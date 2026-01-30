@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kairós 360 - Dashboard de Alto Rendimiento</title>
+    <title>Kairós 360 - Dashboard de Élite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f1f5f9; color: #0f172a; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f1f5f9;
+            color: #0f172a;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+
         .glass-header { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         
-        .active-mission-highlight {
+        .active-mission-card {
             border: 3px solid #6366f1 !important;
             background: linear-gradient(110deg, #f5f7ff 0%, #ffffff 100%) !important;
             transform: scale(1.02);
@@ -20,49 +28,85 @@
             z-index: 10;
             position: relative;
         }
-        .active-mission-highlight::after {
+
+        .active-mission-card::after {
             content: ''; position: absolute; inset: -4px; border-radius: 2.2rem;
             border: 2px solid #6366f1; opacity: 0.5; animation: pulse-ring 2s infinite;
         }
         @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.05); opacity: 0; } }
 
-        .calendar-day { min-width: 60px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 1.5rem; cursor: pointer; transition: all 0.3s; }
-        .calendar-day.selected { background-color: white; color: #0f172a; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); transform: translateY(-4px); }
-        
-        .modal-overlay { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); }
+        .calendar-day {
+            min-width: 65px;
+            height: 85px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calendar-day.selected {
+            background-color: white;
+            color: #0f172a;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .modal-overlay { background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(15px); }
         .tab-btn-active { background-color: #4f46e5 !important; color: white !important; }
 
-        .config-block { background: #ffffff; border-radius: 1.5rem; padding: 1.5rem; border: 1px solid #e2e8f0; margin-bottom: 1rem; position: relative; }
+        .config-block { background: #ffffff; border-radius: 1.5rem; padding: 1.25rem; border: 1px solid #e2e8f0; margin-bottom: 1rem; position: relative; }
         .input-label { font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 6px; display: block; }
         .styled-input { width: 100%; background: #f8fafc; border-radius: 0.75rem; padding: 0.8rem; font-size: 14px; font-weight: 700; border: 2px solid #f1f5f9; outline: none; }
 
         .live-tag { background: #6366f1; color: white; padding: 2px 8px; border-radius: 6px; font-size: 8px; font-weight: 800; display: flex; align-items: center; gap: 4px; }
-        .live-dot { width: 6px; height: 6px; background: white; border-radius: 50%; animation: blink 1s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        #focus-ui { background: radial-gradient(circle at center, #1e1b4b 0%, #020617 100%); }
     </style>
 </head>
 <body class="pb-24">
 
+    <!-- MODAL ENFOQUE -->
+    <div id="focus-ui" class="fixed inset-0 z-[2000] hidden flex flex-col items-center justify-center p-10 text-center text-white">
+        <div class="opacity-30 uppercase tracking-[0.4em] text-[10px] mb-4">Modo Concentración</div>
+        <h2 id="focus-title" class="text-3xl font-black mb-8 uppercase italic text-indigo-400">Actividad</h2>
+        <div id="focus-timer" class="text-9xl font-black tracking-tighter mb-12 tabular-nums">00:00</div>
+        <button onclick="stopFocus()" class="px-12 py-5 bg-white/10 border border-white/20 rounded-full font-black uppercase text-xs tracking-widest hover:bg-white hover:text-slate-900 transition-all">Terminar</button>
+    </div>
+
+    <!-- MODAL NOTAS -->
+    <div id="note-modal" class="fixed inset-0 z-[1100] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
+        <div class="bg-white max-w-sm w-full rounded-[3rem] p-8 shadow-2xl">
+            <h3 class="text-xl font-black mb-4 uppercase">Nota del día</h3>
+            <textarea id="task-note-area" class="w-full h-32 p-4 bg-slate-50 rounded-2xl border-none shadow-inner mb-6 outline-none font-medium" placeholder="Escribe tu progreso..."></textarea>
+            <button onclick="saveTaskNote()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black uppercase text-xs">Guardar Nota</button>
+        </div>
+    </div>
+
     <!-- MODAL TUTORIAL / REGISTRO NOMBRE -->
-    <div id="tutorial-modal" class="fixed inset-0 z-[500] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
+    <div id="tutorial-modal" class="fixed inset-0 z-[1000] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white max-w-sm w-full rounded-[3rem] p-10 shadow-2xl text-center">
+            
             <div id="t-step-0" class="t-step">
-                <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center"><i class="fas fa-user-tag text-3xl"></i></div>
-                <h2 class="text-2xl font-black mb-4">¡HOLA!</h2>
-                <p class="text-slate-500 text-sm mb-6 leading-relaxed">Para una experiencia personal, ingresa tu nombre:</p>
+                <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center"><i class="fas fa-id-card text-3xl"></i></div>
+                <h2 class="text-2xl font-black mb-4 uppercase text-slate-800">BIENVENIDO</h2>
+                <p class="text-slate-500 text-sm mb-6">Ingresa tu nombre para comenzar la experiencia:</p>
                 <input type="text" id="user-name-init" class="styled-input text-center text-xl mb-8 border-indigo-100 font-black text-indigo-600" placeholder="Nombre...">
                 <button onclick="saveNameTutorial()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente</button>
             </div>
+
             <div id="t-step-1" class="t-step hidden">
-                <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center"><i class="fas fa-magic text-3xl"></i></div>
-                <h2 class="text-2xl font-black mb-4 uppercase">HOLA, <span class="display-name text-indigo-600"></span>!</h2>
-                <p class="text-slate-600 text-lg font-bold leading-relaxed mb-10 text-center">Configura <b>trabajo, deporte, medicinas, ocio</b> y más en el panel de control.</p>
+                <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center"><i class="fas fa-hand-sparkles text-3xl"></i></div>
+                <h2 class="text-2xl font-black mb-4 uppercase">HOLA, <span class="user-name-display text-indigo-600"></span>!</h2>
+                <p class="text-slate-600 text-lg font-semibold leading-relaxed mb-10 text-center">"Configura trabajo, deporte, medicinas, ocio y más..."</p>
                 <button onclick="nextTStep(2)" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente</button>
             </div>
-            <div id="t-step-2" class="t-step hidden">
-                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center"><i class="fas fa-rocket text-3xl"></i></div>
+
+            <div id="t-step-2" class="t-step hidden text-center">
+                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center"><i class="fas fa-check-double text-3xl"></i></div>
                 <h2 class="text-2xl font-black mb-4 uppercase">EMPIEZA YA</h2>
-                <p class="text-slate-600 text-lg font-semibold leading-relaxed mb-10">Toca cada tarea al terminarla para ver tu progreso real. ¡A por ello!</p>
+                <p class="text-slate-600 text-lg font-semibold leading-relaxed mb-10 text-center">Toca cada tarea al terminarla para ver tu progreso real. ¡A por ello!</p>
                 <button onclick="closeTutorial()" class="w-full bg-indigo-950 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl tracking-widest">¡Comenzar!</button>
             </div>
         </div>
@@ -71,88 +115,100 @@
     <!-- UI HEADER -->
     <header class="glass-header text-white p-7 rounded-b-[4rem] shadow-2xl sticky top-0 z-50">
         <div class="flex justify-between items-start mb-6">
-            <div>
-                <h1 class="text-2xl font-black italic tracking-tighter uppercase leading-tight">KAIRÓS <span class="text-indigo-400">360</span></h1>
-                <p class="text-[9px] font-bold text-indigo-300 uppercase tracking-[0.15em] mt-1 opacity-90 leading-none">Domina tu momento, equilibra tu mundo</p>
+            <div class="flex items-center gap-4">
+                <!-- BOTÓN HAMBURGUESA -->
+                <button onclick="openConfig()" class="bg-white/10 w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white/20 active:scale-90 transition-all border border-white/5 shadow-sm">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <div>
+                    <h1 class="text-xl font-black italic tracking-tighter uppercase leading-tight">KAIRÓS <span class="text-indigo-400">360</span></h1>
+                    <p class="text-[8px] font-bold text-indigo-300 uppercase tracking-widest leading-none">High Performance</p>
+                </div>
             </div>
             <div class="flex gap-2">
-                <button onclick="openTutorial()" class="bg-white/10 p-3 rounded-2xl border border-white/5 shadow-sm"><i class="fas fa-question text-sm"></i></button>
-                <button onclick="openConfig()" class="bg-white/10 p-3 rounded-2xl border border-white/5 shadow-sm"><i class="fas fa-sliders-h text-sm"></i></button>
-                <button onclick="openTech()" class="bg-indigo-600 p-3 rounded-2xl shadow-lg border border-indigo-400/30"><i class="fas fa-brain text-sm"></i></button>
+                <button onclick="openTutorial(false)" class="bg-white/10 p-3.5 rounded-2xl border border-white/5 shadow-sm active:scale-90"><i class="fas fa-question text-sm"></i></button>
+                <button onclick="openTech()" class="bg-indigo-600 p-3.5 rounded-2xl shadow-lg border border-indigo-400/30 active:scale-90"><i class="fas fa-brain text-sm"></i></button>
             </div>
         </div>
+
         <div class="flex justify-between items-end">
             <div class="flex items-center gap-4">
                 <span id="live-clock" class="text-4xl font-black tracking-tighter">00:00</span>
                 <div class="bg-indigo-500/20 px-3 py-1 rounded-xl border border-indigo-400/30"><span class="text-[10px] font-black uppercase text-indigo-200 tracking-widest display-name">JM</span></div>
             </div>
-            <p id="live-date" class="text-[10px] font-extrabold opacity-60 uppercase tracking-widest text-right"></p>
+            <div class="text-right">
+                <div id="streak-indicator" class="bg-orange-500/20 text-orange-400 border border-orange-500/30 px-3 py-1 rounded-full text-[9px] font-black uppercase mb-1 hidden">Racha 🔥</div>
+                <p id="live-date" class="text-[10px] font-extrabold opacity-60 uppercase tracking-widest text-right"></p>
+            </div>
         </div>
+        <!-- CALENDARIO -->
         <div id="calendar-strip" class="flex overflow-x-auto gap-4 no-scrollbar mt-8 pb-2 px-1"></div>
     </header>
 
     <main class="p-6 space-y-8 max-w-xl mx-auto">
-        <!-- Balance -->
+        <!-- Balance Rendimiento -->
         <section class="bg-white rounded-[3rem] p-8 shadow-sm border border-slate-100 text-slate-900">
             <div class="flex justify-between items-center mb-8">
-                <h2 class="text-sm font-black uppercase flex items-center gap-2"><i class="fas fa-chart-pie text-indigo-500"></i> Mi Esfuerzo Real</h2>
+                <h2 class="text-sm font-black uppercase flex items-center gap-2 font-black"><i class="fas fa-bolt text-indigo-500"></i> Mi Rendimiento</h2>
                 <div id="total-perc" class="text-[10px] font-black text-indigo-600 bg-indigo-50 px-4 py-1.5 rounded-full uppercase">0%</div>
             </div>
             <div class="grid grid-cols-2 gap-5" id="stats-grid"></div>
         </section>
 
         <!-- Cronograma -->
-        <section class="space-y-4 text-slate-900">
-            <div class="flex justify-between items-center px-4">
-                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Actividades</h3>
+        <section class="space-y-4">
+            <div class="flex justify-between items-center px-4 text-slate-900">
+                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest italic font-black">Cronograma Diario</h3>
                 <button onclick="toggleVacation()" id="vacation-btn" class="px-5 py-2.5 bg-slate-200 text-slate-600 text-[9px] font-black rounded-full uppercase border border-slate-300">Modo Vacaciones</button>
             </div>
-            <div id="task-list" class="space-y-4"></div>
+            <div id="task-list" class="space-y-4 text-slate-900"></div>
         </section>
 
         <!-- Médico -->
-        <section class="bg-slate-900 text-white p-8 rounded-[3.5rem] shadow-xl border border-white/5 relative overflow-hidden">
+        <section class="bg-slate-900 text-white p-8 rounded-[3.5rem] shadow-xl border border-white/5">
             <h4 class="text-xs font-black uppercase tracking-widest mb-6 flex items-center gap-3"><i class="fas fa-capsules text-red-500"></i> Salud Visual</h4>
             <div id="medical-info" class="space-y-4"></div>
         </section>
 
-        <footer class="text-center py-10 opacity-60 border-t border-slate-100 mt-12">
+        <footer class="text-center py-10 opacity-50 border-t border-slate-100">
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1 italic">Desarrollado por</p>
             <p class="text-xs font-black text-slate-900 uppercase">Juan Miguel Rios Redondo</p>
         </footer>
     </main>
 
-    <!-- PANEL DE CONTROL -->
-    <div id="config-modal" class="fixed inset-0 z-[400] modal-overlay hidden flex items-end sm:items-center justify-center p-0 sm:p-4 text-slate-900">
-        <div class="bg-white w-full max-w-lg rounded-t-[3.5rem] sm:rounded-[3.5rem] shadow-2xl flex flex-col h-[92vh] overflow-hidden">
+    <!-- PANEL DE CONTROL (Configuraciones) -->
+    <div id="config-modal" class="fixed inset-0 z-[1500] modal-overlay hidden flex items-end sm:items-center justify-center p-0 sm:p-4 text-slate-900">
+        <div class="bg-white w-full max-w-lg rounded-t-[3.5rem] sm:rounded-[3.5rem] shadow-2xl flex flex-col h-[90vh] overflow-hidden">
             <div class="p-8 pb-4">
                 <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-black italic tracking-tighter uppercase">Configurar</h3>
+                    <h3 class="text-2xl font-black italic tracking-tighter uppercase">Panel de Control</h3>
                     <button onclick="closeConfig()"><i class="fas fa-times-circle text-slate-300 text-3xl"></i></button>
                 </div>
                 <div class="flex gap-1 bg-slate-100 p-1.5 rounded-2xl border border-slate-200 overflow-x-auto no-scrollbar">
                     <button onclick="setTab('perfil')" id="tab-perfil" class="flex-1 py-3 text-[10px] font-black rounded-xl px-4 whitespace-nowrap">Perfil</button>
                     <button onclick="setTab('horarios')" id="tab-horarios" class="flex-1 py-3 text-[10px] font-black rounded-xl px-4 whitespace-nowrap">Horarios</button>
                     <button onclick="setTab('medico')" id="tab-medico" class="flex-1 py-3 text-[10px] font-black rounded-xl px-4 whitespace-nowrap">Médico</button>
+                    <button onclick="setTab('stats')" id="tab-stats" class="flex-1 py-3 text-[10px] font-black rounded-xl px-4 whitespace-nowrap">Rachas</button>
                     <button onclick="setTab('data')" id="tab-data" class="flex-1 py-3 text-[10px] font-black rounded-xl px-4 whitespace-nowrap">Datos</button>
                 </div>
             </div>
             <div id="modal-content" class="flex-1 overflow-y-auto px-8 pb-8 no-scrollbar"></div>
-            <div class="p-8 border-t border-slate-50"><button onclick="saveAndClose()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Guardar Cambios</button></div>
+            <div class="p-8 border-t border-slate-50"><button onclick="saveAndClose()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95 transition-all">Guardar Cambios</button></div>
         </div>
     </div>
 
     <!-- MODAL ESTRATEGIAS -->
     <div id="tech-modal" class="fixed inset-0 z-[450] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white w-full max-w-2xl rounded-[3.5rem] p-10 shadow-2xl max-h-[85vh] overflow-y-auto no-scrollbar text-center">
-            <h3 class="text-xl font-black italic text-indigo-900 mb-10 uppercase tracking-tighter border-b-2 border-indigo-50 pb-6">Estrategias de Éxito</h3>
-            <div class="space-y-10 text-left" id="tech-content"></div>
-            <button onclick="closeTech()" class="w-full mt-10 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs shadow-xl">Entendido</button>
+            <h3 class="text-2xl font-black italic text-indigo-900 mb-10 uppercase tracking-tighter border-b-2 border-indigo-50 pb-6">Estrategias de Éxito</h3>
+            <div class="space-y-8 text-left" id="tech-content"></div>
+            <button onclick="closeTech()" class="w-full mt-10 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs shadow-xl">Cerrar</button>
         </div>
     </div>
 
     <script>
-        const DEFAULT_CONFIG = {
+        // --- DATA MAESTRA INICIAL ---
+        const MASTER_CONFIG = {
             userName: '', treatmentStart: '2026-01-30', vacationHidden: ['academia'],
             template: {
                 entreno: [
@@ -161,74 +217,82 @@
                     { id: 'h3', start: '08:00 AM', end: '08:15 AM', task: 'Olopatadina (8 AM)', type: 'salud' },
                     { id: 'h4', start: '08:15 AM', end: '11:00 AM', task: 'Entrenamiento', type: 'deporte' },
                     { id: 'h5', start: '11:00 AM', end: '12:00 PM', task: 'Tareas Colegio', type: 'academia' },
-                    { id: 'h6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Col)', type: 'salud' },
-                    { id: 'h7', start: '12:30 PM', end: '18:00 PM', task: 'Colegio', type: 'academia' },
+                    { id: 'h6', start: '12:15 PM', end: '12:30 PM', task: 'Fluoro (Entrada)', type: 'salud' },
+                    { id: 'h7', start: '12:30 PM', end: '06:00 PM', task: 'Colegio', type: 'academia' },
                     { id: 'h8', start: '08:00 PM', end: '08:15 PM', task: 'Olopatadina (8 PM)', type: 'salud' },
                     { id: 'h9', start: '08:30 PM', end: '09:30 PM', task: 'Apps Música / Duolingo', type: 'musica' },
                     { id: 'h10', start: '09:45 PM', end: '10:00 PM', task: 'Fluoro Final', type: 'salud' }
                 ],
                 estudio: [
                     { id: 's1', start: '06:30 AM', end: '06:45 AM', task: 'Gotas Mañana', type: 'salud' },
-                    { id: 's2', start: '07:00 AM', end: '08:00 AM', task: 'Tareas Colegio', type: 'academia' },
-                    { id: 's3', start: '08:00 AM', end: '08:15 AM', task: 'Olopatadina (8 AM)', type: 'salud' },
-                    { id: 's4', start: '08:15 AM', end: '10:00 AM', task: 'Instrumento', type: 'musica' },
+                    { id: 's2', start: '07:00 AM', end: '08:15 AM', task: 'Tareas Colegio', type: 'academia' },
+                    { id: 's3', start: '08:15 AM', end: '08:30 AM', task: 'Olopatadina (1)', type: 'salud' },
+                    { id: 's4', start: '08:30 AM', end: '10:00 AM', task: 'Instrumento', type: 'musica' },
                     { id: 's5', start: '10:00 AM', end: '11:30 AM', task: 'Apps Música', type: 'musica' },
-                    { id: 's6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Col)', type: 'salud' },
-                    { id: 's7', start: '12:30 PM', end: '18:00 PM', task: 'Colegio', type: 'academia' },
-                    { id: 's8', start: '08:00 PM', end: '08:15 PM', task: 'Olopatadina (8 PM)', type: 'salud' },
+                    { id: 's6', start: '12:15 PM', end: '12:30 PM', task: 'Fluoro (Entrada)', type: 'salud' },
+                    { id: 's7', start: '12:30 PM', end: '06:00 PM', task: 'Colegio', type: 'academia' },
+                    { id: 's8', start: '08:00 PM', end: '08:15 PM', task: 'Olopatadina (2)', type: 'salud' },
                     { id: 's9', start: '08:30 PM', end: '09:45 PM', task: 'Tareas / Repaso', type: 'academia' },
                     { id: 's10', start: '09:45 PM', end: '10:00 PM', task: 'Fluoro Final', type: 'salud' }
                 ],
                 finde: [
-                    { id: 'f1', start: '08:00 AM', end: '08:15 AM', task: 'Olopatadina (1)', type: 'salud' },
+                    { id: 'f1', start: '08:00 AM', end: '08:15 AM', task: 'Olopatadina 1', type: 'salud' },
                     { id: 'f2', start: '09:30 AM', end: '11:00 AM', task: 'Instrumento Libre', type: 'musica' },
                     { id: 'f3', start: '11:00 AM', end: '01:00 PM', task: 'Tiempo Libre', type: 'ocio' },
                     { id: 'f4', start: '04:00 PM', end: '04:15 PM', task: 'Medicina Extra', type: 'salud' },
-                    { id: 'f5', start: '08:00 PM', end: '08:15 PM', task: 'Olopatadina (2)', type: 'salud' },
+                    { id: 'f5', start: '08:00 PM', end: '08:15 PM', task: 'Olopatadina 2', type: 'salud' },
                     { id: 'f6', start: '10:00 PM', end: '10:15 PM', task: 'Fluoro Final', type: 'salud' }
                 ]
             },
             treatments: [
                 { id: 'tr1', name: 'Fluorometolona 0.1%', start: '2026-01-30', duration: 10, unit: 'dias', doseFreq: 'Cada 8h' },
-                { id: 'tr2', name: 'Olopatadina 0.2%', start: '2026-01-30', duration: 2, unit: 'meses', doseFreq: '8:00 AM y 8:00 PM' }
+                { id: 'tr2', name: 'Olopatadina 0.2%', start: '2026-01-30', duration: 2, unit: 'meses', doseFreq: '8 AM y 8 PM' }
             ]
         };
 
         let state = {
             selectedDate: new Intl.DateTimeFormat('sv-SE').format(new Date()),
             isVacation: false, history: {}, tab: 'perfil', dayType: 'estudio',
-            config: JSON.parse(JSON.stringify(DEFAULT_CONFIG))
+            config: JSON.parse(JSON.stringify(MASTER_CONFIG)),
+            focusTimer: null, editingNoteId: null
         };
 
-        function init() {
-            const saved = localStorage.getItem('kairos_v5_final');
-            if(saved) { state.config = JSON.parse(saved); updateNameDisplays(); } else { openTutorial(true); }
-            const savedHist = localStorage.getItem('kairos_hist_v5');
-            if(savedHist) state.history = JSON.parse(savedHist);
-            initCalendar(); renderTech(); updateLive(); setInterval(updateLive, 30000);
+        // --- SISTEMA DE ALMACENAMIENTO ---
+        function saveLocal() { 
+            localStorage.setItem('kairos_v10_final', JSON.stringify(state.config)); 
+            localStorage.setItem('kairos_v10_history', JSON.stringify(state.history));
         }
 
+        function loadLocal() {
+            const c = localStorage.getItem('kairos_v10_final');
+            const h = localStorage.getItem('kairos_v10_history');
+            if(c) { state.config = JSON.parse(c); updateNameDisplays(); } else { openTutorial(true); }
+            if(h) state.history = JSON.parse(h);
+        }
+
+        function init() { loadLocal(); initCalendar(); renderTech(); updateLive(); updateStreakDisplay(); }
+
+        // --- RENDERIZADO PRINCIPAL ---
         function render() {
             const list = document.getElementById('task-list');
-            const medical = document.getElementById('medical-info');
+            const med = document.getElementById('medical-info');
             const now = new Date();
             const todayISO = new Intl.DateTimeFormat('sv-SE').format(now);
             const dObj = new Date(state.selectedDate + 'T12:00:00');
             const dayName = dObj.toLocaleDateString('es-ES', { weekday: 'long' }).toLowerCase();
             
-            const getT = (f) => {
+            const checkT = (f) => {
                 const tr = state.config.treatments.find(x => x.name.toLowerCase().includes(f.toLowerCase()));
                 if (!tr) return { active: false };
                 const s = new Date(tr.start + 'T00:00:00');
-                const sel = new Date(state.selectedDate + 'T00:00:00');
-                const d = Math.floor((sel - s) / 86400000) + 1;
+                const d = Math.floor((new Date(state.selectedDate) - s) / 86400000) + 1;
                 const lim = tr.unit === 'dias' ? parseInt(tr.duration) : parseInt(tr.duration) * 30;
                 return { active: d >= 1 && d <= lim, day: d, limit: lim };
             };
 
-            const fS = getT('Fluoro'); const oS = getT('Olopa');
+            const fS = checkT('Fluoro'); const oS = checkT('Olopa');
             let routine = dayName.includes('sáb') || dayName.includes('dom') ? [...state.config.template.finde] : 
-                          (['lunes', 'miércoles', 'viernes'].includes(dayName) ? [...state.config.template.entreno] : [...state.config.template.estudio]);
+                          (['lunes', 'miércoles', 'viernes'].some(d => dayName.includes(d)) ? [...state.config.template.entreno] : [...state.config.template.estudio]);
 
             if (state.isVacation) routine = routine.filter(t => !state.config.vacationHidden.includes(t.type));
             list.innerHTML = '';
@@ -242,132 +306,154 @@
                 const st = parseTime(t.start, state.selectedDate);
                 const en = parseTime(t.end, state.selectedDate);
                 const isNow = state.selectedDate === todayISO && now >= st && now <= new Date(en.getTime() + 59000);
-                const isD = (state.history[state.selectedDate] || {})[t.id];
+                const histData = state.history[state.selectedDate]?.[t.id] || {};
+                const isDone = histData.done;
                 const dur = (en - st) / 60000;
-                if(s.total[t.type] !== undefined) { s.total[t.type] += dur; if(isD) { s[t.type] += dur; dc++; } }
+                if(s.total[t.type] !== undefined) { s.total[t.type] += dur; if(isDone) { s[t.type] += dur; dc++; } }
 
                 const col = { salud: 'bg-red-500', musica: 'bg-purple-500', deporte: 'bg-orange-500', academia: 'bg-indigo-500', ocio: 'bg-emerald-500' };
-                list.innerHTML += `<div onclick="toggleTask('${t.id}')" class="flex items-stretch bg-white rounded-[2.5rem] shadow-sm border-2 transition-all ${isD ? 'opacity-40 grayscale' : isNow ? 'active-mission-highlight' : 'border-white'}">
+                list.innerHTML += `<div class="flex items-stretch bg-white rounded-[2.5rem] shadow-sm border-2 transition-all ${isDone ? 'opacity-40 grayscale scale-95' : isNow ? 'active-mission-card' : 'border-white'}">
                     <div class="w-2.5 ${col[t.type]} rounded-l-[2.5rem]"></div>
-                    <div class="flex-1 p-6 flex items-center gap-6">
-                        <div class="min-w-[85px] text-center border-r border-slate-100 pr-3"><p class="text-[12px] font-black text-slate-800">${t.start}</p><p class="text-[9px] font-bold text-slate-300 mt-1 uppercase">${t.end}</p></div>
-                        <div class="flex-1 pr-2"><div class="flex items-center gap-2 mb-1"><h3 class="text-sm font-black uppercase text-slate-800">${t.task}</h3>${isNow ? '<div class="live-tag"><div class="live-dot"></div>VIVO</div>' : ''}</div>
-                        <span class="text-[7px] font-black uppercase bg-slate-50 border px-2 py-0.5 rounded-full ${col[t.type].replace('bg-','text-')}">${t.type}</span></div>
-                        <i class="fas ${isD ? 'fa-check-circle text-green-500' : 'fa-circle text-slate-100'} text-3xl"></i>
+                    <div class="flex-1 p-6 flex items-center gap-4 text-slate-900">
+                        <div class="min-w-[80px] text-center border-r border-slate-50 pr-4"><p class="text-[12px] font-black">${t.start}</p><p class="text-[9px] font-bold text-slate-300 mt-1 uppercase">${t.end}</p></div>
+                        <div class="flex-1 pr-2"><div class="flex items-center gap-2 mb-1"><h3 class="text-sm font-black uppercase tracking-tight">${t.task}</h3>${isNow ? '<div class="live-tag">VIVO</div>' : ''}</div>
+                        <div class="flex gap-2"><span class="text-[7px] font-black uppercase bg-slate-50 border px-2 py-0.5 rounded-full ${col[t.type].replace('bg-','text-')}">${t.type}</span>${histData.note ? '<i class="fas fa-sticky-note text-indigo-400 text-[8px]"></i>' : ''}</div></div>
+                        <div class="flex gap-2">
+                            ${isNow && !isDone ? `<button onclick="startFocus('${t.task}', '${t.end}')" class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center active:scale-90"><i class="fas fa-stopwatch"></i></button>` : ''}
+                            <button onclick="openNoteModal('${t.id}')" class="w-10 h-10 bg-slate-50 text-slate-300 rounded-2xl flex items-center justify-center"><i class="fas fa-edit"></i></button>
+                            <button onclick="toggleTask('${t.id}')" class="w-10 h-10 rounded-2xl flex items-center justify-center ${isDone ? 'bg-green-500 text-white' : 'bg-slate-100 text-slate-200'}"><i class="fas fa-check"></i></button>
+                        </div>
                     </div>
                 </div>`;
             });
-            medical.innerHTML = state.config.treatments.map(tr => {
-                const info = getT(tr.name);
+            med.innerHTML = state.config.treatments.map(tr => {
+                const info = checkT(tr.name);
                 return `<div class="p-4 bg-white/5 rounded-3xl border border-white/5 flex justify-between items-center">
-                    <div><p class="font-black ${info.active ? 'text-red-400' : 'text-slate-500'} uppercase text-[11px]">${tr.name}</p><p class="opacity-60 text-[10px] uppercase font-bold tracking-widest">${tr.doseFreq}</p></div>
+                    <div><p class="font-black ${info.active ? 'text-red-400' : 'text-slate-500'} uppercase text-[11px]">${tr.name}</p><p class="opacity-40 text-[9px] uppercase font-bold tracking-widest">${tr.doseFreq}</p></div>
                     <span class="text-[10px] font-black bg-white/10 px-3 py-1 rounded-lg">${info.active ? 'Día '+info.day+'/'+info.limit : 'FIN'}</span>
                 </div>`;
             }).join('');
             renderStats(s, dc, routine.length);
         }
 
+        // --- TABS DEL PANEL ---
+        window.setTab = (t) => {
+            state.tab = t;
+            ['perfil','horarios','medico','stats','data'].forEach(x => {
+                const el = document.getElementById(`tab-${x}`);
+                if(el) el.className = `flex-1 py-3 text-[10px] font-black rounded-xl uppercase px-4 whitespace-nowrap ${t === x ? 'tab-btn-active' : 'text-slate-500'}`;
+            });
+            renderTab();
+        };
+
         function renderTab() {
-            const cont = document.getElementById('modal-content'); cont.innerHTML = '';
+            const c = document.getElementById('modal-content'); c.innerHTML = '';
             if(state.tab === 'perfil') {
-                cont.innerHTML = `<div class="p-8 bg-slate-50 rounded-[2.5rem] space-y-4">
-                    <label class="input-label">Tu Nombre</label>
-                    <input type="text" value="${state.config.userName}" onchange="state.config.userName=this.value; updateNameDisplays();" class="styled-input text-xl border-indigo-100 font-black">
-                </div>`;
+                c.innerHTML = `<div class="p-8 bg-slate-50 rounded-[2.5rem] space-y-4"><label class="input-label">Tu Nombre</label><input type="text" id="name-editor" value="${state.config.userName}" onchange="state.config.userName=this.value; updateNameDisplays(); saveLocal();" class="styled-input text-xl border-indigo-100 font-black"></div>`;
             } else if(state.tab === 'horarios') {
-                cont.innerHTML = `<div class="flex gap-2 mb-6 p-1 bg-slate-100 rounded-2xl text-slate-900">${['estudio','entreno','finde'].map(d => `<button onclick="state.dayType='${d}'; renderTab();" class="flex-1 py-2 text-[9px] font-black rounded-xl uppercase ${state.dayType===d?'bg-white shadow-sm':'text-slate-500'}">${d}</button>`).join('')}</div>`;
+                c.innerHTML = `<div class="flex gap-2 mb-6 p-1 bg-slate-100 rounded-2xl text-slate-900">${['estudio','entreno','finde'].map(d => `<button onclick="state.dayType='${d}'; renderTab();" class="flex-1 py-2 text-[9px] font-black rounded-xl uppercase ${state.dayType===d?'bg-white shadow-sm':'text-slate-500'}">${d}</button>`).join('')}</div>`;
                 (state.config.template[state.dayType] || []).forEach((t, i) => {
-                    cont.innerHTML += `<div class="config-block shadow-sm"><button onclick="delTask('${state.dayType}', ${i})" class="absolute top-4 right-4 text-slate-200 hover:text-red-500"><i class="fas fa-trash-alt"></i></button>
+                    c.innerHTML += `<div class="config-block shadow-sm"><button onclick="delTask('${state.dayType}', ${i})" class="absolute top-4 right-4 text-slate-200 hover:text-red-500"><i class="fas fa-trash-alt"></i></button>
                         <label class="input-label">Actividad</label><input type="text" value="${t.task}" onchange="state.config.template['${state.dayType}'][${i}].task=this.value" class="styled-input mb-4">
                         <div class="flex gap-4"><div class="flex-1 text-center"><label class="input-label">Inicio</label><input type="time" value="${to24(t.start)}" onchange="state.config.template['${state.dayType}'][${i}].start=to12(this.value)" class="styled-input"></div>
                         <div class="flex-1 text-center"><label class="input-label">Fin</label><input type="time" value="${to24(t.end)}" onchange="state.config.template['${state.dayType}'][${i}].end=to12(this.value)" class="styled-input"></div></div>
-                        <div class="mt-4"><label class="input-label">Categoría</label><select onchange="state.config.template['${state.dayType}'][${i}].type=this.value" class="styled-input text-xs font-black uppercase">
-                            ${['academia','musica','deporte','salud','ocio'].map(cat => `<option value="${cat}" ${t.type===cat?'selected':''}>${cat}</option>`).join('')}
-                        </select></div>
+                        <div class="mt-4"><label class="input-label">Categoría</label><select onchange="state.config.template['${state.dayType}'][${i}].type=this.value" class="styled-input text-xs uppercase">${['academia','musica','deporte','salud','ocio'].map(cat => `<option value="${cat}" ${t.type===cat?'selected':''}>${cat}</option>`).join('')}</select></div>
                     </div>`;
                 });
-                cont.innerHTML += `<button onclick="addTask()" class="w-full bg-slate-50 text-slate-500 py-4 rounded-3xl border-2 border-dashed border-slate-200 font-black uppercase text-[10px]"><i class="fas fa-plus mr-2"></i> Añadir Actividad</button>`;
+                c.innerHTML += `<button onclick="addTask()" class="w-full bg-slate-50 text-slate-500 py-4 rounded-3xl border-2 border-dashed border-slate-200 font-black uppercase text-[10px]"><i class="fas fa-plus mr-2"></i> Añadir Nueva Tarea</button>`;
             } else if(state.tab === 'medico') {
                 state.config.treatments.forEach((tr, i) => {
-                    cont.innerHTML += `<div class="config-block shadow-sm"><button onclick="delMed(${i})" class="absolute top-4 right-4 text-slate-200 hover:text-red-500"><i class="fas fa-trash-alt"></i></button>
-                        <div><label class="input-label text-red-500">Medicina</label><input type="text" value="${tr.name}" onchange="state.config.treatments[${i}].name=this.value" class="styled-input mb-4"></div>
+                    c.innerHTML += `<div class="config-block shadow-sm"><button onclick="delMed(${i})" class="absolute top-4 right-4 text-slate-200 hover:text-red-500"><i class="fas fa-trash-alt"></i></button>
+                        <label class="input-label">Medicina</label><input type="text" value="${tr.name}" onchange="state.config.treatments[${i}].name=this.value" class="styled-input mb-4">
                         <div class="flex gap-3 mb-4"><div class="flex-1"><label class="input-label">Inicio</label><input type="date" value="${tr.start}" onchange="state.config.treatments[${i}].start=this.value" class="styled-input text-xs font-bold"></div>
                         <div class="flex-1"><label class="input-label">Duración</label><div class="flex gap-1"><input type="number" value="${tr.duration}" onchange="state.config.treatments[${i}].duration=this.value" class="w-12 styled-input p-2 text-center font-bold">
                         <select onchange="state.config.treatments[${i}].unit=this.value" class="styled-input p-1 text-[9px] uppercase font-black"><option value="dias" ${tr.unit==='dias'?'selected':''}>Días</option><option value="meses" ${tr.unit==='meses'?'selected':''}>Meses</option></select></div></div></div>
-                        <label class="input-label">Pauta sugerida</label><input type="text" value="${tr.doseFreq}" onchange="state.config.treatments[${i}].doseFreq=this.value" class="styled-input">
+                        <label class="input-label">Pauta Horaria</label><input type="text" value="${tr.doseFreq}" onchange="state.config.treatments[${i}].doseFreq=this.value" class="styled-input">
                     </div>`;
                 });
-                cont.innerHTML += `<button onclick="addMed()" class="w-full bg-red-50 text-red-600 py-4 rounded-3xl border-2 border-dashed border-red-100 font-black uppercase text-[10px]"><i class="fas fa-plus mr-2"></i> Añadir Medicina</button>`;
+                c.innerHTML += `<button onclick="addMed()" class="w-full bg-red-50 text-red-600 py-4 rounded-3xl border-2 border-dashed border-red-100 font-black uppercase text-[10px]"><i class="fas fa-plus mr-2"></i> Añadir Medicina</button>`;
             } else if(state.tab === 'data') {
-                cont.innerHTML = `<div class="p-8 bg-indigo-50 rounded-[3rem] space-y-6 text-center border border-indigo-100 shadow-inner">
-                    <button onclick="exportJSON()" class="w-full bg-white text-indigo-600 p-6 rounded-[2rem] font-black text-xs uppercase shadow-md flex items-center justify-center gap-3 border border-indigo-100"><i class="fas fa-file-download"></i> Descargar archivo .JSON</button>
-                    <div class="pt-6 space-y-4 text-left"><p class="text-[10px] font-black text-indigo-400 uppercase opacity-60 text-center">Importar Backup:</p>
+                c.innerHTML = `<div class="p-8 bg-indigo-50 rounded-[3rem] space-y-6 text-center border border-indigo-100 shadow-inner">
+                    <button onclick="exportJSON()" class="w-full bg-white text-indigo-600 p-6 rounded-[2rem] font-black text-xs uppercase shadow-md"><i class="fas fa-download mr-2"></i> Exportar .JSON</button>
+                    <div class="pt-6 space-y-4 text-left">
+                        <p class="text-[10px] font-black text-indigo-400 uppercase opacity-60 text-center">Importar archivo .JSON:</p>
                         <input type="file" id="json-input" class="hidden" accept=".json" onchange="importJSON(event)">
-                        <button onclick="document.getElementById('json-input').click()" class="w-full bg-slate-900 text-white p-6 rounded-[2rem] font-black text-xs uppercase shadow-xl flex items-center justify-center gap-3"><i class="fas fa-file-upload"></i> Seleccionar archivo</button>
+                        <button onclick="document.getElementById('json-input').click()" class="w-full bg-slate-950 text-white p-6 rounded-[2.5rem] font-black text-xs uppercase shadow-xl flex items-center justify-center gap-3"><i class="fas fa-upload"></i> Cargar archivo</button>
                     </div>
-                    <div class="pt-10 border-t border-indigo-200"><button onclick="resetApp()" class="w-full bg-red-100 text-red-600 p-5 rounded-2xl font-black text-[10px] uppercase border border-red-200">Limpiar Todo</button></div>
+                    <div class="pt-10 border-t border-indigo-200"><button onclick="resetApp()" class="w-full bg-red-100 text-red-600 p-5 rounded-2xl font-black text-[10px] uppercase border border-red-200">Reiniciar App</button></div>
                 </div>`;
+            } else if(state.tab === 'stats') {
+                const s = calculateStreak();
+                c.innerHTML = `<div class="p-8 space-y-6"><div class="bg-indigo-50 p-6 rounded-3xl text-center"><p class="text-[10px] font-black uppercase text-indigo-400 mb-2">Días Perfectos</p><p class="text-4xl font-black text-indigo-600">${s}</p></div></div>`;
             }
         }
 
-        window.saveNameTutorial = () => { const n = document.getElementById('user-name-init').value; if(!n) return; state.config.userName = n; updateNameDisplays(); nextTStep(1); };
-        window.nextTStep = (s) => { document.querySelectorAll('.t-step').forEach(el => el.classList.add('hidden')); document.getElementById(`t-step-${s}`).classList.remove('hidden'); };
+        // --- ACTIONS ---
+        window.saveNameTutorial = () => { 
+            const n = document.getElementById('user-name-init').value; 
+            if(!n) return; state.config.userName = n; 
+            saveLocal(); updateNameDisplays(); nextTStep(1); 
+        };
+        window.nextTStep = (s) => { 
+            saveLocal();
+            document.querySelectorAll('.t-step').forEach(el => el.classList.add('hidden')); 
+            document.getElementById(`t-step-${s}`).classList.remove('hidden'); 
+        };
         window.openTutorial = (first = false) => { document.getElementById('tutorial-modal').classList.remove('hidden'); nextTStep(first ? 0 : 1); };
-        window.closeTutorial = () => { document.getElementById('tutorial-modal').classList.add('hidden'); saveLocal(); };
+        window.closeTutorial = () => { document.getElementById('tutorial-modal').classList.add('hidden'); saveLocal(); render(); };
         window.openConfig = () => { document.getElementById('config-modal').classList.remove('hidden'); setTab('perfil'); };
         window.closeConfig = () => document.getElementById('config-modal').classList.add('hidden');
-        window.setTab = (t) => { state.tab = t; ['perfil','horarios','medico','data'].forEach(x => { const el = document.getElementById(`tab-${x}`); el.className = `flex-1 py-3 text-[10px] font-black rounded-xl uppercase px-4 whitespace-nowrap ${t === x ? 'tab-btn-active' : 'text-slate-500'}`; }); renderTab(); };
         window.saveAndClose = () => { saveLocal(); document.getElementById('config-modal').classList.add('hidden'); render(); };
         window.resetApp = () => { if(!confirm("¿Borrar todo?")) return; localStorage.clear(); location.reload(); };
         
+        window.exportJSON = () => { const b = new Blob([JSON.stringify(state.config, null, 2)], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `kairos_backup.json`; a.click(); };
+        window.importJSON = (e) => { const r = new FileReader(); r.onload = (ev) => { try { state.config = JSON.parse(ev.target.result); updateNameDisplays(); saveLocal(); alert("¡Importación Correcta!"); renderTab(); } catch(e) { alert("Archivo Inválido."); } }; r.readAsText(e.target.files[0]); };
+
         window.addTask = () => { state.config.template[state.dayType].push({ id: 'task_'+Date.now(), start: '08:00 AM', end: '09:00 AM', task: 'Nueva Tarea', type: 'ocio' }); renderTab(); };
         window.delTask = (d, i) => { state.config.template[d].splice(i, 1); renderTab(); };
-        window.addMed = () => { state.config.treatments.push({ name: 'Medicina', start: state.selectedDate, duration: 7, unit: 'dias', doseFreq: 'Dosis' }); renderTab(); };
+        window.addMed = () => { state.config.treatments.push({ id: 'med_'+Date.now(), name: 'Nueva Medicina', start: state.selectedDate, duration: 7, unit: 'dias', doseFreq: 'Pauta' }); renderTab(); };
         window.delMed = (i) => { state.config.treatments.splice(i, 1); renderTab(); };
+        
+        window.toggleTask = (id) => { if(!state.history[state.selectedDate]) state.history[state.selectedDate] = {}; if(!state.history[state.selectedDate][id]) state.history[state.selectedDate][id] = { done: false }; state.history[state.selectedDate][id].done = !state.history[state.selectedDate][id].done; saveLocal(); updateStreakDisplay(); render(); };
+        window.saveTaskNote = () => { if(!state.history[state.selectedDate]) state.history[state.selectedDate] = {}; if(!state.history[state.selectedDate][state.editingNoteId]) state.history[state.selectedDate][state.editingNoteId] = { done: false }; state.history[state.selectedDate][state.editingNoteId].note = document.getElementById('task-note-area').value; saveLocal(); document.getElementById('note-modal').classList.add('hidden'); render(); };
+        window.openNoteModal = (id) => { state.editingNoteId = id; const existing = state.history[state.selectedDate]?.[id]?.note || ''; document.getElementById('task-note-area').value = existing; document.getElementById('note-modal').classList.remove('hidden'); };
 
-        window.exportJSON = () => { const b = new Blob([JSON.stringify(state.config, null, 2)], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `kairos360_backup.json`; a.click(); };
-        window.importJSON = (e) => { const r = new FileReader(); r.onload = (ev) => { try { state.config = JSON.parse(ev.target.result); updateNameDisplays(); alert("¡Importado!"); renderTab(); } catch(e) { alert("Inválido."); } }; r.readAsText(e.target.files[0]); };
-
-        window.toggleTask = (id) => { const h = state.history[state.selectedDate] || {}; h[id] = !h[id]; state.history[state.selectedDate] = h; saveLocal(); render(); };
-        window.updateNameDisplays = () => { const n = state.config.userName || 'Usuario'; document.querySelectorAll('.display-name').forEach(el => el.innerText = n.toUpperCase()); };
+        window.updateNameDisplays = () => { const n = state.config.userName || 'Usuario'; document.querySelectorAll('.user-name-display, .display-name').forEach(el => el.innerText = n.toUpperCase()); };
         window.updateLive = () => { const n = new Date(); document.getElementById('live-clock').innerText = n.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true }); document.getElementById('live-date').innerText = n.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }); render(); };
         window.parseTime = (t, iso) => { const [time, mod] = t.split(' '); let [h, m] = time.split(':').map(Number); if(mod === 'PM' && h < 12) h += 12; if(mod === 'AM' && h === 12) h = 0; const d = new Date(iso + 'T00:00:00'); d.setHours(h, m, 0, 0); return d; };
         const to24 = (t12) => { const [time, mod] = t12.split(' '); let [h, m] = time.split(':').map(Number); if(mod === 'PM' && h < 12) h += 12; if(mod === 'AM' && h === 12) h = 0; return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`; };
         const to12 = (t24) => { let [h, m] = t24.split(':').map(Number); let mod = 'AM'; if(h >= 12) { mod = 'PM'; if(h > 12) h -= 12; } if(h === 0) h = 12; return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} ${mod}`; };
+        function calculateStreak() { let streak = 0, date = new Date(); while(true) { const iso = new Intl.DateTimeFormat('sv-SE').format(date); const day = state.history[iso]; if(day && Object.values(day).some(v => v.done)) { streak++; date.setDate(date.getDate()-1); } else break; } return streak; }
+        function updateStreakDisplay() { const s = calculateStreak(); const b = document.getElementById('streak-indicator'); if(s > 0) { b.innerText = `Racha: ${s} 🔥`; b.classList.remove('hidden'); } else b.classList.add('hidden'); }
+        function renderStats(s, count, total) { const grid = document.getElementById('stats-grid'); grid.innerHTML = ''; [{id:'musica',l:'Música',c:'bg-purple-500'},{id:'deporte',l:'Deporte',c:'bg-orange-500'},{id:'academia',l:'Estudios',c:'bg-indigo-500'},{id:'salud',l:'Salud',c:'bg-red-500'}].forEach(type => { const p = s.total[type.id] > 0 ? Math.round((s[type.id] / s.total[type.id]) * 100) : 0; grid.innerHTML += `<div class="bg-slate-50 p-4 rounded-3xl border border-slate-100"><div class="flex justify-between mb-2 font-black text-[9px] text-slate-400"><span>${type.l}</span><span>${p}%</span></div><div class="h-1.5 bg-slate-200 rounded-full overflow-hidden shadow-inner"><div class="${type.c} h-full transition-all duration-1000" style="width: ${p}%"></div></div></div>`; }); document.getElementById('total-perc').innerText = `${Math.round((count/total)*100 || 0)}%`; }
+        
+        function initCalendar() { 
+            const strip = document.getElementById('calendar-strip'); strip.innerHTML = ''; 
+            for (let i = 0; i <= 14; i++) { 
+                const d = new Date(); d.setDate(d.getDate() + i); const iso = new Intl.DateTimeFormat('sv-SE').format(d); 
+                const day = document.createElement('div'); day.className = `calendar-day ${iso === state.selectedDate ? 'selected' : 'text-white opacity-40'}`; 
+                day.onclick = () => { state.selectedDate = iso; initCalendar(); render(); }; 
+                day.innerHTML = `<span class="text-[8px] font-black uppercase tracking-tighter">${new Intl.DateTimeFormat('es-ES', { weekday: 'short' }).format(d)}</span><span class="text-xl font-black mt-1 leading-none">${d.getDate()}</span>`; 
+                strip.appendChild(day); 
+            } 
+            strip.scrollLeft = 0;
+        }
 
-        function renderStats(s, count, total) {
-            const grid = document.getElementById('stats-grid'); grid.innerHTML = '';
-            [{id:'musica',l:'Música',c:'bg-purple-500'},{id:'deporte',l:'Deporte',c:'bg-orange-500'},{id:'academia',l:'Estudios',c:'bg-indigo-500'},{id:'salud',l:'Salud',c:'bg-red-500'}].forEach(type => {
-                const p = s.total[type.id] > 0 ? Math.round((s[type.id] / s.total[type.id]) * 100) : 0;
-                grid.innerHTML += `<div class="bg-slate-50 p-4 rounded-3xl border border-slate-100"><div class="flex justify-between mb-2 font-black uppercase text-[9px] text-slate-400"><span>${type.l}</span><span>${p}%</span></div><div class="h-1.5 bg-slate-200 rounded-full overflow-hidden shadow-inner"><div class="${type.c} h-full transition-all duration-1000" style="width: ${p}%"></div></div></div>`;
-            });
-            document.getElementById('total-perc').innerText = `${Math.round((count/total)*100 || 0)}%`;
-        }
-        function initCalendar() {
-            const strip = document.getElementById('calendar-strip'); strip.innerHTML = '';
-            for (let i = -7; i <= 7; i++) {
-                const d = new Date(); d.setDate(d.getDate() + i); const iso = new Intl.DateTimeFormat('sv-SE').format(d);
-                const isS = iso === state.selectedDate; const day = document.createElement('div');
-                day.className = `calendar-day ${isS ? 'selected' : 'text-white opacity-40 hover:opacity-100'}`;
-                day.onclick = () => { state.selectedDate = iso; initCalendar(); render(); };
-                day.innerHTML = `<span class="text-[8px] font-black uppercase tracking-tighter">${new Intl.DateTimeFormat('es-ES', { weekday: 'short' }).format(d)}</span><span class="text-xl font-black mt-1 leading-none">${d.getDate()}</span>`;
-                strip.appendChild(day); if (isS) day.scrollIntoView({ behavior: 'smooth', inline: 'center' });
-            }
-        }
         function renderTech() {
             const t = [
-                { i: '🍅', n: 'Pomodoro (25/5)', p: 'Usa 25 min para tareas de colegio. Al sonar, descansa 5 min lejos de pantallas. Mantiene tu mente fresca para tu música.' },
-                { i: '👁️', n: 'Regla 20-20-20', p: 'Cada 20 min en pantalla, mira un punto a 6 metros por 20 segundos. Tus ojos deben sanar pronto.' },
-                { i: '🎻', n: 'Recuerdo Activo', p: 'En tu instrumento, toca de memoria antes de leer la partitura. Crearás conexiones 10 veces más rápidas.' },
-                { i: '🧩', n: 'Práctica Intercalada', p: 'No hagas una hora de Duolingo seguido. Alterna 15 min de idiomas y música. El cambio estimula tus neuronas.' },
-                { i: '🎓', n: 'Método Feynman', p: 'Explica lo aprendido a tus padres como si fueran niños de 5 años. Si puedes, ya dominas el tema.' }
+                { i: '🍅', n: 'Pomodoro (25/5)', p: 'Enfoca tu cerebro en bloques de 25 min para tareas de colegio. Al sonar, descansa 5 min lejos de pantallas. Evita que la mente se sature antes de tu práctica de música.' },
+                { i: '👁️', n: 'Regla 20-20-20', p: 'Vital para curar la conjuntivitis: Cada 20 min de uso de pantalla (Duolingo/Apps), mira un objeto a 6 metros por 20 segundos para relajar el nervio óptico.' },
+                { i: '🎻', n: 'Recuerdo Activo', p: 'En tu instrumento, toca una escala o pasaje de memoria antes de leer. Forzar el recuerdo crea conexiones neuronales 10 veces más rápidas.' },
+                { i: '🧩', n: 'Práctica Intercalada', p: 'No practiques lo mismo por una hora. Alterna 15 min de idiomas, 15 min de técnica y 15 min de teoría. El cambio constante estimula la inteligencia musical.' },
+                { i: '🎓', n: 'Método Feynman', p: 'Al terminar tus deberes, explica a tus padres lo que aprendiste hoy como si tuvieras 5 años. Si logras explicarlo de forma simple, es porque ya dominas el tema.' }
             ];
-            document.getElementById('tech-content').innerHTML = t.map(x => `<div class="flex gap-6 items-start">
-                <span class="text-4xl leading-none">${x.i}</span><div><h4 class="text-lg font-black text-indigo-900 uppercase mb-2 tracking-tighter">${x.n}</h4><p class="text-base text-slate-500 font-semibold leading-relaxed">${x.p}</p></div></div>`).join('');
+            document.getElementById('tech-content').innerHTML = t.map(x => `<div class="flex gap-4 items-start"><span class="text-3xl">${x.i}</span><div><h4 class="text-lg font-black text-indigo-900 uppercase mb-1 font-black">${x.n}</h4><p class="text-sm text-slate-500 font-semibold leading-relaxed">${x.p}</p></div></div>`).join('');
         }
+        window.requestNotify = () => { Notification.requestPermission().then(p => { if(p === 'granted') alert("Notificaciones activadas"); else alert("Asegúrate de usar HTTPS en GitHub para habilitar notificaciones."); }); };
         window.openTech = () => document.getElementById('tech-modal').classList.remove('hidden');
         window.closeTech = () => document.getElementById('tech-modal').classList.add('hidden');
-        window.toggleVacation = () => { state.isVacation = !state.isVacation; const b = document.getElementById('vacation-btn'); b.className = state.isVacation ? "px-5 py-2.5 bg-indigo-600 text-white text-[10px] font-black rounded-full uppercase shadow-lg shadow-indigo-100 border-transparent" : "px-5 py-2.5 bg-slate-200 text-slate-600 text-[10px] font-black rounded-full uppercase border-slate-300"; render(); };
+        window.toggleVacation = () => { state.isVacation = !state.isVacation; const b = document.getElementById('vacation-btn'); b.className = state.isVacation ? "px-5 py-2.5 bg-indigo-600 text-white text-[10px] font-black rounded-full uppercase" : "px-5 py-2.5 bg-slate-200 text-slate-600 text-[10px] font-black rounded-full uppercase"; render(); };
+        const todayISO = () => new Intl.DateTimeFormat('sv-SE').format(new Date());
 
         window.onload = init;
     </script>
