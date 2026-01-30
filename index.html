@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kairós 360 - Gestión Profesional</title>
+    <title>Kairós 360 - Dashboard de Alto Rendimiento</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -46,31 +46,22 @@
     <!-- MODAL TUTORIAL / REGISTRO NOMBRE -->
     <div id="tutorial-modal" class="fixed inset-0 z-[500] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white max-w-sm w-full rounded-[3rem] p-10 shadow-2xl text-center">
-            
             <div id="t-step-0" class="t-step">
-                <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center">
-                    <i class="fas fa-user-circle text-3xl"></i>
-                </div>
-                <h2 class="text-2xl font-black mb-4">¡BIENVENIDO!</h2>
+                <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center"><i class="fas fa-user-tag text-3xl"></i></div>
+                <h2 class="text-2xl font-black mb-4">¡HOLA!</h2>
                 <p class="text-slate-500 text-sm mb-6 leading-relaxed">Para una experiencia personal, ingresa tu nombre:</p>
                 <input type="text" id="user-name-init" class="styled-input text-center text-xl mb-8 border-indigo-100 font-black text-indigo-600" placeholder="Nombre...">
                 <button onclick="saveNameTutorial()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente</button>
             </div>
-
             <div id="t-step-1" class="t-step hidden">
-                <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center">
-                    <i class="fas fa-hand-sparkles text-3xl"></i>
-                </div>
-                <h2 class="text-2xl font-black mb-4">HOLA, <span class="display-name text-indigo-600"></span>!</h2>
+                <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center"><i class="fas fa-magic text-3xl"></i></div>
+                <h2 class="text-2xl font-black mb-4 uppercase">HOLA, <span class="display-name text-indigo-600"></span>!</h2>
                 <p class="text-slate-600 text-lg font-bold leading-relaxed mb-10 text-center">Configura <b>trabajo, deporte, medicinas, ocio</b> y más en el panel de control.</p>
                 <button onclick="nextTStep(2)" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente</button>
             </div>
-
             <div id="t-step-2" class="t-step hidden">
-                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center">
-                    <i class="fas fa-check-double text-3xl"></i>
-                </div>
-                <h2 class="text-2xl font-black mb-4 uppercase">CONTROL TOTAL</h2>
+                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center"><i class="fas fa-rocket text-3xl"></i></div>
+                <h2 class="text-2xl font-black mb-4 uppercase">EMPIEZA YA</h2>
                 <p class="text-slate-600 text-lg font-semibold leading-relaxed mb-10">Toca cada tarea al terminarla para ver tu progreso real. ¡A por ello!</p>
                 <button onclick="closeTutorial()" class="w-full bg-indigo-950 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl tracking-widest">¡Comenzar!</button>
             </div>
@@ -104,30 +95,29 @@
         <!-- Balance -->
         <section class="bg-white rounded-[3rem] p-8 shadow-sm border border-slate-100 text-slate-900">
             <div class="flex justify-between items-center mb-8">
-                <h2 class="text-sm font-black uppercase flex items-center gap-2"><i class="fas fa-chart-pie text-indigo-500"></i> Mi Esfuerzo</h2>
-                <div id="total-perc" class="text-[10px] font-black text-indigo-600 bg-indigo-50 px-4 py-1.5 rounded-full uppercase tracking-tighter">0%</div>
+                <h2 class="text-sm font-black uppercase flex items-center gap-2"><i class="fas fa-chart-pie text-indigo-500"></i> Mi Esfuerzo Real</h2>
+                <div id="total-perc" class="text-[10px] font-black text-indigo-600 bg-indigo-50 px-4 py-1.5 rounded-full uppercase">0%</div>
             </div>
             <div class="grid grid-cols-2 gap-5" id="stats-grid"></div>
         </section>
 
         <!-- Cronograma -->
-        <section class="space-y-4">
+        <section class="space-y-4 text-slate-900">
             <div class="flex justify-between items-center px-4">
-                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest italic tracking-[0.2em]">Misiones Actuales</h3>
-                <button onclick="toggleVacation()" id="vacation-btn" class="px-5 py-2.5 bg-slate-200 text-slate-600 text-[9px] font-black rounded-full uppercase flex items-center gap-2 border border-slate-300">Modo Vacaciones</button>
+                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Actividades</h3>
+                <button onclick="toggleVacation()" id="vacation-btn" class="px-5 py-2.5 bg-slate-200 text-slate-600 text-[9px] font-black rounded-full uppercase border border-slate-300">Modo Vacaciones</button>
             </div>
             <div id="task-list" class="space-y-4"></div>
         </section>
 
         <!-- Médico -->
         <section class="bg-slate-900 text-white p-8 rounded-[3.5rem] shadow-xl border border-white/5 relative overflow-hidden">
-            <h4 class="text-xs font-black uppercase tracking-widest mb-6 flex items-center gap-3"><i class="fas fa-heartbeat text-red-500"></i> Salud Visual</h4>
+            <h4 class="text-xs font-black uppercase tracking-widest mb-6 flex items-center gap-3"><i class="fas fa-capsules text-red-500"></i> Salud Visual</h4>
             <div id="medical-info" class="space-y-4"></div>
-            <p class="text-center mt-6 text-[9px] font-bold text-slate-500 uppercase tracking-widest border-t border-white/5 pt-4">Inicio: 30 Ene, 2026</p>
         </section>
 
-        <footer class="text-center py-10 opacity-50 border-t border-slate-100 mt-12">
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1">Desarrollado para</p>
+        <footer class="text-center py-10 opacity-60 border-t border-slate-100 mt-12">
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1 italic">Desarrollado por</p>
             <p class="text-xs font-black text-slate-900 uppercase">Juan Miguel Rios Redondo</p>
         </footer>
     </main>
@@ -148,25 +138,22 @@
                 </div>
             </div>
             <div id="modal-content" class="flex-1 overflow-y-auto px-8 pb-8 no-scrollbar"></div>
-            <div class="p-8 border-t border-slate-50"><button onclick="saveAndClose()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95 transition-all">Guardar Cambios</button></div>
+            <div class="p-8 border-t border-slate-50"><button onclick="saveAndClose()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Guardar Cambios</button></div>
         </div>
     </div>
 
-    <!-- ESTRATEGIAS -->
+    <!-- MODAL ESTRATEGIAS -->
     <div id="tech-modal" class="fixed inset-0 z-[450] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white w-full max-w-2xl rounded-[3.5rem] p-10 shadow-2xl max-h-[85vh] overflow-y-auto no-scrollbar text-center">
             <h3 class="text-xl font-black italic text-indigo-900 mb-10 uppercase tracking-tighter border-b-2 border-indigo-50 pb-6">Estrategias de Éxito</h3>
             <div class="space-y-10 text-left" id="tech-content"></div>
-            <button onclick="closeTech()" class="w-full mt-10 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs shadow-xl">Cerrar</button>
+            <button onclick="closeTech()" class="w-full mt-10 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs shadow-xl">Entendido</button>
         </div>
     </div>
 
     <script>
-        // --- DATA INICIAL (ESTADO POR DEFECTO) ---
         const DEFAULT_CONFIG = {
-            userName: '',
-            treatmentStart: '2026-01-30',
-            vacationHidden: ['academia'],
+            userName: '', treatmentStart: '2026-01-30', vacationHidden: ['academia'],
             template: {
                 entreno: [
                     { id: 'h1', start: '06:30 AM', end: '06:45 AM', task: 'Gotas Mañana', type: 'salud' },
@@ -175,10 +162,10 @@
                     { id: 'h4', start: '08:15 AM', end: '11:00 AM', task: 'Entrenamiento', type: 'deporte' },
                     { id: 'h5', start: '11:00 AM', end: '12:00 PM', task: 'Tareas Colegio', type: 'academia' },
                     { id: 'h6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Col)', type: 'salud' },
-                    { id: 'h7', start: '12:30 PM', end: '06:00 PM', task: 'Colegio', type: 'academia' },
+                    { id: 'h7', start: '12:30 PM', end: '18:00 PM', task: 'Colegio', type: 'academia' },
                     { id: 'h8', start: '08:00 PM', end: '08:15 PM', task: 'Olopatadina (8 PM)', type: 'salud' },
                     { id: 'h9', start: '08:30 PM', end: '09:30 PM', task: 'Apps Música / Duolingo', type: 'musica' },
-                    { id: 'h10', start: '09:45 PM', end: '10:00 PM', task: 'Fluoro Final + Sueño', type: 'salud' }
+                    { id: 'h10', start: '09:45 PM', end: '10:00 PM', task: 'Fluoro Final', type: 'salud' }
                 ],
                 estudio: [
                     { id: 's1', start: '06:30 AM', end: '06:45 AM', task: 'Gotas Mañana', type: 'salud' },
@@ -187,10 +174,10 @@
                     { id: 's4', start: '08:15 AM', end: '10:00 AM', task: 'Instrumento', type: 'musica' },
                     { id: 's5', start: '10:00 AM', end: '11:30 AM', task: 'Apps Música', type: 'musica' },
                     { id: 's6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Col)', type: 'salud' },
-                    { id: 's7', start: '12:30 PM', end: '06:00 PM', task: 'Colegio', type: 'academia' },
+                    { id: 's7', start: '12:30 PM', end: '18:00 PM', task: 'Colegio', type: 'academia' },
                     { id: 's8', start: '08:00 PM', end: '08:15 PM', task: 'Olopatadina (8 PM)', type: 'salud' },
                     { id: 's9', start: '08:30 PM', end: '09:45 PM', task: 'Tareas / Repaso', type: 'academia' },
-                    { id: 's10', start: '09:45 PM', end: '10:00 PM', task: 'Fluoro Final + Sueño', type: 'salud' }
+                    { id: 's10', start: '09:45 PM', end: '10:00 PM', task: 'Fluoro Final', type: 'salud' }
                 ],
                 finde: [
                     { id: 'f1', start: '08:00 AM', end: '08:15 AM', task: 'Olopatadina (1)', type: 'salud' },
@@ -202,8 +189,8 @@
                 ]
             },
             treatments: [
-                { id: 'tr1', name: 'Fluorometolona 0.1%', start: '2026-01-30', duration: 10, unit: 'dias', doseFreq: 'Cada 8h (Sin colegio)' },
-                { id: 'tr2', name: 'Olopatadina 0.2%', start: '2026-01-30', duration: 2, unit: 'meses', doseFreq: 'Cada 12h (8 AM y 8 PM)' }
+                { id: 'tr1', name: 'Fluorometolona 0.1%', start: '2026-01-30', duration: 10, unit: 'dias', doseFreq: 'Cada 8h' },
+                { id: 'tr2', name: 'Olopatadina 0.2%', start: '2026-01-30', duration: 2, unit: 'meses', doseFreq: '8:00 AM y 8:00 PM' }
             ]
         };
 
@@ -213,24 +200,14 @@
             config: JSON.parse(JSON.stringify(DEFAULT_CONFIG))
         };
 
-        // --- SISTEMA DE PERSISTENCIA ---
-        function saveLocal() { 
-            localStorage.setItem('kairos_vfinal_stable_github', JSON.stringify(state.config)); 
-            localStorage.setItem('kairos_history_github', JSON.stringify(state.history));
-        }
-
-        function loadLocal() {
-            const c = localStorage.getItem('kairos_vfinal_stable_github');
-            if(c) { state.config = JSON.parse(c); updateNameDisplays(); } else { openTutorial(true); }
-            const h = localStorage.getItem('kairos_history_github');
-            if(h) state.history = JSON.parse(h);
-        }
-
         function init() {
-            loadLocal(); initCalendar(); renderTech(); updateLive(); setInterval(updateLive, 30000);
+            const saved = localStorage.getItem('kairos_v5_final');
+            if(saved) { state.config = JSON.parse(saved); updateNameDisplays(); } else { openTutorial(true); }
+            const savedHist = localStorage.getItem('kairos_hist_v5');
+            if(savedHist) state.history = JSON.parse(savedHist);
+            initCalendar(); renderTech(); updateLive(); setInterval(updateLive, 30000);
         }
 
-        // --- RENDERIZADO ---
         function render() {
             const list = document.getElementById('task-list');
             const medical = document.getElementById('medical-info');
@@ -272,9 +249,9 @@
                 const col = { salud: 'bg-red-500', musica: 'bg-purple-500', deporte: 'bg-orange-500', academia: 'bg-indigo-500', ocio: 'bg-emerald-500' };
                 list.innerHTML += `<div onclick="toggleTask('${t.id}')" class="flex items-stretch bg-white rounded-[2.5rem] shadow-sm border-2 transition-all ${isD ? 'opacity-40 grayscale' : isNow ? 'active-mission-highlight' : 'border-white'}">
                     <div class="w-2.5 ${col[t.type]} rounded-l-[2.5rem]"></div>
-                    <div class="flex-1 p-6 flex items-center gap-6 text-slate-900">
-                        <div class="min-w-[85px] text-center border-r border-slate-100 pr-3"><p class="text-[12px] font-black">${t.start}</p><p class="text-[9px] font-bold text-slate-300 mt-1 uppercase">${t.end}</p></div>
-                        <div class="flex-1 pr-2"><div class="flex items-center gap-2 mb-1"><h3 class="text-sm font-black uppercase">${t.task}</h3>${isNow ? '<div class="live-tag"><div class="live-dot"></div>VIVO</div>' : ''}</div>
+                    <div class="flex-1 p-6 flex items-center gap-6">
+                        <div class="min-w-[85px] text-center border-r border-slate-100 pr-3"><p class="text-[12px] font-black text-slate-800">${t.start}</p><p class="text-[9px] font-bold text-slate-300 mt-1 uppercase">${t.end}</p></div>
+                        <div class="flex-1 pr-2"><div class="flex items-center gap-2 mb-1"><h3 class="text-sm font-black uppercase text-slate-800">${t.task}</h3>${isNow ? '<div class="live-tag"><div class="live-dot"></div>VIVO</div>' : ''}</div>
                         <span class="text-[7px] font-black uppercase bg-slate-50 border px-2 py-0.5 rounded-full ${col[t.type].replace('bg-','text-')}">${t.type}</span></div>
                         <i class="fas ${isD ? 'fa-check-circle text-green-500' : 'fa-circle text-slate-100'} text-3xl"></i>
                     </div>
@@ -283,19 +260,18 @@
             medical.innerHTML = state.config.treatments.map(tr => {
                 const info = getT(tr.name);
                 return `<div class="p-4 bg-white/5 rounded-3xl border border-white/5 flex justify-between items-center">
-                    <div><p class="font-black ${info.active ? 'text-red-400' : 'text-slate-500'} uppercase text-[11px]">${tr.name}</p><p class="opacity-60 text-[10px] uppercase tracking-widest font-bold">${tr.doseFreq}</p></div>
+                    <div><p class="font-black ${info.active ? 'text-red-400' : 'text-slate-500'} uppercase text-[11px]">${tr.name}</p><p class="opacity-60 text-[10px] uppercase font-bold tracking-widest">${tr.doseFreq}</p></div>
                     <span class="text-[10px] font-black bg-white/10 px-3 py-1 rounded-lg">${info.active ? 'Día '+info.day+'/'+info.limit : 'FIN'}</span>
                 </div>`;
             }).join('');
             renderStats(s, dc, routine.length);
         }
 
-        // --- CONTROL PANEL TABS ---
         function renderTab() {
             const cont = document.getElementById('modal-content'); cont.innerHTML = '';
             if(state.tab === 'perfil') {
                 cont.innerHTML = `<div class="p-8 bg-slate-50 rounded-[2.5rem] space-y-4">
-                    <label class="input-label">Nombre del Usuario</label>
+                    <label class="input-label">Tu Nombre</label>
                     <input type="text" value="${state.config.userName}" onchange="state.config.userName=this.value; updateNameDisplays();" class="styled-input text-xl border-indigo-100 font-black">
                 </div>`;
             } else if(state.tab === 'horarios') {
@@ -305,34 +281,35 @@
                         <label class="input-label">Actividad</label><input type="text" value="${t.task}" onchange="state.config.template['${state.dayType}'][${i}].task=this.value" class="styled-input mb-4">
                         <div class="flex gap-4"><div class="flex-1 text-center"><label class="input-label">Inicio</label><input type="time" value="${to24(t.start)}" onchange="state.config.template['${state.dayType}'][${i}].start=to12(this.value)" class="styled-input"></div>
                         <div class="flex-1 text-center"><label class="input-label">Fin</label><input type="time" value="${to24(t.end)}" onchange="state.config.template['${state.dayType}'][${i}].end=to12(this.value)" class="styled-input"></div></div>
-                        <div class="mt-4"><label class="input-label">Tipo</label><select onchange="state.config.template['${state.dayType}'][${i}].type=this.value" class="styled-input text-xs uppercase">${['academia','musica','deporte','salud','ocio'].map(cat => `<option value="${cat}" ${t.type===cat?'selected':''}>${cat}</option>`).join('')}</select></div>
+                        <div class="mt-4"><label class="input-label">Categoría</label><select onchange="state.config.template['${state.dayType}'][${i}].type=this.value" class="styled-input text-xs font-black uppercase">
+                            ${['academia','musica','deporte','salud','ocio'].map(cat => `<option value="${cat}" ${t.type===cat?'selected':''}>${cat}</option>`).join('')}
+                        </select></div>
                     </div>`;
                 });
-                cont.innerHTML += `<button onclick="addTask()" class="w-full bg-slate-50 text-slate-500 py-4 rounded-3xl border-2 border-dashed border-slate-200 font-black uppercase text-[10px]"><i class="fas fa-plus mr-2"></i> Añadir Tarea</button>`;
-            } else if(state.tab === 'medicina') {
+                cont.innerHTML += `<button onclick="addTask()" class="w-full bg-slate-50 text-slate-500 py-4 rounded-3xl border-2 border-dashed border-slate-200 font-black uppercase text-[10px]"><i class="fas fa-plus mr-2"></i> Añadir Actividad</button>`;
+            } else if(state.tab === 'medico') {
                 state.config.treatments.forEach((tr, i) => {
                     cont.innerHTML += `<div class="config-block shadow-sm"><button onclick="delMed(${i})" class="absolute top-4 right-4 text-slate-200 hover:text-red-500"><i class="fas fa-trash-alt"></i></button>
                         <div><label class="input-label text-red-500">Medicina</label><input type="text" value="${tr.name}" onchange="state.config.treatments[${i}].name=this.value" class="styled-input mb-4"></div>
-                        <div class="flex gap-3 mb-4"><div class="flex-1"><label class="input-label">Inicio</label><input type="date" value="${tr.start}" onchange="state.config.treatments[${i}].start=this.value" class="styled-input text-xs"></div>
-                        <div class="flex-1"><label class="input-label">Cantidad</label><div class="flex gap-1"><input type="number" value="${tr.duration}" onchange="state.config.treatments[${i}].duration=this.value" class="w-12 styled-input p-2 text-center font-bold">
+                        <div class="flex gap-3 mb-4"><div class="flex-1"><label class="input-label">Inicio</label><input type="date" value="${tr.start}" onchange="state.config.treatments[${i}].start=this.value" class="styled-input text-xs font-bold"></div>
+                        <div class="flex-1"><label class="input-label">Duración</label><div class="flex gap-1"><input type="number" value="${tr.duration}" onchange="state.config.treatments[${i}].duration=this.value" class="w-12 styled-input p-2 text-center font-bold">
                         <select onchange="state.config.treatments[${i}].unit=this.value" class="styled-input p-1 text-[9px] uppercase font-black"><option value="dias" ${tr.unit==='dias'?'selected':''}>Días</option><option value="meses" ${tr.unit==='meses'?'selected':''}>Meses</option></select></div></div></div>
                         <label class="input-label">Pauta sugerida</label><input type="text" value="${tr.doseFreq}" onchange="state.config.treatments[${i}].doseFreq=this.value" class="styled-input">
                     </div>`;
                 });
                 cont.innerHTML += `<button onclick="addMed()" class="w-full bg-red-50 text-red-600 py-4 rounded-3xl border-2 border-dashed border-red-100 font-black uppercase text-[10px]"><i class="fas fa-plus mr-2"></i> Añadir Medicina</button>`;
             } else if(state.tab === 'data') {
-                cont.innerHTML = `<div class="p-8 bg-indigo-50 rounded-[3rem] space-y-6 text-center shadow-inner border border-indigo-100">
-                    <button onclick="exportJSON()" class="w-full bg-white text-indigo-600 p-6 rounded-[2rem] font-black text-xs uppercase shadow-md border border-indigo-100"><i class="fas fa-file-download"></i> Descargar archivo .JSON</button>
-                    <div class="pt-6 space-y-4"><p class="text-[10px] font-black text-indigo-400 uppercase opacity-60">Importar Backup:</p>
+                cont.innerHTML = `<div class="p-8 bg-indigo-50 rounded-[3rem] space-y-6 text-center border border-indigo-100 shadow-inner">
+                    <button onclick="exportJSON()" class="w-full bg-white text-indigo-600 p-6 rounded-[2rem] font-black text-xs uppercase shadow-md flex items-center justify-center gap-3 border border-indigo-100"><i class="fas fa-file-download"></i> Descargar archivo .JSON</button>
+                    <div class="pt-6 space-y-4 text-left"><p class="text-[10px] font-black text-indigo-400 uppercase opacity-60 text-center">Importar Backup:</p>
                         <input type="file" id="json-input" class="hidden" accept=".json" onchange="importJSON(event)">
-                        <button onclick="document.getElementById('json-input').click()" class="w-full bg-slate-900 text-white p-6 rounded-[2rem] font-black text-xs uppercase shadow-xl"><i class="fas fa-file-upload"></i> Seleccionar archivo</button>
+                        <button onclick="document.getElementById('json-input').click()" class="w-full bg-slate-900 text-white p-6 rounded-[2rem] font-black text-xs uppercase shadow-xl flex items-center justify-center gap-3"><i class="fas fa-file-upload"></i> Seleccionar archivo</button>
                     </div>
-                    <div class="pt-10 border-t border-indigo-200"><button onclick="resetApp()" class="w-full bg-red-100 text-red-600 p-5 rounded-2xl font-black text-[10px] uppercase border border-red-200">Reiniciar App (Borrar Todo)</button></div>
+                    <div class="pt-10 border-t border-indigo-200"><button onclick="resetApp()" class="w-full bg-red-100 text-red-600 p-5 rounded-2xl font-black text-[10px] uppercase border border-red-200">Limpiar Todo</button></div>
                 </div>`;
             }
         }
 
-        // --- HELPERS & ACTIONS ---
         window.saveNameTutorial = () => { const n = document.getElementById('user-name-init').value; if(!n) return; state.config.userName = n; updateNameDisplays(); nextTStep(1); };
         window.nextTStep = (s) => { document.querySelectorAll('.t-step').forEach(el => el.classList.add('hidden')); document.getElementById(`t-step-${s}`).classList.remove('hidden'); };
         window.openTutorial = (first = false) => { document.getElementById('tutorial-modal').classList.remove('hidden'); nextTStep(first ? 0 : 1); };
@@ -343,13 +320,13 @@
         window.saveAndClose = () => { saveLocal(); document.getElementById('config-modal').classList.add('hidden'); render(); };
         window.resetApp = () => { if(!confirm("¿Borrar todo?")) return; localStorage.clear(); location.reload(); };
         
-        window.addTask = () => { state.config.template[state.dayType].push({ id: 'task_'+Date.now(), start: '08:00 AM', end: '09:00 AM', task: 'Nueva Actividad', type: 'ocio' }); renderTab(); };
+        window.addTask = () => { state.config.template[state.dayType].push({ id: 'task_'+Date.now(), start: '08:00 AM', end: '09:00 AM', task: 'Nueva Tarea', type: 'ocio' }); renderTab(); };
         window.delTask = (d, i) => { state.config.template[d].splice(i, 1); renderTab(); };
         window.addMed = () => { state.config.treatments.push({ name: 'Medicina', start: state.selectedDate, duration: 7, unit: 'dias', doseFreq: 'Dosis' }); renderTab(); };
         window.delMed = (i) => { state.config.treatments.splice(i, 1); renderTab(); };
 
         window.exportJSON = () => { const b = new Blob([JSON.stringify(state.config, null, 2)], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `kairos360_backup.json`; a.click(); };
-        window.importJSON = (e) => { const r = new FileReader(); r.onload = (ev) => { try { state.config = JSON.parse(ev.target.result); updateNameDisplays(); alert("¡Importado!"); renderTab(); } catch(e) { alert("Archivo Inválido."); } }; r.readAsText(e.target.files[0]); };
+        window.importJSON = (e) => { const r = new FileReader(); r.onload = (ev) => { try { state.config = JSON.parse(ev.target.result); updateNameDisplays(); alert("¡Importado!"); renderTab(); } catch(e) { alert("Inválido."); } }; r.readAsText(e.target.files[0]); };
 
         window.toggleTask = (id) => { const h = state.history[state.selectedDate] || {}; h[id] = !h[id]; state.history[state.selectedDate] = h; saveLocal(); render(); };
         window.updateNameDisplays = () => { const n = state.config.userName || 'Usuario'; document.querySelectorAll('.display-name').forEach(el => el.innerText = n.toUpperCase()); };
@@ -364,7 +341,7 @@
                 const p = s.total[type.id] > 0 ? Math.round((s[type.id] / s.total[type.id]) * 100) : 0;
                 grid.innerHTML += `<div class="bg-slate-50 p-4 rounded-3xl border border-slate-100"><div class="flex justify-between mb-2 font-black uppercase text-[9px] text-slate-400"><span>${type.l}</span><span>${p}%</span></div><div class="h-1.5 bg-slate-200 rounded-full overflow-hidden shadow-inner"><div class="${type.c} h-full transition-all duration-1000" style="width: ${p}%"></div></div></div>`;
             });
-            document.getElementById('total-perc').innerText = `${Math.round((count/total)*100 || 0)}% COMPLETADO`;
+            document.getElementById('total-perc').innerText = `${Math.round((count/total)*100 || 0)}%`;
         }
         function initCalendar() {
             const strip = document.getElementById('calendar-strip'); strip.innerHTML = '';
@@ -379,18 +356,18 @@
         }
         function renderTech() {
             const t = [
-                { i: '🍅', n: 'Pomodoro (25/5)', p: 'Usa 25 min para tareas. Al sonar, descansa 5 min sin pantallas. Mantiene tu mente fresca para la música.' },
-                { i: '👁️', n: 'Regla 20-20-20', p: 'Fundamental: Cada 20 min en pantalla, mira un punto a 6 metros por 20 segundos para sanar tus ojos.' },
-                { i: '🎻', n: 'Recuerdo Activo', p: 'Toca de memoria antes de leer la partitura. Recordar a la fuerza crea conexiones 10 veces más rápidas.' },
-                { i: '🧩', n: 'Práctica Intercalada', p: 'Alterna: 15 min idiomas, 15 min ritmo, 15 min teoría. Estimula tu cerebro al máximo.' },
-                { i: '🎓', n: 'Método Feynman', p: 'Al terminar tareas, explica a tus padres lo aprendido como si fueran niños. ¡Dominio total!' }
+                { i: '🍅', n: 'Pomodoro (25/5)', p: 'Usa 25 min para tareas de colegio. Al sonar, descansa 5 min lejos de pantallas. Mantiene tu mente fresca para tu música.' },
+                { i: '👁️', n: 'Regla 20-20-20', p: 'Cada 20 min en pantalla, mira un punto a 6 metros por 20 segundos. Tus ojos deben sanar pronto.' },
+                { i: '🎻', n: 'Recuerdo Activo', p: 'En tu instrumento, toca de memoria antes de leer la partitura. Crearás conexiones 10 veces más rápidas.' },
+                { i: '🧩', n: 'Práctica Intercalada', p: 'No hagas una hora de Duolingo seguido. Alterna 15 min de idiomas y música. El cambio estimula tus neuronas.' },
+                { i: '🎓', n: 'Método Feynman', p: 'Explica lo aprendido a tus padres como si fueran niños de 5 años. Si puedes, ya dominas el tema.' }
             ];
             document.getElementById('tech-content').innerHTML = t.map(x => `<div class="flex gap-6 items-start">
                 <span class="text-4xl leading-none">${x.i}</span><div><h4 class="text-lg font-black text-indigo-900 uppercase mb-2 tracking-tighter">${x.n}</h4><p class="text-base text-slate-500 font-semibold leading-relaxed">${x.p}</p></div></div>`).join('');
         }
         window.openTech = () => document.getElementById('tech-modal').classList.remove('hidden');
         window.closeTech = () => document.getElementById('tech-modal').classList.add('hidden');
-        window.toggleVacation = () => { state.isVacation = !state.isVacation; const b = document.getElementById('vacation-btn'); b.className = state.isVacation ? "px-5 py-2.5 bg-indigo-600 text-white text-[10px] font-black rounded-full uppercase shadow-lg shadow-indigo-100" : "px-5 py-2.5 bg-slate-200 text-slate-600 text-[10px] font-black rounded-full uppercase border-slate-300"; render(); };
+        window.toggleVacation = () => { state.isVacation = !state.isVacation; const b = document.getElementById('vacation-btn'); b.className = state.isVacation ? "px-5 py-2.5 bg-indigo-600 text-white text-[10px] font-black rounded-full uppercase shadow-lg shadow-indigo-100 border-transparent" : "px-5 py-2.5 bg-slate-200 text-slate-600 text-[10px] font-black rounded-full uppercase border-slate-300"; render(); };
 
         window.onload = init;
     </script>
