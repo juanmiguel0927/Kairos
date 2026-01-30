@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kairós 360 - Dashboard Profesional</title>
+    <title>Kairós 360 - Gestión Profesional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -13,7 +13,6 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #f1f5f9;
             color: #0f172a;
-            -webkit-tap-highlight-color: transparent;
         }
 
         .glass-header { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); }
@@ -21,9 +20,9 @@
         
         .active-mission-highlight {
             border: 3px solid #6366f1 !important;
-            background: linear-gradient(90deg, #f5f7ff 0%, #ffffff 100%) !important;
+            background: linear-gradient(110deg, #f5f7ff 0%, #ffffff 100%) !important;
             transform: scale(1.02);
-            box-shadow: 0 20px 30px -10px rgba(99, 102, 241, 0.3) !important;
+            box-shadow: 0 15px 25px -5px rgba(99, 102, 241, 0.3) !important;
             z-index: 10;
             position: relative;
         }
@@ -38,10 +37,7 @@
             animation: pulse-ring 2s infinite;
         }
 
-        @keyframes pulse-ring {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.05); opacity: 0; }
-        }
+        @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.05); opacity: 0; } }
 
         .calendar-day {
             min-width: 60px;
@@ -62,16 +58,9 @@
             transform: translateY(-4px);
         }
 
-        .modal-overlay {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(12px);
-        }
-
-        .tab-btn-active { 
-            background-color: #4f46e5 !important; 
-            color: white !important; 
-            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
-        }
+        .modal-overlay { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); }
+        .step-card { background: #ffffff; color: #0f172a; }
+        .tab-btn-active { background-color: #4f46e5 !important; color: white !important; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2); }
 
         .config-block {
             background: #ffffff;
@@ -81,87 +70,56 @@
             margin-bottom: 1rem;
         }
 
-        .input-label {
-            font-size: 10px;
-            font-weight: 800;
-            color: #64748b;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            display: block;
-        }
+        .input-label { font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 6px; display: block; }
+        .styled-input { width: 100%; background: #f8fafc; border-radius: 0.75rem; padding: 0.75rem; font-size: 14px; font-weight: 700; border: 2px solid #f1f5f9; outline: none; }
 
-        .styled-input {
-            width: 100%;
-            background: #f8fafc;
-            border-radius: 0.75rem;
-            padding: 0.75rem;
-            font-size: 14px;
-            font-weight: 700;
-            border: 2px solid #f1f5f9;
-            outline: none;
-        }
-
-        .live-tag {
-            background: #6366f1;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 8px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
+        .live-tag { background: #6366f1; color: white; padding: 2px 8px; border-radius: 6px; font-size: 8px; font-weight: 800; display: flex; align-items: center; gap: 4px; }
         .live-dot { width: 6px; height: 6px; background: white; border-radius: 50%; animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
 <body class="pb-24">
 
-    <!-- MODAL TUTORIAL E INGRESO DE NOMBRE -->
+    <!-- MODAL TUTORIAL / REGISTRO INICIAL -->
     <div id="tutorial-modal" class="fixed inset-0 z-[500] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white max-w-sm w-full rounded-[3rem] p-10 shadow-2xl text-center">
             
-            <!-- Paso 0: Nombre -->
             <div id="t-step-0" class="t-step">
                 <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center">
                     <i class="fas fa-user-edit text-3xl"></i>
                 </div>
-                <h2 class="text-2xl font-black mb-4">¿QUIÉN ERES?</h2>
-                <p class="text-slate-500 text-sm mb-6">Ingresa tu nombre para personalizar tu tablero:</p>
-                <input type="text" id="name-input-init" class="styled-input text-center text-xl mb-8 border-indigo-100" placeholder="Tu nombre aquí...">
+                <h2 class="text-2xl font-black mb-4 uppercase">¿Quién eres?</h2>
+                <p class="text-slate-500 text-sm mb-6 leading-relaxed">Para comenzar tu nueva organización, ingresa tu nombre aquí:</p>
+                <input type="text" id="name-input-init" class="styled-input text-center text-xl mb-8 border-indigo-100 font-black text-indigo-600" placeholder="Nombre...">
                 <button onclick="saveNameTutorial()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente</button>
             </div>
 
-            <!-- Paso 1: Explicación Uso -->
             <div id="t-step-1" class="t-step hidden">
                 <div class="w-20 h-20 bg-green-100 text-green-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center">
                     <i class="fas fa-check-circle text-3xl"></i>
                 </div>
                 <h2 class="text-2xl font-black mb-4">HOLA, <span class="user-name-display text-indigo-600"></span>!</h2>
-                <p class="text-slate-600 text-lg font-semibold leading-relaxed mb-10">Toca tus tareas al terminarlas para ver tu progreso. La app resalta automáticamente lo que debes hacer ahora.</p>
+                <p class="text-slate-600 text-lg font-semibold leading-relaxed mb-10 text-center">Toca tus tareas al terminarlas. La app resaltará lo que debes hacer ahora.</p>
                 <button onclick="nextTStep(2)" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente</button>
             </div>
 
-            <!-- Paso 2: Personalización -->
             <div id="t-step-2" class="t-step hidden">
                 <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center">
-                    <i class="fas fa-tools text-3xl"></i>
+                    <i class="fas fa-sliders-h text-3xl"></i>
                 </div>
-                <h2 class="text-2xl font-black mb-4 uppercase">CONFIGURA TODO</h2>
-                <p class="text-slate-600 text-lg font-semibold leading-relaxed mb-10">Configura <b>trabajo, deporte, medicinas, ocio</b> y más en el panel de control superior.</p>
-                <button onclick="closeTutorial()" class="w-full bg-indigo-950 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl tracking-widest">¡Comenzar Misión!</button>
+                <h2 class="text-2xl font-black mb-4">PERSONALIZA</h2>
+                <p class="text-slate-600 text-lg font-semibold leading-relaxed mb-10 text-center">Configura <b>trabajo, deporte, medicinas, ocio</b> y más en el panel superior.</p>
+                <button onclick="closeTutorial()" class="w-full bg-indigo-950 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">¡A Ganar!</button>
             </div>
         </div>
     </div>
 
-    <!-- Header Principal -->
+    <!-- Header -->
     <header class="glass-header text-white p-7 rounded-b-[4rem] shadow-2xl sticky top-0 z-50">
         <div class="flex justify-between items-start mb-6">
             <div>
                 <h1 class="text-2xl font-black italic tracking-tighter uppercase leading-tight">KAIRÓS <span class="text-indigo-400">360</span></h1>
-                <p class="text-[9px] font-bold text-indigo-300 uppercase tracking-[0.15em] mt-1 opacity-90 leading-none">Domina tu momento, equilibra tu mundo</p>
+                <p class="text-[9px] font-bold text-indigo-300 uppercase tracking-[0.15em] mt-1 opacity-90">Domina tu momento, equilibra tu mundo</p>
             </div>
             <div class="flex gap-2">
                 <button onclick="openTutorial()" class="bg-white/10 p-3 rounded-2xl border border-white/5 shadow-sm"><i class="fas fa-question text-sm"></i></button>
@@ -184,126 +142,76 @@
     </header>
 
     <main class="p-6 space-y-8 max-w-xl mx-auto">
-        <!-- Barra de Esfuerzo -->
         <section class="bg-white rounded-[3rem] p-8 shadow-sm border border-slate-100">
             <div class="flex justify-between items-center mb-8">
-                <h2 class="text-sm font-black text-slate-800 uppercase flex items-center gap-2">
-                    <i class="fas fa-chart-pie text-indigo-500"></i> Mi Esfuerzo Real
-                </h2>
-                <div id="total-perc" class="text-[10px] font-black text-indigo-600 bg-indigo-50 px-4 py-1.5 rounded-full uppercase">0%</div>
+                <h2 class="text-sm font-black text-slate-800 uppercase flex items-center gap-2"><i class="fas fa-chart-line text-indigo-500"></i> Mi Esfuerzo</h2>
+                <div id="total-perc" class="text-[10px] font-black text-indigo-600 bg-indigo-50 px-4 py-1.5 rounded-full">0% LOGRADO</div>
             </div>
             <div class="grid grid-cols-2 gap-5" id="stats-grid"></div>
         </section>
 
-        <!-- Cronograma -->
         <section class="space-y-4">
             <div class="flex justify-between items-center px-4">
-                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Actividades del Día</h3>
-                <button onclick="toggleVacation()" id="vacation-btn" class="px-5 py-2.5 bg-slate-200 text-slate-600 text-[9px] font-black rounded-full uppercase flex items-center gap-2 border border-slate-300">
+                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Cronograma</h3>
+                <button onclick="toggleVacation()" id="vacation-btn" class="px-5 py-2.5 bg-slate-200 text-slate-600 text-[9px] font-black rounded-full uppercase flex items-center gap-2 border border-slate-300 transition-all">
                     <i class="fas fa-umbrella-beach"></i> Modo Vacaciones
                 </button>
             </div>
             <div id="task-list" class="space-y-4"></div>
         </section>
 
-        <!-- Médico -->
-        <section class="bg-slate-900 text-white p-8 rounded-[3.5rem] shadow-xl border border-white/5 relative overflow-hidden">
-            <h4 class="text-xs font-black uppercase tracking-widest mb-6 flex items-center gap-3">
-                <i class="fas fa-prescription-bottle-alt text-red-500"></i> Seguimiento Médico
-            </h4>
+        <section class="bg-slate-900 text-white p-8 rounded-[3.5rem] shadow-xl border border-white/5">
+            <h4 class="text-xs font-black uppercase tracking-widest mb-6 flex items-center gap-3"><i class="fas fa-heartbeat text-red-500"></i> Mi Salud Visual</h4>
             <div id="medical-info" class="space-y-4"></div>
-            <p class="text-center mt-6 text-[9px] font-bold text-slate-500 uppercase tracking-widest border-t border-white/5 pt-4">Inicio Tratamiento: 30 Ene, 2026</p>
         </section>
 
-        <!-- Créditos -->
-        <footer class="text-center pt-10 pb-12 border-t border-slate-200 mt-16 opacity-50">
+        <footer class="text-center py-10 opacity-50">
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Desarrollado para</p>
             <p class="text-xs font-black text-slate-900 uppercase tracking-widest">Juan Miguel Rios Redondo</p>
         </footer>
     </main>
 
-    <!-- Modal Configuración -->
+    <!-- Panel de Control -->
     <div id="config-modal" class="fixed inset-0 z-[400] modal-overlay hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-        <div class="bg-white w-full max-w-lg rounded-t-[3.5rem] sm:rounded-[3.5rem] shadow-2xl flex flex-col max-h-[92vh] overflow-hidden text-slate-900">
+        <div class="bg-white w-full max-w-lg rounded-t-[3.5rem] sm:rounded-[3.5rem] shadow-2xl flex flex-col max-h-[92vh] overflow-hidden">
             <div class="p-8 pb-4">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-black italic tracking-tighter uppercase">Panel Pro</h3>
+                <div class="flex justify-between items-center mb-6 text-slate-900">
+                    <h3 class="text-2xl font-black italic tracking-tighter uppercase">Configurar</h3>
                     <button onclick="closeConfig()"><i class="fas fa-times-circle text-slate-300 text-3xl"></i></button>
                 </div>
                 <div class="flex gap-1 bg-slate-100 p-1.5 rounded-2xl border border-slate-200 overflow-x-auto no-scrollbar">
                     <button onclick="setTab('perfil')" id="tab-perfil" class="flex-1 py-3 text-[10px] font-black rounded-xl px-3 whitespace-nowrap">Perfil</button>
                     <button onclick="setTab('editor')" id="tab-editor" class="flex-1 py-3 text-[10px] font-black rounded-xl px-3 whitespace-nowrap">Horarios</button>
                     <button onclick="setTab('medicina')" id="tab-medicina" class="flex-1 py-3 text-[10px] font-black rounded-xl px-3 whitespace-nowrap">Médico</button>
-                    <button onclick="setTab('vacaciones')" id="tab-vacaciones" class="flex-1 py-3 text-[10px] font-black rounded-xl px-3 whitespace-nowrap">Filtro</button>
                     <button onclick="setTab('data')" id="tab-data" class="flex-1 py-3 text-[10px] font-black rounded-xl px-3 whitespace-nowrap">Datos</button>
                 </div>
             </div>
-            <div id="modal-content" class="flex-1 overflow-y-auto px-8 pb-8 no-scrollbar"></div>
-            <div class="p-8 border-t border-slate-50"><button onclick="saveChanges()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95 transition-all">Guardar Cambios</button></div>
+            <div id="modal-content" class="flex-1 overflow-y-auto px-8 pb-8 no-scrollbar text-slate-900"></div>
+            <div class="p-8 border-t border-slate-50"><button onclick="saveChanges()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95 transition-all">Guardar Todo</button></div>
         </div>
     </div>
 
-    <!-- Modal Técnicas Pro -->
+    <!-- Estrategias -->
     <div id="tech-modal" class="fixed inset-0 z-[450] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white w-full max-w-2xl rounded-[3.5rem] p-10 shadow-2xl max-h-[85vh] overflow-y-auto no-scrollbar">
-            <h3 class="text-2xl font-black italic text-indigo-900 mb-10 text-center uppercase tracking-tighter border-b-2 border-indigo-50 pb-6">Estrategias de Alto Rendimiento</h3>
+            <h3 class="text-2xl font-black italic text-indigo-900 mb-10 text-center uppercase tracking-tighter border-b-2 border-indigo-50 pb-6">Estrategias Pro</h3>
             <div class="space-y-10" id="tech-content"></div>
-            <button onclick="closeTech()" class="w-full mt-10 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs shadow-xl">Volver al Dashboard</button>
+            <button onclick="closeTech()" class="w-full mt-10 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs shadow-xl">Regresar</button>
         </div>
     </div>
 
-    <!-- SCRIPTS CORE (Compatibilidad Máxima) -->
     <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
 
     <script>
-        // --- ESTADO INICIAL ---
+        // --- DATA ---
         let state = {
             userName: '', selectedDate: new Intl.DateTimeFormat('sv-SE').format(new Date()),
             isVacation: false, history: {}, tab: 'perfil',
             config: {
-                userName: '',
-                treatmentStart: '2026-01-30',
-                vacationHidden: ['academia'],
-                template: {
-                    entreno: [
-                        { id: 'h1', start: '06:30 AM', end: '06:45 AM', task: 'Gotas Mañana', type: 'salud' },
-                        { id: 'h2', start: '07:00 AM', end: '08:00 AM', task: 'Instrumento', type: 'musica' },
-                        { id: 'h3', start: '08:00 AM', end: '08:15 AM', task: 'Olopatadina (8 AM)', type: 'salud' },
-                        { id: 'h4', start: '08:15 AM', end: '11:00 AM', task: 'Entrenamiento', type: 'deporte' },
-                        { id: 'h5', start: '11:00 AM', end: '12:00 PM', task: 'Tareas Colegio', type: 'academia' },
-                        { id: 'h6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Entrada)', type: 'salud' },
-                        { id: 'h7', start: '12:30 PM', end: '06:00 PM', task: 'Colegio', type: 'academia' },
-                        { id: 'h8', start: '08:00 PM', end: '08:15 PM', task: 'Olopatadina (8 PM)', type: 'salud' },
-                        { id: 'h9', start: '08:30 PM', end: '09:45 PM', task: 'Música / Idiomas / Duolingo', type: 'musica' },
-                        { id: 'h10', start: '09:45 PM', end: '10:00 PM', task: 'Fluoro Final + Sueño', type: 'salud' }
-                    ],
-                    estudio: [
-                        { id: 's1', start: '06:30 AM', end: '06:45 AM', task: 'Gotas Mañana', type: 'salud' },
-                        { id: 's2', start: '07:00 AM', end: '08:15 AM', task: 'Tareas Colegio', type: 'academia' },
-                        { id: 's3', start: '08:15 AM', end: '08:30 AM', task: 'Olopatadina (1)', type: 'salud' },
-                        { id: 's4', start: '08:30 AM', end: '10:00 AM', task: 'Instrumento', type: 'musica' },
-                        { id: 's5', start: '10:00 AM', end: '11:30 AM', task: 'Apps Música / Duolingo', type: 'musica' },
-                        { id: 's6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona 2', type: 'salud' },
-                        { id: 's7', start: '12:30 PM', end: '06:00 PM', task: 'Colegio', type: 'academia' },
-                        { id: 's8', start: '08:00 PM', end: '08:15 PM', task: 'Olopatadina (2)', type: 'salud' },
-                        { id: 's9', start: '08:30 PM', end: '09:45 PM', task: 'Tareas / Repaso', type: 'academia' },
-                        { id: 's10', start: '10:00 PM', end: '10:15 PM', task: 'Fluoro Final', type: 'salud' }
-                    ],
-                    finde: [
-                        { id: 'f1', start: '08:00 AM', end: '08:15 AM', task: 'Olopatadina 1', type: 'salud' },
-                        { id: 'f2', start: '09:30 AM', end: '11:00 AM', task: 'Instrumento Libre', type: 'musica' },
-                        { id: 'f3', start: '11:00 AM', end: '01:00 PM', task: 'Ocio / Tiempo Libre', type: 'ocio' },
-                        { id: 'f4', start: '04:00 PM', end: '04:15 PM', task: 'Fluorometolona Extra', type: 'salud' },
-                        { id: 'f5', start: '08:00 PM', end: '08:15 PM', task: 'Olopatadina 2', type: 'salud' },
-                        { id: 'f6', start: '10:00 PM', end: '10:15 PM', task: 'Fluoro Final', type: 'salud' }
-                    ]
-                },
-                treatments: [
-                    { id: 'tr1', name: 'Fluorometolona 0.1%', start: '2026-01-30', duration: 10, unit: 'dias', doseFreq: 'Cada 8h (Sin colegio)' },
-                    { id: 'tr2', name: 'Olopatadina 0.2%', start: '2026-01-30', duration: 2, unit: 'meses', doseFreq: '8:00 AM y 8:00 PM' }
-                ]
+                userName: '', treatmentStart: '2026-01-30', vacationHidden: ['academia'],
+                template: { entreno: [], estudio: [], finde: [] }, treatments: []
             }
         };
 
@@ -311,9 +219,8 @@
         firebase.initializeApp(configFB);
         const auth = firebase.auth();
         const db = firebase.firestore();
-        const appId = 'kairos-vfinal-stable-v5';
+        const appId = 'kairos-final-v30';
 
-        // --- INICIALIZACIÓN ---
         async function init() {
             auth.onAuthStateChanged(async (u) => {
                 if (u) {
@@ -322,6 +229,7 @@
                     if(snap.exists()) {
                         state.config = snap.data();
                         updateNameDisplays();
+                        render();
                     } else {
                         openTutorial(true);
                     }
@@ -329,48 +237,32 @@
                         s.forEach(doc => state.history[doc.id] = doc.data());
                         render();
                     });
-                } else {
-                    auth.signInAnonymously();
-                }
+                } else { auth.signInAnonymously(); }
             });
-            initCalendar();
-            renderTech();
-            updateLive();
-            setInterval(updateLive, 30000);
+            initCalendar(); renderTech(); updateLive(); setInterval(updateLive, 30000);
         }
 
-        function updateNameDisplays() {
-            const name = state.config.userName || 'Usuario';
-            document.querySelectorAll('.user-name-display').forEach(el => el.innerText = name.toUpperCase());
-        }
-
-        function updateLive() {
-            const n = new Date();
-            document.getElementById('live-clock').innerText = n.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
-            document.getElementById('live-date').innerText = n.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-            render();
-        }
-
+        // --- RENDER ---
         function render() {
             const list = document.getElementById('task-list');
             const medical = document.getElementById('medical-info');
             const now = new Date();
             const todayISO = new Intl.DateTimeFormat('sv-SE').format(now);
-            const dateObj = new Date(state.selectedDate + 'T12:00:00');
-            const dayName = new Intl.DateTimeFormat('es-ES', { weekday: 'long' }).format(dateObj).toLowerCase();
+            const dObj = new Date(state.selectedDate + 'T12:00:00');
+            const dayName = new Intl.DateTimeFormat('es-ES', { weekday: 'long' }).format(dObj).toLowerCase();
             
-            const getT = (filter) => {
-                const tr = state.config.treatments.find(x => x.name.toLowerCase().includes(filter.toLowerCase()));
-                if (!tr) return { active: true };
+            const getT = (f) => {
+                const tr = state.config.treatments.find(x => x.name.toLowerCase().includes(f.toLowerCase()));
+                if (!tr) return { active: false };
                 const s = new Date(tr.start + 'T00:00:00');
                 const sel = new Date(state.selectedDate + 'T00:00:00');
                 const d = Math.floor((sel - s) / 86400000) + 1;
-                const lim = tr.unit === 'dias' ? parseInt(tr.duration) : parseInt(tr.duration) * 30;
-                return { active: d >= 1 && d <= lim, day: d, limit: lim };
+                const l = tr.unit === 'dias' ? parseInt(tr.duration) : parseInt(tr.duration) * 30;
+                return { active: d >= 1 && d <= l, day: d, limit: l, freq: tr.doseFreq };
             };
 
             const fS = getT('Fluoro'); const oS = getT('Olopa');
-            let routine = ['sábado', 'domingo'].includes(dayName) ? [...state.config.template.finde] : 
+            let routine = dayName.includes('sáb') || dayName.includes('dom') ? [...state.config.template.finde] : 
                           (['lunes', 'miércoles', 'viernes'].includes(dayName) ? [...state.config.template.entreno] : [...state.config.template.estudio]);
 
             if (state.isVacation) routine = routine.filter(t => !state.config.vacationHidden.includes(t.type));
@@ -391,16 +283,16 @@
                 if(s.total[t.type] !== undefined) { s.total[t.type] += dur; if(isD) { s[t.type] += dur; dc++; } }
 
                 const col = { salud: 'bg-red-500', musica: 'bg-purple-500', deporte: 'bg-orange-500', academia: 'bg-indigo-500', ocio: 'bg-emerald-500' };
-                list.innerHTML += `<div onclick="toggleTask('${t.id}')" class="flex items-stretch bg-white rounded-[2.5rem] shadow-sm border-2 transition-all ${isD ? 'opacity-40 grayscale scale-95 border-transparent' : isNow ? 'active-mission-highlight' : 'border-white'}">
+                list.innerHTML += `<div onclick="toggleTask('${t.id}')" class="flex items-stretch bg-white rounded-[2.5rem] shadow-sm border-2 transition-all ${isD ? 'opacity-40 grayscale' : isNow ? 'active-mission-highlight' : 'border-white'}">
                     <div class="w-2 ${col[t.type]} rounded-l-[2.5rem]"></div>
                     <div class="flex-1 p-6 flex items-center gap-6">
-                        <div class="min-w-[85px] text-center border-r border-slate-100 pr-3">
-                            <p class="text-[12px] font-black text-slate-800 leading-none">${t.start}</p>
+                        <div class="min-w-[85px] text-center border-r border-slate-50 pr-4">
+                            <p class="text-[11px] font-black text-slate-800 leading-none">${t.start}</p>
                             <p class="text-[9px] font-bold text-slate-300 mt-2 uppercase">${t.end}</p>
                         </div>
                         <div class="flex-1">
                             <div class="flex items-center gap-2 mb-1">
-                                <h3 class="text-sm font-black uppercase text-slate-800 tracking-tight leading-none">${t.task}</h3>
+                                <h3 class="text-sm font-black uppercase text-slate-800 tracking-tight">${t.task}</h3>
                                 ${isNow ? '<div class="live-tag"><div class="live-dot"></div>VIVO</div>' : ''}
                             </div>
                             <span class="text-[7px] font-black uppercase bg-slate-50 border px-2 py-0.5 rounded-full ${col[t.type].replace('bg-','text-')}">${t.type}</span>
@@ -411,30 +303,15 @@
             });
             medical.innerHTML = state.config.treatments.map(tr => {
                 const info = getT(tr.name);
-                return `<div class="p-5 bg-white/5 rounded-3xl border border-white/5 flex justify-between items-center">
+                return `<div class="p-4 bg-white/5 rounded-3xl border border-white/5 flex justify-between items-center">
                     <div><p class="font-black ${info.active ? 'text-red-400' : 'text-slate-500'} uppercase text-[11px]">${tr.name}</p><p class="opacity-60 text-[10px] uppercase font-bold tracking-widest">${tr.doseFreq}</p></div>
                     <span class="text-[10px] font-black bg-white/10 px-3 py-1 rounded-lg">${info.active ? 'Día '+info.day+'/'+info.limit : 'FIN'}</span>
                 </div>`;
-            }).join('');
+            }).join('') || '<p class="text-center text-slate-400 text-xs py-4 uppercase font-black">Sin tratamientos activos</p>';
             renderStats(s, dc, routine.length);
         }
 
-        function parseTime(t, iso) {
-            const [time, mod] = t.split(' '); let [h, m] = time.split(':').map(Number);
-            if(mod === 'PM' && h < 12) h += 12; if(mod === 'AM' && h === 12) h = 0;
-            const d = new Date(iso + 'T00:00:00'); d.setHours(h, m, 0, 0); return d;
-        }
-
-        function renderStats(s, count, total) {
-            const grid = document.getElementById('stats-grid'); grid.innerHTML = '';
-            [{id:'musica',l:'Música',c:'bg-purple-500'},{id:'deporte',l:'Deporte',c:'bg-orange-500'},{id:'academia',l:'Estudios',c:'bg-indigo-500'},{id:'salud',l:'Salud',c:'bg-red-500'}].forEach(type => {
-                const p = s.total[type.id] > 0 ? Math.round((s[type.id] / s.total[type.id]) * 100) : 0;
-                grid.innerHTML += `<div class="bg-slate-50 p-4 rounded-3xl border border-slate-100"><div class="flex justify-between mb-2"><span class="text-[9px] font-black uppercase text-slate-400">${type.l}</span><span class="text-[10px] font-black text-indigo-600">${p}%</span></div><div class="h-1.5 bg-slate-200 rounded-full overflow-hidden"><div class="${type.c} h-full transition-all duration-1000" style="width: ${p}%"></div></div></div>`;
-            });
-            document.getElementById('total-perc').innerText = `${Math.round((count/total)*100 || 0)}%`;
-        }
-
-        // --- ACCIONES ---
+        // --- ACTIONS ---
         window.saveNameTutorial = () => {
             const n = document.getElementById('name-input-init').value;
             if(!n) return;
@@ -462,9 +339,9 @@
         
         window.setTab = (t) => {
             state.tab = t;
-            ['perfil','editor','medicina','vacaciones','data'].forEach(x => {
+            ['perfil','editor','medicina','data'].forEach(x => {
                 const el = document.getElementById(`tab-${x}`);
-                el.className = `flex-1 py-3 text-[10px] font-black rounded-xl px-4 transition-all whitespace-nowrap ${t === x ? 'tab-btn-active' : 'text-slate-500'}`;
+                el.className = `flex-1 py-3 text-[10px] font-black rounded-xl uppercase px-4 whitespace-nowrap ${t === x ? 'tab-btn-active' : 'text-slate-500'}`;
             });
             renderTab();
         };
@@ -473,49 +350,50 @@
             const c = document.getElementById('modal-content'); c.innerHTML = '';
             if(state.tab === 'perfil') {
                 c.innerHTML = `<div class="p-8 bg-slate-50 rounded-[2.5rem] space-y-4">
-                    <label class="input-label">Tu Nombre Personal</label>
+                    <label class="input-label">Tu Nombre</label>
                     <input type="text" value="${state.config.userName}" onchange="state.config.userName=this.value; updateNameDisplays();" class="styled-input text-xl border-indigo-100">
-                    <p class="text-[10px] text-slate-400 font-bold italic text-center">Este nombre se usará en el visor principal y tutoriales.</p>
+                    <p class="text-[10px] text-slate-400 font-bold italic text-center">Aparecerá en el encabezado.</p>
                 </div>`;
             } else if(state.tab === 'editor') {
-                const dT = ['lunes', 'miércoles', 'viernes'].includes(new Intl.DateTimeFormat('es-ES', {weekday: 'long'}).format(new Date()).toLowerCase()) ? 'entreno' : 'estudio';
-                state.config.template[dT].forEach((t, i) => {
-                    c.innerHTML += `<div class="config-block shadow-sm">
-                        <label class="input-label">Nombre de Actividad</label><input type="text" value="${t.task}" onchange="state.config.template['${dT}'][${i}].task=this.value" class="styled-input mb-4">
-                        <div class="flex gap-4"><div class="flex-1"><label class="input-label text-center">Inicia</label><input type="text" value="${t.start}" onchange="state.config.template['${dT}'][${i}].start=this.value" class="styled-input text-center"></div><div class="flex-1"><label class="input-label text-center">Fin</label><input type="text" value="${t.end}" onchange="state.config.template['${dT}'][${i}].end=this.value" class="styled-input text-center"></div></div>
-                    </div>`;
+                c.innerHTML = `<p class="text-center text-[10px] font-black text-slate-400 uppercase mb-4 tracking-widest">Modifica tu rutina horaria:</p>`;
+                ['entreno','estudio','finde'].forEach(day => {
+                    c.innerHTML += `<div class="p-4 bg-indigo-50 rounded-2xl mb-4 font-black uppercase text-[10px] text-indigo-900">${day}</div>`;
+                    (state.config.template[day] || []).forEach((t, i) => {
+                        c.innerHTML += `<div class="config-block shadow-sm">
+                            <label class="input-label">Actividad</label><input type="text" value="${t.task}" onchange="state.config.template['${day}'][${i}].task=this.value" class="styled-input mb-4">
+                            <div class="flex gap-4"><div class="flex-1"><label class="input-label text-center">Inicia</label><input type="text" value="${t.start}" onchange="state.config.template['${day}'][${i}].start=this.value" class="styled-input text-center"></div><div class="flex-1"><label class="input-label text-center">Fin</label><input type="text" value="${t.end}" onchange="state.config.template['${day}'][${i}].end=this.value" class="styled-input text-center"></div></div>
+                        </div>`;
+                    });
                 });
             } else if(state.tab === 'medicina') {
                 state.config.treatments.forEach((tr, i) => {
-                    c.innerHTML += `<div class="config-block space-y-5">
-                        <div><label class="input-label text-red-400">Medicina</label><input type="text" value="${tr.name}" onchange="state.config.treatments[${i}].name=this.value" class="styled-input"></div>
-                        <div class="flex gap-4">
-                            <div class="flex-1"><label class="input-label">Inicia</label><input type="date" value="${tr.start}" onchange="state.config.treatments[${i}].start=this.value" class="styled-input p-2 text-xs"></div>
-                            <div class="flex-1"><label class="input-label">Duración</label>
-                                <div class="flex gap-1"><input type="number" value="${tr.duration}" onchange="state.config.treatments[${i}].duration=this.value" class="w-12 styled-input p-2 text-center font-bold">
-                                <select onchange="state.config.treatments[${i}].unit=this.value" class="styled-input p-1 text-[9px] uppercase font-black"><option value="dias" ${tr.unit==='dias'?'selected':''}>Días</option><option value="meses" ${tr.unit==='meses'?'selected':''}>Meses</option></select></div>
-                            </div>
-                        </div>
-                        <div><label class="input-label">Pauta Horaria</label><input type="text" value="${tr.doseFreq}" onchange="state.config.treatments[${i}].doseFreq=this.value" class="styled-input"></div>
+                    c.innerHTML += `<div class="config-block space-y-4 shadow-sm">
+                        <div><label class="input-label">Medicina</label><input type="text" value="${tr.name}" onchange="state.config.treatments[${i}].name=this.value" class="styled-input"></div>
+                        <div class="flex gap-3"><div class="flex-1"><label class="input-label">Inicia</label><input type="date" value="${tr.start}" onchange="state.config.treatments[${i}].start=this.value" class="styled-input"></div><div class="flex-1"><label class="input-label">Cantidad</label><div class="flex gap-1"><input type="number" value="${tr.duration}" onchange="state.config.treatments[${i}].duration=this.value" class="w-12 styled-input p-2 text-center"><select onchange="state.config.treatments[${i}].unit=this.value" class="styled-input p-1 text-[9px] uppercase"><option value="dias" ${tr.unit==='dias'?'selected':''}>Días</option><option value="meses" ${tr.unit==='meses'?'selected':''}>Meses</option></select></div></div></div>
+                        <div><label class="input-label">Pauta</label><input type="text" value="${tr.doseFreq}" onchange="state.config.treatments[${i}].doseFreq=this.value" class="styled-input"></div>
                     </div>`;
                 });
-            } else if(state.tab === 'vacaciones') {
-                c.innerHTML = `<div class="p-8 bg-slate-50 rounded-[2.5rem] text-center"><h4 class="text-xs font-black uppercase text-slate-400 mb-8 tracking-widest">¿Qué ocultar en Vacaciones?</h4>${['academia', 'deporte', 'musica', 'ocio'].map(cat => `<label class="flex justify-between p-6 bg-white rounded-[2rem] border border-slate-100 mb-4 cursor-pointer shadow-sm"><span class="text-xs font-black uppercase text-slate-700">${cat==='academia'?'Colegio':cat}</span><input type="checkbox" ${state.config.vacationHidden.includes(cat)?'checked':''} onchange="toggleVacCat('${cat}')" class="w-7 h-7 accent-indigo-600"></label>`).join('')}</div>`;
-            } else {
-                c.innerHTML = `<div class="p-8 bg-indigo-50 rounded-[3rem] space-y-6 text-center border border-indigo-100 shadow-inner">
-                    <button onclick="exportJSON()" class="w-full bg-white text-indigo-600 p-6 rounded-[2.5rem] font-black text-xs uppercase shadow-xl flex items-center justify-center gap-4"><i class="fas fa-file-download text-lg"></i> Exportar archivo .JSON</button>
-                    <div class="pt-6 space-y-4">
-                        <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest opacity-60">Importar Archivo (Anterior):</p>
+            } else if(state.tab === 'data') {
+                c.innerHTML = `<div class="p-8 bg-indigo-50 rounded-[3rem] space-y-6 text-center shadow-inner">
+                    <button onclick="exportJSON()" class="w-full bg-white text-indigo-600 p-5 rounded-2xl font-black text-[10px] uppercase shadow-md flex items-center justify-center gap-3 border border-indigo-100"><i class="fas fa-file-download"></i> Exportar archivo .JSON</button>
+                    <div class="pt-4 space-y-4">
+                        <p class="text-[10px] font-black text-indigo-400 uppercase opacity-60">Restaurar versión anterior:</p>
                         <input type="file" id="json-input" class="hidden" accept=".json" onchange="importJSON(event)">
-                        <button onclick="document.getElementById('json-input').click()" class="w-full bg-indigo-950 text-white p-6 rounded-[2.5rem] font-black text-xs uppercase shadow-2xl flex items-center justify-center gap-4"><i class="fas fa-file-upload text-lg"></i> Cargar archivo .JSON</button>
+                        <button onclick="document.getElementById('json-input').click()" class="w-full bg-slate-950 text-white p-5 rounded-2xl font-black text-[10px] uppercase shadow-xl flex items-center justify-center gap-3"><i class="fas fa-file-upload"></i> Cargar archivo .JSON</button>
+                    </div>
+                    <div class="pt-8 border-t border-indigo-100">
+                        <button onclick="resetApp()" class="w-full bg-red-100 text-red-600 p-5 rounded-2xl font-black text-[10px] uppercase border border-red-200 active:bg-red-600 active:text-white transition-all">Borrar todo y Reiniciar</button>
                     </div>
                 </div>`;
             }
         }
 
-        window.toggleVacCat = (cat) => {
-            if(state.config.vacationHidden.includes(cat)) state.config.vacationHidden = state.config.vacationHidden.filter(c => c !== cat);
-            else state.config.vacationHidden.push(cat); renderTab();
+        window.resetApp = async () => {
+            if(!confirm("¿Estás seguro de que quieres borrar toda la información y empezar de cero?")) return;
+            state.config = { userName: '', treatmentStart: '2026-01-30', vacationHidden: ['academia'], template: { entreno: [], estudio: [], finde: [] }, treatments: [] };
+            state.history = {};
+            await saveChanges();
+            location.reload();
         };
 
         window.saveChanges = async () => {
@@ -531,18 +409,16 @@
         };
 
         window.importJSON = (e) => {
-            const f = e.target.files[0]; if(!f) return;
             const r = new FileReader();
             r.onload = (ev) => {
                 try {
-                    const data = JSON.parse(ev.target.result);
-                    state.config = {...state.config, ...data};
+                    state.config = JSON.parse(ev.target.result);
                     updateNameDisplays();
-                    alert("¡Configuración cargada con éxito! No olvides Guardar.");
+                    alert("¡Configuración cargada con éxito!");
                     renderTab();
-                } catch(e) { alert("Archivo JSON no válido."); }
+                } catch(e) { alert("Archivo inválido."); }
             };
-            r.readAsText(f);
+            r.readAsText(e.target.files[0]);
         };
 
         window.toggleTask = async (id) => {
@@ -551,7 +427,32 @@
             render();
         };
 
-        window.toggleVacation = () => { state.isVacation = !state.isVacation; const b = document.getElementById('vacation-btn'); b.className = state.isVacation ? "px-5 py-2.5 bg-indigo-600 text-white text-[10px] font-black rounded-full uppercase shadow-lg shadow-indigo-100 border-transparent" : "px-5 py-2.5 bg-slate-200 text-slate-600 text-[10px] font-black rounded-full uppercase border-slate-300"; render(); };
+        window.updateNameDisplays = () => {
+            const name = state.config.userName || 'Usuario';
+            document.querySelectorAll('.user-name-display').forEach(el => el.innerText = name.toUpperCase());
+        };
+
+        window.updateLive = () => {
+            const n = new Date();
+            document.getElementById('live-clock').innerText = n.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
+            document.getElementById('live-date').innerText = n.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+            render();
+        }
+
+        window.parseTime = (t, iso) => {
+            const [time, mod] = t.split(' '); let [h, m] = time.split(':').map(Number);
+            if(mod === 'PM' && h < 12) h += 12; if(mod === 'AM' && h === 12) h = 0;
+            const d = new Date(iso + 'T00:00:00'); d.setHours(h, m, 0, 0); return d;
+        }
+
+        window.renderStats = (s, count, total) => {
+            const grid = document.getElementById('stats-grid'); grid.innerHTML = '';
+            [{id:'musica',l:'Música',c:'bg-purple-500'},{id:'deporte',l:'Deporte',c:'bg-orange-500'},{id:'academia',l:'Estudios',c:'bg-indigo-500'},{id:'salud',l:'Salud',c:'bg-red-500'}].forEach(type => {
+                const p = s.total[type.id] > 0 ? Math.round((s[type.id] / s.total[type.id]) * 100) : 0;
+                grid.innerHTML += `<div class="bg-slate-50 p-4 rounded-3xl border border-slate-100"><div class="flex justify-between mb-2"><span class="text-[9px] font-black uppercase text-slate-400">${type.l}</span><span class="text-[10px] font-black text-indigo-600">${p}%</span></div><div class="h-1.5 bg-slate-200 rounded-full overflow-hidden"><div class="${type.c} h-full transition-all duration-1000" style="width: ${p}%"></div></div></div>`;
+            });
+            document.getElementById('total-perc').innerText = `${Math.round((count/total)*100 || 0)}%`;
+        }
 
         function initCalendar() {
             const strip = document.getElementById('calendar-strip'); strip.innerHTML = '';
@@ -560,25 +461,25 @@
                 const isS = iso === state.selectedDate; const day = document.createElement('div');
                 day.className = `calendar-day ${isS ? 'selected' : 'text-white opacity-40 hover:opacity-100'}`;
                 day.onclick = () => { state.selectedDate = iso; initCalendar(); render(); };
-                day.innerHTML = `<span class="text-[9px] font-black uppercase tracking-tighter">${new Intl.DateTimeFormat('es-ES', { weekday: 'short' }).format(d)}</span><span class="text-xl font-black mt-1 leading-none">${d.getDate()}</span>`;
+                day.innerHTML = `<span class="text-[8px] font-black uppercase tracking-tighter">${new Intl.DateTimeFormat('es-ES', { weekday: 'short' }).format(d)}</span><span class="text-xl font-black mt-1 leading-none">${d.getDate()}</span>`;
                 strip.appendChild(day); if (isS) day.scrollIntoView({ behavior: 'smooth', inline: 'center' });
             }
         }
 
         function renderTech() {
             const t = [
-                { i: '🍅', n: '1. Método Pomodoro (25/5)', p: 'Usa 25 min para tareas. Al sonar, descansa 5 min lejos de pantallas. Mantiene tu mente fresca para la música.' },
-                { i: '👁️', n: '2. Regla Visual 20-20-20', p: 'Cada 20 min en Duolingo y apps: mira algo a 6 metros por 20 segundos. Tus ojos deben sanar de la conjuntivitis.' },
-                { i: '🎻', n: '3. Recuerdo Activo', p: 'En tu instrumento, toca de memoria antes de leer la partitura. Recordar a la fuerza crea conexiones neuronales 10 veces más rápidas.' },
-                { i: '🧩', n: '4. Práctica Intercalada', p: 'Alterna: 15 min idiomas, 15 min ritmo, 15 min teoría. El cambio constante evita el aburrimiento y acelera el aprendizaje.' },
-                { i: '🎓', n: '5. Método Feynman', p: 'Al terminar tus deberes, explica a tus padres lo que aprendiste hoy como si tuvieran 5 años. Si logras explicarlo simple, ya lo dominas.' }
+                { i: '🍅', n: 'Pomodoro (25/5)', p: 'Usa 25 min para tareas. Al sonar, descansa 5 min sin pantallas. Mantiene tu mente fresca para la música.' },
+                { i: '👁️', n: 'Regla 20-20-20', p: 'Cada 20 min en Duolingo y apps: mira algo a 6 metros por 20 segundos. Fundamental para sanar tus ojos.' },
+                { i: '🎻', n: 'Recuerdo Activo', p: 'En tu instrumento, toca de memoria antes de leer la partitura. Crearás conexiones 10 veces más rápidas.' },
+                { i: '🧩', n: 'Práctica Intercalada', p: 'Alterna: 15 min idiomas, 15 min ritmo, 15 min teoría. Estimula tu cerebro al máximo.' },
+                { i: '🎓', n: 'Método Feynman', p: 'Al terminar tus deberes, explica a tus padres lo que aprendiste hoy como si tuvieran 5 años. ¡Dominio total!' }
             ];
             document.getElementById('tech-content').innerHTML = t.map(x => `
                 <div class="flex gap-6 items-start">
-                    <span class="text-5xl leading-none shadow-sm">${x.i}</span>
+                    <span class="text-4xl leading-none">${x.i}</span>
                     <div>
-                        <h4 class="text-xl font-black text-indigo-900 uppercase mb-3 tracking-tight">${x.n}</h4>
-                        <p class="text-lg text-slate-500 leading-relaxed font-semibold">${x.p}</p>
+                        <h4 class="text-lg font-black text-indigo-900 uppercase mb-2">${x.n}</h4>
+                        <p class="text-base text-slate-500 leading-relaxed font-semibold">${x.p}</p>
                     </div>
                 </div>`).join('');
         }
