@@ -8,13 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f1f5f9;
-            color: #0f172a;
-        }
-
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f1f5f9; color: #0f172a; -webkit-tap-highlight-color: transparent; }
         .glass-header { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         
@@ -22,56 +16,25 @@
             border: 3px solid #6366f1 !important;
             background: linear-gradient(110deg, #f5f7ff 0%, #ffffff 100%) !important;
             transform: scale(1.02);
-            box-shadow: 0 15px 25px -5px rgba(99, 102, 241, 0.3) !important;
+            box-shadow: 0 20px 30px -10px rgba(99, 102, 241, 0.3) !important;
             z-index: 10;
             position: relative;
         }
-
         .active-mission-highlight::after {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 2.2rem;
-            border: 2px solid #6366f1;
-            opacity: 0.5;
-            animation: pulse-ring 2s infinite;
+            content: ''; position: absolute; inset: -4px; border-radius: 2.2rem;
+            border: 2px solid #6366f1; opacity: 0.5; animation: pulse-ring 2s infinite;
         }
-
         @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.05); opacity: 0; } }
 
-        .calendar-day {
-            min-width: 60px;
-            height: 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .calendar-day.selected {
-            background-color: white;
-            color: #0f172a;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            transform: translateY(-4px);
-        }
-
+        .calendar-day { min-width: 60px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 1.5rem; cursor: pointer; transition: all 0.3s; }
+        .calendar-day.selected { background-color: white; color: #0f172a; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); transform: translateY(-4px); }
+        
         .modal-overlay { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); }
-        .step-card { background: #ffffff; color: #0f172a; }
-        .tab-btn-active { background-color: #4f46e5 !important; color: white !important; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2); }
+        .tab-btn-active { background-color: #4f46e5 !important; color: white !important; }
 
-        .config-block {
-            background: #ffffff;
-            border-radius: 1.5rem;
-            padding: 1.25rem;
-            border: 1px solid #e2e8f0;
-            margin-bottom: 1rem;
-        }
-
+        .config-block { background: #ffffff; border-radius: 1.5rem; padding: 1.5rem; border: 1px solid #e2e8f0; margin-bottom: 1rem; position: relative; }
         .input-label { font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 6px; display: block; }
-        .styled-input { width: 100%; background: #f8fafc; border-radius: 0.75rem; padding: 0.75rem; font-size: 14px; font-weight: 700; border: 2px solid #f1f5f9; outline: none; }
+        .styled-input { width: 100%; background: #f8fafc; border-radius: 0.75rem; padding: 0.8rem; font-size: 14px; font-weight: 700; border: 2px solid #f1f5f9; outline: none; }
 
         .live-tag { background: #6366f1; color: white; padding: 2px 8px; border-radius: 6px; font-size: 8px; font-weight: 800; display: flex; align-items: center; gap: 4px; }
         .live-dot { width: 6px; height: 6px; background: white; border-radius: 50%; animation: blink 1s infinite; }
@@ -80,46 +43,46 @@
 </head>
 <body class="pb-24">
 
-    <!-- MODAL TUTORIAL / REGISTRO INICIAL -->
+    <!-- MODAL TUTORIAL / REGISTRO NOMBRE -->
     <div id="tutorial-modal" class="fixed inset-0 z-[500] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white max-w-sm w-full rounded-[3rem] p-10 shadow-2xl text-center">
             
             <div id="t-step-0" class="t-step">
                 <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center">
-                    <i class="fas fa-user-edit text-3xl"></i>
+                    <i class="fas fa-user-circle text-3xl"></i>
                 </div>
-                <h2 class="text-2xl font-black mb-4 uppercase">¿Quién eres?</h2>
-                <p class="text-slate-500 text-sm mb-6 leading-relaxed">Para comenzar tu nueva organización, ingresa tu nombre aquí:</p>
-                <input type="text" id="name-input-init" class="styled-input text-center text-xl mb-8 border-indigo-100 font-black text-indigo-600" placeholder="Nombre...">
+                <h2 class="text-2xl font-black mb-4">¡BIENVENIDO!</h2>
+                <p class="text-slate-500 text-sm mb-6 leading-relaxed">Para una experiencia personal, ingresa tu nombre:</p>
+                <input type="text" id="user-name-init" class="styled-input text-center text-xl mb-8 border-indigo-100 font-black text-indigo-600" placeholder="Nombre...">
                 <button onclick="saveNameTutorial()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente</button>
             </div>
 
             <div id="t-step-1" class="t-step hidden">
-                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center">
-                    <i class="fas fa-check-circle text-3xl"></i>
+                <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center">
+                    <i class="fas fa-hand-sparkles text-3xl"></i>
                 </div>
-                <h2 class="text-2xl font-black mb-4">HOLA, <span class="user-name-display text-indigo-600"></span>!</h2>
-                <p class="text-slate-600 text-lg font-semibold leading-relaxed mb-10 text-center">Toca tus tareas al terminarlas. La app resaltará lo que debes hacer ahora.</p>
+                <h2 class="text-2xl font-black mb-4">HOLA, <span class="display-name text-indigo-600"></span>!</h2>
+                <p class="text-slate-600 text-lg font-bold leading-relaxed mb-10 text-center">Configura <b>trabajo, deporte, medicinas, ocio</b> y más en el panel de control.</p>
                 <button onclick="nextTStep(2)" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente</button>
             </div>
 
             <div id="t-step-2" class="t-step hidden">
-                <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center">
-                    <i class="fas fa-sliders-h text-3xl"></i>
+                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-[2rem] mx-auto mb-8 flex items-center justify-center">
+                    <i class="fas fa-check-double text-3xl"></i>
                 </div>
-                <h2 class="text-2xl font-black mb-4">PERSONALIZA</h2>
-                <p class="text-slate-600 text-lg font-semibold leading-relaxed mb-10 text-center">Configura <b>trabajo, deporte, medicinas, ocio</b> y más en el panel superior.</p>
-                <button onclick="closeTutorial()" class="w-full bg-indigo-950 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">¡A Ganar!</button>
+                <h2 class="text-2xl font-black mb-4 uppercase">CONTROL TOTAL</h2>
+                <p class="text-slate-600 text-lg font-semibold leading-relaxed mb-10">Toca cada tarea al terminarla para ver tu progreso real. ¡A por ello!</p>
+                <button onclick="closeTutorial()" class="w-full bg-indigo-950 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl tracking-widest">¡Comenzar!</button>
             </div>
         </div>
     </div>
 
-    <!-- Header -->
+    <!-- UI HEADER -->
     <header class="glass-header text-white p-7 rounded-b-[4rem] shadow-2xl sticky top-0 z-50">
         <div class="flex justify-between items-start mb-6">
             <div>
                 <h1 class="text-2xl font-black italic tracking-tighter uppercase leading-tight">KAIRÓS <span class="text-indigo-400">360</span></h1>
-                <p class="text-[9px] font-bold text-indigo-300 uppercase tracking-[0.15em] mt-1 opacity-90">Domina tu momento, equilibra tu mundo</p>
+                <p class="text-[9px] font-bold text-indigo-300 uppercase tracking-[0.15em] mt-1 opacity-90 leading-none">Domina tu momento, equilibra tu mundo</p>
             </div>
             <div class="flex gap-2">
                 <button onclick="openTutorial()" class="bg-white/10 p-3 rounded-2xl border border-white/5 shadow-sm"><i class="fas fa-question text-sm"></i></button>
@@ -127,129 +90,154 @@
                 <button onclick="openTech()" class="bg-indigo-600 p-3 rounded-2xl shadow-lg border border-indigo-400/30"><i class="fas fa-brain text-sm"></i></button>
             </div>
         </div>
-
         <div class="flex justify-between items-end">
             <div class="flex items-center gap-4">
                 <span id="live-clock" class="text-4xl font-black tracking-tighter">00:00</span>
-                <div class="bg-indigo-500/20 px-3 py-1 rounded-xl border border-indigo-400/30">
-                    <span class="text-[10px] font-black uppercase text-indigo-200 tracking-widest"><span class="user-name-display"></span></span>
-                </div>
+                <div class="bg-indigo-500/20 px-3 py-1 rounded-xl border border-indigo-400/30"><span class="text-[10px] font-black uppercase text-indigo-200 tracking-widest display-name">JM</span></div>
             </div>
             <p id="live-date" class="text-[10px] font-extrabold opacity-60 uppercase tracking-widest text-right"></p>
         </div>
-
         <div id="calendar-strip" class="flex overflow-x-auto gap-4 no-scrollbar mt-8 pb-2 px-1"></div>
     </header>
 
     <main class="p-6 space-y-8 max-w-xl mx-auto">
-        <section class="bg-white rounded-[3rem] p-8 shadow-sm border border-slate-100">
+        <!-- Balance -->
+        <section class="bg-white rounded-[3rem] p-8 shadow-sm border border-slate-100 text-slate-900">
             <div class="flex justify-between items-center mb-8">
-                <h2 class="text-sm font-black text-slate-800 uppercase flex items-center gap-2"><i class="fas fa-chart-line text-indigo-500"></i> Mi Esfuerzo</h2>
-                <div id="total-perc" class="text-[10px] font-black text-indigo-600 bg-indigo-50 px-4 py-1.5 rounded-full">0% LOGRADO</div>
+                <h2 class="text-sm font-black uppercase flex items-center gap-2"><i class="fas fa-chart-pie text-indigo-500"></i> Mi Esfuerzo</h2>
+                <div id="total-perc" class="text-[10px] font-black text-indigo-600 bg-indigo-50 px-4 py-1.5 rounded-full uppercase tracking-tighter">0%</div>
             </div>
             <div class="grid grid-cols-2 gap-5" id="stats-grid"></div>
         </section>
 
+        <!-- Cronograma -->
         <section class="space-y-4">
             <div class="flex justify-between items-center px-4">
-                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Cronograma</h3>
-                <button onclick="toggleVacation()" id="vacation-btn" class="px-5 py-2.5 bg-slate-200 text-slate-600 text-[9px] font-black rounded-full uppercase flex items-center gap-2 border border-slate-300 transition-all">
-                    <i class="fas fa-umbrella-beach"></i> Modo Vacaciones
-                </button>
+                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest italic tracking-[0.2em]">Misiones Actuales</h3>
+                <button onclick="toggleVacation()" id="vacation-btn" class="px-5 py-2.5 bg-slate-200 text-slate-600 text-[9px] font-black rounded-full uppercase flex items-center gap-2 border border-slate-300">Modo Vacaciones</button>
             </div>
             <div id="task-list" class="space-y-4"></div>
         </section>
 
-        <section class="bg-slate-900 text-white p-8 rounded-[3.5rem] shadow-xl border border-white/5">
-            <h4 class="text-xs font-black uppercase tracking-widest mb-6 flex items-center gap-3"><i class="fas fa-heartbeat text-red-500"></i> Mi Salud Visual</h4>
+        <!-- Médico -->
+        <section class="bg-slate-900 text-white p-8 rounded-[3.5rem] shadow-xl border border-white/5 relative overflow-hidden">
+            <h4 class="text-xs font-black uppercase tracking-widest mb-6 flex items-center gap-3"><i class="fas fa-heartbeat text-red-500"></i> Salud Visual</h4>
             <div id="medical-info" class="space-y-4"></div>
+            <p class="text-center mt-6 text-[9px] font-bold text-slate-500 uppercase tracking-widest border-t border-white/5 pt-4">Inicio: 30 Ene, 2026</p>
         </section>
 
-        <footer class="text-center py-10 opacity-50">
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Desarrollado para</p>
-            <p class="text-xs font-black text-slate-900 uppercase tracking-widest">Juan Miguel Rios Redondo</p>
+        <footer class="text-center py-10 opacity-50 border-t border-slate-100 mt-12">
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1">Desarrollado para</p>
+            <p class="text-xs font-black text-slate-900 uppercase">Juan Miguel Rios Redondo</p>
         </footer>
     </main>
 
-    <!-- Panel de Control -->
-    <div id="config-modal" class="fixed inset-0 z-[400] modal-overlay hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-        <div class="bg-white w-full max-w-lg rounded-t-[3.5rem] sm:rounded-[3.5rem] shadow-2xl flex flex-col max-h-[92vh] overflow-hidden">
+    <!-- PANEL DE CONTROL -->
+    <div id="config-modal" class="fixed inset-0 z-[400] modal-overlay hidden flex items-end sm:items-center justify-center p-0 sm:p-4 text-slate-900">
+        <div class="bg-white w-full max-w-lg rounded-t-[3.5rem] sm:rounded-[3.5rem] shadow-2xl flex flex-col h-[92vh] overflow-hidden">
             <div class="p-8 pb-4">
-                <div class="flex justify-between items-center mb-6 text-slate-900">
+                <div class="flex justify-between items-center mb-6">
                     <h3 class="text-2xl font-black italic tracking-tighter uppercase">Configurar</h3>
                     <button onclick="closeConfig()"><i class="fas fa-times-circle text-slate-300 text-3xl"></i></button>
                 </div>
                 <div class="flex gap-1 bg-slate-100 p-1.5 rounded-2xl border border-slate-200 overflow-x-auto no-scrollbar">
-                    <button onclick="setTab('perfil')" id="tab-perfil" class="flex-1 py-3 text-[10px] font-black rounded-xl px-3 whitespace-nowrap">Perfil</button>
-                    <button onclick="setTab('editor')" id="tab-editor" class="flex-1 py-3 text-[10px] font-black rounded-xl px-3 whitespace-nowrap">Horarios</button>
-                    <button onclick="setTab('medicina')" id="tab-medicina" class="flex-1 py-3 text-[10px] font-black rounded-xl px-3 whitespace-nowrap">Médico</button>
-                    <button onclick="setTab('data')" id="tab-data" class="flex-1 py-3 text-[10px] font-black rounded-xl px-3 whitespace-nowrap">Datos</button>
+                    <button onclick="setTab('perfil')" id="tab-perfil" class="flex-1 py-3 text-[10px] font-black rounded-xl px-4 whitespace-nowrap">Perfil</button>
+                    <button onclick="setTab('horarios')" id="tab-horarios" class="flex-1 py-3 text-[10px] font-black rounded-xl px-4 whitespace-nowrap">Horarios</button>
+                    <button onclick="setTab('medico')" id="tab-medico" class="flex-1 py-3 text-[10px] font-black rounded-xl px-4 whitespace-nowrap">Médico</button>
+                    <button onclick="setTab('data')" id="tab-data" class="flex-1 py-3 text-[10px] font-black rounded-xl px-4 whitespace-nowrap">Datos</button>
                 </div>
             </div>
-            <div id="modal-content" class="flex-1 overflow-y-auto px-8 pb-8 no-scrollbar text-slate-900"></div>
-            <div class="p-8 border-t border-slate-50"><button onclick="saveChanges()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95 transition-all">Guardar Todo</button></div>
+            <div id="modal-content" class="flex-1 overflow-y-auto px-8 pb-8 no-scrollbar"></div>
+            <div class="p-8 border-t border-slate-50"><button onclick="saveAndClose()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95 transition-all">Guardar Cambios</button></div>
         </div>
     </div>
 
-    <!-- Estrategias -->
+    <!-- ESTRATEGIAS -->
     <div id="tech-modal" class="fixed inset-0 z-[450] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
-        <div class="bg-white w-full max-w-2xl rounded-[3.5rem] p-10 shadow-2xl max-h-[85vh] overflow-y-auto no-scrollbar">
-            <h3 class="text-2xl font-black italic text-indigo-900 mb-10 text-center uppercase tracking-tighter border-b-2 border-indigo-50 pb-6">Estrategias Pro</h3>
-            <div class="space-y-10" id="tech-content"></div>
-            <button onclick="closeTech()" class="w-full mt-10 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs shadow-xl">Regresar</button>
+        <div class="bg-white w-full max-w-2xl rounded-[3.5rem] p-10 shadow-2xl max-h-[85vh] overflow-y-auto no-scrollbar text-center">
+            <h3 class="text-xl font-black italic text-indigo-900 mb-10 uppercase tracking-tighter border-b-2 border-indigo-50 pb-6">Estrategias de Éxito</h3>
+            <div class="space-y-10 text-left" id="tech-content"></div>
+            <button onclick="closeTech()" class="w-full mt-10 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs shadow-xl">Cerrar</button>
         </div>
     </div>
-
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
 
     <script>
-        // --- DATA ---
-        let state = {
-            userName: '', selectedDate: new Intl.DateTimeFormat('sv-SE').format(new Date()),
-            isVacation: false, history: {}, tab: 'perfil',
-            config: {
-                userName: '', treatmentStart: '2026-01-30', vacationHidden: ['academia'],
-                template: { entreno: [], estudio: [], finde: [] }, treatments: []
-            }
+        // --- DATA INICIAL (ESTADO POR DEFECTO) ---
+        const DEFAULT_CONFIG = {
+            userName: '',
+            treatmentStart: '2026-01-30',
+            vacationHidden: ['academia'],
+            template: {
+                entreno: [
+                    { id: 'h1', start: '06:30 AM', end: '06:45 AM', task: 'Gotas Mañana', type: 'salud' },
+                    { id: 'h2', start: '07:00 AM', end: '08:00 AM', task: 'Instrumento', type: 'musica' },
+                    { id: 'h3', start: '08:00 AM', end: '08:15 AM', task: 'Olopatadina (8 AM)', type: 'salud' },
+                    { id: 'h4', start: '08:15 AM', end: '11:00 AM', task: 'Entrenamiento', type: 'deporte' },
+                    { id: 'h5', start: '11:00 AM', end: '12:00 PM', task: 'Tareas Colegio', type: 'academia' },
+                    { id: 'h6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Col)', type: 'salud' },
+                    { id: 'h7', start: '12:30 PM', end: '06:00 PM', task: 'Colegio', type: 'academia' },
+                    { id: 'h8', start: '08:00 PM', end: '08:15 PM', task: 'Olopatadina (8 PM)', type: 'salud' },
+                    { id: 'h9', start: '08:30 PM', end: '09:30 PM', task: 'Apps Música / Duolingo', type: 'musica' },
+                    { id: 'h10', start: '09:45 PM', end: '10:00 PM', task: 'Fluoro Final + Sueño', type: 'salud' }
+                ],
+                estudio: [
+                    { id: 's1', start: '06:30 AM', end: '06:45 AM', task: 'Gotas Mañana', type: 'salud' },
+                    { id: 's2', start: '07:00 AM', end: '08:00 AM', task: 'Tareas Colegio', type: 'academia' },
+                    { id: 's3', start: '08:00 AM', end: '08:15 AM', task: 'Olopatadina (8 AM)', type: 'salud' },
+                    { id: 's4', start: '08:15 AM', end: '10:00 AM', task: 'Instrumento', type: 'musica' },
+                    { id: 's5', start: '10:00 AM', end: '11:30 AM', task: 'Apps Música', type: 'musica' },
+                    { id: 's6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Col)', type: 'salud' },
+                    { id: 's7', start: '12:30 PM', end: '06:00 PM', task: 'Colegio', type: 'academia' },
+                    { id: 's8', start: '08:00 PM', end: '08:15 PM', task: 'Olopatadina (8 PM)', type: 'salud' },
+                    { id: 's9', start: '08:30 PM', end: '09:45 PM', task: 'Tareas / Repaso', type: 'academia' },
+                    { id: 's10', start: '09:45 PM', end: '10:00 PM', task: 'Fluoro Final + Sueño', type: 'salud' }
+                ],
+                finde: [
+                    { id: 'f1', start: '08:00 AM', end: '08:15 AM', task: 'Olopatadina (1)', type: 'salud' },
+                    { id: 'f2', start: '09:30 AM', end: '11:00 AM', task: 'Instrumento Libre', type: 'musica' },
+                    { id: 'f3', start: '11:00 AM', end: '01:00 PM', task: 'Tiempo Libre', type: 'ocio' },
+                    { id: 'f4', start: '04:00 PM', end: '04:15 PM', task: 'Medicina Extra', type: 'salud' },
+                    { id: 'f5', start: '08:00 PM', end: '08:15 PM', task: 'Olopatadina (2)', type: 'salud' },
+                    { id: 'f6', start: '10:00 PM', end: '10:15 PM', task: 'Fluoro Final', type: 'salud' }
+                ]
+            },
+            treatments: [
+                { id: 'tr1', name: 'Fluorometolona 0.1%', start: '2026-01-30', duration: 10, unit: 'dias', doseFreq: 'Cada 8h (Sin colegio)' },
+                { id: 'tr2', name: 'Olopatadina 0.2%', start: '2026-01-30', duration: 2, unit: 'meses', doseFreq: 'Cada 12h (8 AM y 8 PM)' }
+            ]
         };
 
-        const configFB = JSON.parse(__firebase_config);
-        firebase.initializeApp(configFB);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const appId = 'kairos-final-v30';
+        let state = {
+            selectedDate: new Intl.DateTimeFormat('sv-SE').format(new Date()),
+            isVacation: false, history: {}, tab: 'perfil', dayType: 'estudio',
+            config: JSON.parse(JSON.stringify(DEFAULT_CONFIG))
+        };
 
-        async function init() {
-            auth.onAuthStateChanged(async (u) => {
-                if (u) {
-                    state.user = u;
-                    const snap = await db.doc(`artifacts/${appId}/users/${u.uid}/config/master`).get();
-                    if(snap.exists()) {
-                        state.config = snap.data();
-                        updateNameDisplays();
-                        render();
-                    } else {
-                        openTutorial(true);
-                    }
-                    db.collection(`artifacts/${appId}/users/${u.uid}/history`).onSnapshot(s => {
-                        s.forEach(doc => state.history[doc.id] = doc.data());
-                        render();
-                    });
-                } else { auth.signInAnonymously(); }
-            });
-            initCalendar(); renderTech(); updateLive(); setInterval(updateLive, 30000);
+        // --- SISTEMA DE PERSISTENCIA ---
+        function saveLocal() { 
+            localStorage.setItem('kairos_vfinal_stable_github', JSON.stringify(state.config)); 
+            localStorage.setItem('kairos_history_github', JSON.stringify(state.history));
         }
 
-        // --- RENDER ---
+        function loadLocal() {
+            const c = localStorage.getItem('kairos_vfinal_stable_github');
+            if(c) { state.config = JSON.parse(c); updateNameDisplays(); } else { openTutorial(true); }
+            const h = localStorage.getItem('kairos_history_github');
+            if(h) state.history = JSON.parse(h);
+        }
+
+        function init() {
+            loadLocal(); initCalendar(); renderTech(); updateLive(); setInterval(updateLive, 30000);
+        }
+
+        // --- RENDERIZADO ---
         function render() {
             const list = document.getElementById('task-list');
             const medical = document.getElementById('medical-info');
             const now = new Date();
             const todayISO = new Intl.DateTimeFormat('sv-SE').format(now);
             const dObj = new Date(state.selectedDate + 'T12:00:00');
-            const dayName = new Intl.DateTimeFormat('es-ES', { weekday: 'long' }).format(dObj).toLowerCase();
+            const dayName = dObj.toLocaleDateString('es-ES', { weekday: 'long' }).toLowerCase();
             
             const getT = (f) => {
                 const tr = state.config.treatments.find(x => x.name.toLowerCase().includes(f.toLowerCase()));
@@ -257,8 +245,8 @@
                 const s = new Date(tr.start + 'T00:00:00');
                 const sel = new Date(state.selectedDate + 'T00:00:00');
                 const d = Math.floor((sel - s) / 86400000) + 1;
-                const l = tr.unit === 'dias' ? parseInt(tr.duration) : parseInt(tr.duration) * 30;
-                return { active: d >= 1 && d <= l, day: d, limit: l, freq: tr.doseFreq };
+                const lim = tr.unit === 'dias' ? parseInt(tr.duration) : parseInt(tr.duration) * 30;
+                return { active: d >= 1 && d <= lim, day: d, limit: lim };
             };
 
             const fS = getT('Fluoro'); const oS = getT('Olopa');
@@ -266,7 +254,6 @@
                           (['lunes', 'miércoles', 'viernes'].includes(dayName) ? [...state.config.template.entreno] : [...state.config.template.estudio]);
 
             if (state.isVacation) routine = routine.filter(t => !state.config.vacationHidden.includes(t.type));
-            
             list.innerHTML = '';
             let dc = 0; const s = { musica: 0, deporte: 0, academia: 0, salud: 0, total: { musica: 0, deporte: 0, academia: 0, salud: 0 } };
 
@@ -284,19 +271,11 @@
 
                 const col = { salud: 'bg-red-500', musica: 'bg-purple-500', deporte: 'bg-orange-500', academia: 'bg-indigo-500', ocio: 'bg-emerald-500' };
                 list.innerHTML += `<div onclick="toggleTask('${t.id}')" class="flex items-stretch bg-white rounded-[2.5rem] shadow-sm border-2 transition-all ${isD ? 'opacity-40 grayscale' : isNow ? 'active-mission-highlight' : 'border-white'}">
-                    <div class="w-2 ${col[t.type]} rounded-l-[2.5rem]"></div>
-                    <div class="flex-1 p-6 flex items-center gap-6">
-                        <div class="min-w-[85px] text-center border-r border-slate-50 pr-4">
-                            <p class="text-[11px] font-black text-slate-800 leading-none">${t.start}</p>
-                            <p class="text-[9px] font-bold text-slate-300 mt-2 uppercase">${t.end}</p>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <h3 class="text-sm font-black uppercase text-slate-800 tracking-tight">${t.task}</h3>
-                                ${isNow ? '<div class="live-tag"><div class="live-dot"></div>VIVO</div>' : ''}
-                            </div>
-                            <span class="text-[7px] font-black uppercase bg-slate-50 border px-2 py-0.5 rounded-full ${col[t.type].replace('bg-','text-')}">${t.type}</span>
-                        </div>
+                    <div class="w-2.5 ${col[t.type]} rounded-l-[2.5rem]"></div>
+                    <div class="flex-1 p-6 flex items-center gap-6 text-slate-900">
+                        <div class="min-w-[85px] text-center border-r border-slate-100 pr-3"><p class="text-[12px] font-black">${t.start}</p><p class="text-[9px] font-bold text-slate-300 mt-1 uppercase">${t.end}</p></div>
+                        <div class="flex-1 pr-2"><div class="flex items-center gap-2 mb-1"><h3 class="text-sm font-black uppercase">${t.task}</h3>${isNow ? '<div class="live-tag"><div class="live-dot"></div>VIVO</div>' : ''}</div>
+                        <span class="text-[7px] font-black uppercase bg-slate-50 border px-2 py-0.5 rounded-full ${col[t.type].replace('bg-','text-')}">${t.type}</span></div>
                         <i class="fas ${isD ? 'fa-check-circle text-green-500' : 'fa-circle text-slate-100'} text-3xl"></i>
                     </div>
                 </div>`;
@@ -304,156 +283,89 @@
             medical.innerHTML = state.config.treatments.map(tr => {
                 const info = getT(tr.name);
                 return `<div class="p-4 bg-white/5 rounded-3xl border border-white/5 flex justify-between items-center">
-                    <div><p class="font-black ${info.active ? 'text-red-400' : 'text-slate-500'} uppercase text-[11px]">${tr.name}</p><p class="opacity-60 text-[10px] uppercase font-bold tracking-widest">${tr.doseFreq}</p></div>
+                    <div><p class="font-black ${info.active ? 'text-red-400' : 'text-slate-500'} uppercase text-[11px]">${tr.name}</p><p class="opacity-60 text-[10px] uppercase tracking-widest font-bold">${tr.doseFreq}</p></div>
                     <span class="text-[10px] font-black bg-white/10 px-3 py-1 rounded-lg">${info.active ? 'Día '+info.day+'/'+info.limit : 'FIN'}</span>
                 </div>`;
-            }).join('') || '<p class="text-center text-slate-400 text-xs py-4 uppercase font-black">Sin tratamientos activos</p>';
+            }).join('');
             renderStats(s, dc, routine.length);
         }
 
-        // --- ACTIONS ---
-        window.saveNameTutorial = () => {
-            const n = document.getElementById('name-input-init').value;
-            if(!n) return;
-            state.config.userName = n;
-            updateNameDisplays();
-            nextTStep(1);
-        };
-        window.nextTStep = (s) => {
-            document.querySelectorAll('.t-step').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`t-step-${s}`).classList.remove('hidden');
-        };
-        window.openTutorial = (isFirst = false) => {
-            document.getElementById('tutorial-modal').classList.remove('hidden');
-            nextTStep(isFirst ? 0 : 1);
-        };
-        window.closeTutorial = () => {
-            document.getElementById('tutorial-modal').classList.add('hidden');
-            saveChanges();
-        };
-
-        window.openConfig = () => { document.getElementById('config-modal').classList.remove('hidden'); setTab('perfil'); };
-        window.closeConfig = () => document.getElementById('config-modal').classList.add('hidden');
-        window.openTech = () => document.getElementById('tech-modal').classList.remove('hidden');
-        window.closeTech = () => document.getElementById('tech-modal').classList.add('hidden');
-        
-        window.setTab = (t) => {
-            state.tab = t;
-            ['perfil','editor','medicina','data'].forEach(x => {
-                const el = document.getElementById(`tab-${x}`);
-                el.className = `flex-1 py-3 text-[10px] font-black rounded-xl uppercase px-4 whitespace-nowrap ${t === x ? 'tab-btn-active' : 'text-slate-500'}`;
-            });
-            renderTab();
-        };
-
+        // --- CONTROL PANEL TABS ---
         function renderTab() {
-            const c = document.getElementById('modal-content'); c.innerHTML = '';
+            const cont = document.getElementById('modal-content'); cont.innerHTML = '';
             if(state.tab === 'perfil') {
-                c.innerHTML = `<div class="p-8 bg-slate-50 rounded-[2.5rem] space-y-4">
-                    <label class="input-label">Tu Nombre</label>
-                    <input type="text" value="${state.config.userName}" onchange="state.config.userName=this.value; updateNameDisplays();" class="styled-input text-xl border-indigo-100">
-                    <p class="text-[10px] text-slate-400 font-bold italic text-center">Aparecerá en el encabezado.</p>
+                cont.innerHTML = `<div class="p-8 bg-slate-50 rounded-[2.5rem] space-y-4">
+                    <label class="input-label">Nombre del Usuario</label>
+                    <input type="text" value="${state.config.userName}" onchange="state.config.userName=this.value; updateNameDisplays();" class="styled-input text-xl border-indigo-100 font-black">
                 </div>`;
-            } else if(state.tab === 'editor') {
-                c.innerHTML = `<p class="text-center text-[10px] font-black text-slate-400 uppercase mb-4 tracking-widest">Modifica tu rutina horaria:</p>`;
-                ['entreno','estudio','finde'].forEach(day => {
-                    c.innerHTML += `<div class="p-4 bg-indigo-50 rounded-2xl mb-4 font-black uppercase text-[10px] text-indigo-900">${day}</div>`;
-                    (state.config.template[day] || []).forEach((t, i) => {
-                        c.innerHTML += `<div class="config-block shadow-sm">
-                            <label class="input-label">Actividad</label><input type="text" value="${t.task}" onchange="state.config.template['${day}'][${i}].task=this.value" class="styled-input mb-4">
-                            <div class="flex gap-4"><div class="flex-1"><label class="input-label text-center">Inicia</label><input type="text" value="${t.start}" onchange="state.config.template['${day}'][${i}].start=this.value" class="styled-input text-center"></div><div class="flex-1"><label class="input-label text-center">Fin</label><input type="text" value="${t.end}" onchange="state.config.template['${day}'][${i}].end=this.value" class="styled-input text-center"></div></div>
-                        </div>`;
-                    });
-                });
-            } else if(state.tab === 'medicina') {
-                state.config.treatments.forEach((tr, i) => {
-                    c.innerHTML += `<div class="config-block space-y-4 shadow-sm">
-                        <div><label class="input-label">Medicina</label><input type="text" value="${tr.name}" onchange="state.config.treatments[${i}].name=this.value" class="styled-input"></div>
-                        <div class="flex gap-3"><div class="flex-1"><label class="input-label">Inicia</label><input type="date" value="${tr.start}" onchange="state.config.treatments[${i}].start=this.value" class="styled-input"></div><div class="flex-1"><label class="input-label">Cantidad</label><div class="flex gap-1"><input type="number" value="${tr.duration}" onchange="state.config.treatments[${i}].duration=this.value" class="w-12 styled-input p-2 text-center"><select onchange="state.config.treatments[${i}].unit=this.value" class="styled-input p-1 text-[9px] uppercase"><option value="dias" ${tr.unit==='dias'?'selected':''}>Días</option><option value="meses" ${tr.unit==='meses'?'selected':''}>Meses</option></select></div></div></div>
-                        <div><label class="input-label">Pauta</label><input type="text" value="${tr.doseFreq}" onchange="state.config.treatments[${i}].doseFreq=this.value" class="styled-input"></div>
+            } else if(state.tab === 'horarios') {
+                cont.innerHTML = `<div class="flex gap-2 mb-6 p-1 bg-slate-100 rounded-2xl text-slate-900">${['estudio','entreno','finde'].map(d => `<button onclick="state.dayType='${d}'; renderTab();" class="flex-1 py-2 text-[9px] font-black rounded-xl uppercase ${state.dayType===d?'bg-white shadow-sm':'text-slate-500'}">${d}</button>`).join('')}</div>`;
+                (state.config.template[state.dayType] || []).forEach((t, i) => {
+                    cont.innerHTML += `<div class="config-block shadow-sm"><button onclick="delTask('${state.dayType}', ${i})" class="absolute top-4 right-4 text-slate-200 hover:text-red-500"><i class="fas fa-trash-alt"></i></button>
+                        <label class="input-label">Actividad</label><input type="text" value="${t.task}" onchange="state.config.template['${state.dayType}'][${i}].task=this.value" class="styled-input mb-4">
+                        <div class="flex gap-4"><div class="flex-1 text-center"><label class="input-label">Inicio</label><input type="time" value="${to24(t.start)}" onchange="state.config.template['${state.dayType}'][${i}].start=to12(this.value)" class="styled-input"></div>
+                        <div class="flex-1 text-center"><label class="input-label">Fin</label><input type="time" value="${to24(t.end)}" onchange="state.config.template['${state.dayType}'][${i}].end=to12(this.value)" class="styled-input"></div></div>
+                        <div class="mt-4"><label class="input-label">Tipo</label><select onchange="state.config.template['${state.dayType}'][${i}].type=this.value" class="styled-input text-xs uppercase">${['academia','musica','deporte','salud','ocio'].map(cat => `<option value="${cat}" ${t.type===cat?'selected':''}>${cat}</option>`).join('')}</select></div>
                     </div>`;
                 });
+                cont.innerHTML += `<button onclick="addTask()" class="w-full bg-slate-50 text-slate-500 py-4 rounded-3xl border-2 border-dashed border-slate-200 font-black uppercase text-[10px]"><i class="fas fa-plus mr-2"></i> Añadir Tarea</button>`;
+            } else if(state.tab === 'medicina') {
+                state.config.treatments.forEach((tr, i) => {
+                    cont.innerHTML += `<div class="config-block shadow-sm"><button onclick="delMed(${i})" class="absolute top-4 right-4 text-slate-200 hover:text-red-500"><i class="fas fa-trash-alt"></i></button>
+                        <div><label class="input-label text-red-500">Medicina</label><input type="text" value="${tr.name}" onchange="state.config.treatments[${i}].name=this.value" class="styled-input mb-4"></div>
+                        <div class="flex gap-3 mb-4"><div class="flex-1"><label class="input-label">Inicio</label><input type="date" value="${tr.start}" onchange="state.config.treatments[${i}].start=this.value" class="styled-input text-xs"></div>
+                        <div class="flex-1"><label class="input-label">Cantidad</label><div class="flex gap-1"><input type="number" value="${tr.duration}" onchange="state.config.treatments[${i}].duration=this.value" class="w-12 styled-input p-2 text-center font-bold">
+                        <select onchange="state.config.treatments[${i}].unit=this.value" class="styled-input p-1 text-[9px] uppercase font-black"><option value="dias" ${tr.unit==='dias'?'selected':''}>Días</option><option value="meses" ${tr.unit==='meses'?'selected':''}>Meses</option></select></div></div></div>
+                        <label class="input-label">Pauta sugerida</label><input type="text" value="${tr.doseFreq}" onchange="state.config.treatments[${i}].doseFreq=this.value" class="styled-input">
+                    </div>`;
+                });
+                cont.innerHTML += `<button onclick="addMed()" class="w-full bg-red-50 text-red-600 py-4 rounded-3xl border-2 border-dashed border-red-100 font-black uppercase text-[10px]"><i class="fas fa-plus mr-2"></i> Añadir Medicina</button>`;
             } else if(state.tab === 'data') {
-                c.innerHTML = `<div class="p-8 bg-indigo-50 rounded-[3rem] space-y-6 text-center shadow-inner">
-                    <button onclick="exportJSON()" class="w-full bg-white text-indigo-600 p-5 rounded-2xl font-black text-[10px] uppercase shadow-md flex items-center justify-center gap-3 border border-indigo-100"><i class="fas fa-file-download"></i> Exportar archivo .JSON</button>
-                    <div class="pt-4 space-y-4">
-                        <p class="text-[10px] font-black text-indigo-400 uppercase opacity-60">Restaurar versión anterior:</p>
+                cont.innerHTML = `<div class="p-8 bg-indigo-50 rounded-[3rem] space-y-6 text-center shadow-inner border border-indigo-100">
+                    <button onclick="exportJSON()" class="w-full bg-white text-indigo-600 p-6 rounded-[2rem] font-black text-xs uppercase shadow-md border border-indigo-100"><i class="fas fa-file-download"></i> Descargar archivo .JSON</button>
+                    <div class="pt-6 space-y-4"><p class="text-[10px] font-black text-indigo-400 uppercase opacity-60">Importar Backup:</p>
                         <input type="file" id="json-input" class="hidden" accept=".json" onchange="importJSON(event)">
-                        <button onclick="document.getElementById('json-input').click()" class="w-full bg-slate-950 text-white p-5 rounded-2xl font-black text-[10px] uppercase shadow-xl flex items-center justify-center gap-3"><i class="fas fa-file-upload"></i> Cargar archivo .JSON</button>
+                        <button onclick="document.getElementById('json-input').click()" class="w-full bg-slate-900 text-white p-6 rounded-[2rem] font-black text-xs uppercase shadow-xl"><i class="fas fa-file-upload"></i> Seleccionar archivo</button>
                     </div>
-                    <div class="pt-8 border-t border-indigo-100">
-                        <button onclick="resetApp()" class="w-full bg-red-100 text-red-600 p-5 rounded-2xl font-black text-[10px] uppercase border border-red-200 active:bg-red-600 active:text-white transition-all">Borrar todo y Reiniciar</button>
-                    </div>
+                    <div class="pt-10 border-t border-indigo-200"><button onclick="resetApp()" class="w-full bg-red-100 text-red-600 p-5 rounded-2xl font-black text-[10px] uppercase border border-red-200">Reiniciar App (Borrar Todo)</button></div>
                 </div>`;
             }
         }
 
-        window.resetApp = async () => {
-            if(!confirm("¿Estás seguro de que quieres borrar toda la información y empezar de cero?")) return;
-            state.config = { userName: '', treatmentStart: '2026-01-30', vacationHidden: ['academia'], template: { entreno: [], estudio: [], finde: [] }, treatments: [] };
-            state.history = {};
-            await saveChanges();
-            location.reload();
-        };
+        // --- HELPERS & ACTIONS ---
+        window.saveNameTutorial = () => { const n = document.getElementById('user-name-init').value; if(!n) return; state.config.userName = n; updateNameDisplays(); nextTStep(1); };
+        window.nextTStep = (s) => { document.querySelectorAll('.t-step').forEach(el => el.classList.add('hidden')); document.getElementById(`t-step-${s}`).classList.remove('hidden'); };
+        window.openTutorial = (first = false) => { document.getElementById('tutorial-modal').classList.remove('hidden'); nextTStep(first ? 0 : 1); };
+        window.closeTutorial = () => { document.getElementById('tutorial-modal').classList.add('hidden'); saveLocal(); };
+        window.openConfig = () => { document.getElementById('config-modal').classList.remove('hidden'); setTab('perfil'); };
+        window.closeConfig = () => document.getElementById('config-modal').classList.add('hidden');
+        window.setTab = (t) => { state.tab = t; ['perfil','horarios','medico','data'].forEach(x => { const el = document.getElementById(`tab-${x}`); el.className = `flex-1 py-3 text-[10px] font-black rounded-xl uppercase px-4 whitespace-nowrap ${t === x ? 'tab-btn-active' : 'text-slate-500'}`; }); renderTab(); };
+        window.saveAndClose = () => { saveLocal(); document.getElementById('config-modal').classList.add('hidden'); render(); };
+        window.resetApp = () => { if(!confirm("¿Borrar todo?")) return; localStorage.clear(); location.reload(); };
+        
+        window.addTask = () => { state.config.template[state.dayType].push({ id: 'task_'+Date.now(), start: '08:00 AM', end: '09:00 AM', task: 'Nueva Actividad', type: 'ocio' }); renderTab(); };
+        window.delTask = (d, i) => { state.config.template[d].splice(i, 1); renderTab(); };
+        window.addMed = () => { state.config.treatments.push({ name: 'Medicina', start: state.selectedDate, duration: 7, unit: 'dias', doseFreq: 'Dosis' }); renderTab(); };
+        window.delMed = (i) => { state.config.treatments.splice(i, 1); renderTab(); };
 
-        window.saveChanges = async () => {
-            if(state.user) await db.doc(`artifacts/${appId}/users/${state.user.uid}/config/master`).set(state.config);
-            closeConfig(); render();
-        };
+        window.exportJSON = () => { const b = new Blob([JSON.stringify(state.config, null, 2)], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `kairos360_backup.json`; a.click(); };
+        window.importJSON = (e) => { const r = new FileReader(); r.onload = (ev) => { try { state.config = JSON.parse(ev.target.result); updateNameDisplays(); alert("¡Importado!"); renderTab(); } catch(e) { alert("Archivo Inválido."); } }; r.readAsText(e.target.files[0]); };
 
-        window.exportJSON = () => {
-            const blob = new Blob([JSON.stringify(state.config, null, 2)], {type : 'application/json'});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.href = url; a.download = `kairos360_${state.config.userName || 'user'}.json`;
-            a.click();
-        };
+        window.toggleTask = (id) => { const h = state.history[state.selectedDate] || {}; h[id] = !h[id]; state.history[state.selectedDate] = h; saveLocal(); render(); };
+        window.updateNameDisplays = () => { const n = state.config.userName || 'Usuario'; document.querySelectorAll('.display-name').forEach(el => el.innerText = n.toUpperCase()); };
+        window.updateLive = () => { const n = new Date(); document.getElementById('live-clock').innerText = n.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true }); document.getElementById('live-date').innerText = n.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }); render(); };
+        window.parseTime = (t, iso) => { const [time, mod] = t.split(' '); let [h, m] = time.split(':').map(Number); if(mod === 'PM' && h < 12) h += 12; if(mod === 'AM' && h === 12) h = 0; const d = new Date(iso + 'T00:00:00'); d.setHours(h, m, 0, 0); return d; };
+        const to24 = (t12) => { const [time, mod] = t12.split(' '); let [h, m] = time.split(':').map(Number); if(mod === 'PM' && h < 12) h += 12; if(mod === 'AM' && h === 12) h = 0; return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`; };
+        const to12 = (t24) => { let [h, m] = t24.split(':').map(Number); let mod = 'AM'; if(h >= 12) { mod = 'PM'; if(h > 12) h -= 12; } if(h === 0) h = 12; return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} ${mod}`; };
 
-        window.importJSON = (e) => {
-            const r = new FileReader();
-            r.onload = (ev) => {
-                try {
-                    state.config = JSON.parse(ev.target.result);
-                    updateNameDisplays();
-                    alert("¡Configuración cargada con éxito!");
-                    renderTab();
-                } catch(e) { alert("Archivo inválido."); }
-            };
-            r.readAsText(e.target.files[0]);
-        };
-
-        window.toggleTask = async (id) => {
-            const h = state.history[state.selectedDate] || {}; h[id] = !h[id];
-            if(state.user) await db.doc(`artifacts/${appId}/users/${state.user.uid}/history/${state.selectedDate}`).set(h);
-            render();
-        };
-
-        window.updateNameDisplays = () => {
-            const name = state.config.userName || 'Usuario';
-            document.querySelectorAll('.user-name-display').forEach(el => el.innerText = name.toUpperCase());
-        };
-
-        window.updateLive = () => {
-            const n = new Date();
-            document.getElementById('live-clock').innerText = n.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
-            document.getElementById('live-date').innerText = n.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-            render();
-        }
-
-        window.parseTime = (t, iso) => {
-            const [time, mod] = t.split(' '); let [h, m] = time.split(':').map(Number);
-            if(mod === 'PM' && h < 12) h += 12; if(mod === 'AM' && h === 12) h = 0;
-            const d = new Date(iso + 'T00:00:00'); d.setHours(h, m, 0, 0); return d;
-        }
-
-        window.renderStats = (s, count, total) => {
+        function renderStats(s, count, total) {
             const grid = document.getElementById('stats-grid'); grid.innerHTML = '';
             [{id:'musica',l:'Música',c:'bg-purple-500'},{id:'deporte',l:'Deporte',c:'bg-orange-500'},{id:'academia',l:'Estudios',c:'bg-indigo-500'},{id:'salud',l:'Salud',c:'bg-red-500'}].forEach(type => {
                 const p = s.total[type.id] > 0 ? Math.round((s[type.id] / s.total[type.id]) * 100) : 0;
-                grid.innerHTML += `<div class="bg-slate-50 p-4 rounded-3xl border border-slate-100"><div class="flex justify-between mb-2"><span class="text-[9px] font-black uppercase text-slate-400">${type.l}</span><span class="text-[10px] font-black text-indigo-600">${p}%</span></div><div class="h-1.5 bg-slate-200 rounded-full overflow-hidden"><div class="${type.c} h-full transition-all duration-1000" style="width: ${p}%"></div></div></div>`;
+                grid.innerHTML += `<div class="bg-slate-50 p-4 rounded-3xl border border-slate-100"><div class="flex justify-between mb-2 font-black uppercase text-[9px] text-slate-400"><span>${type.l}</span><span>${p}%</span></div><div class="h-1.5 bg-slate-200 rounded-full overflow-hidden shadow-inner"><div class="${type.c} h-full transition-all duration-1000" style="width: ${p}%"></div></div></div>`;
             });
-            document.getElementById('total-perc').innerText = `${Math.round((count/total)*100 || 0)}%`;
+            document.getElementById('total-perc').innerText = `${Math.round((count/total)*100 || 0)}% COMPLETADO`;
         }
-
         function initCalendar() {
             const strip = document.getElementById('calendar-strip'); strip.innerHTML = '';
             for (let i = -7; i <= 7; i++) {
@@ -465,24 +377,20 @@
                 strip.appendChild(day); if (isS) day.scrollIntoView({ behavior: 'smooth', inline: 'center' });
             }
         }
-
         function renderTech() {
             const t = [
                 { i: '🍅', n: 'Pomodoro (25/5)', p: 'Usa 25 min para tareas. Al sonar, descansa 5 min sin pantallas. Mantiene tu mente fresca para la música.' },
-                { i: '👁️', n: 'Regla 20-20-20', p: 'Cada 20 min en Duolingo y apps: mira algo a 6 metros por 20 segundos. Fundamental para sanar tus ojos.' },
-                { i: '🎻', n: 'Recuerdo Activo', p: 'En tu instrumento, toca de memoria antes de leer la partitura. Crearás conexiones 10 veces más rápidas.' },
+                { i: '👁️', n: 'Regla 20-20-20', p: 'Fundamental: Cada 20 min en pantalla, mira un punto a 6 metros por 20 segundos para sanar tus ojos.' },
+                { i: '🎻', n: 'Recuerdo Activo', p: 'Toca de memoria antes de leer la partitura. Recordar a la fuerza crea conexiones 10 veces más rápidas.' },
                 { i: '🧩', n: 'Práctica Intercalada', p: 'Alterna: 15 min idiomas, 15 min ritmo, 15 min teoría. Estimula tu cerebro al máximo.' },
-                { i: '🎓', n: 'Método Feynman', p: 'Al terminar tus deberes, explica a tus padres lo que aprendiste hoy como si tuvieran 5 años. ¡Dominio total!' }
+                { i: '🎓', n: 'Método Feynman', p: 'Al terminar tareas, explica a tus padres lo aprendido como si fueran niños. ¡Dominio total!' }
             ];
-            document.getElementById('tech-content').innerHTML = t.map(x => `
-                <div class="flex gap-6 items-start">
-                    <span class="text-4xl leading-none">${x.i}</span>
-                    <div>
-                        <h4 class="text-lg font-black text-indigo-900 uppercase mb-2">${x.n}</h4>
-                        <p class="text-base text-slate-500 leading-relaxed font-semibold">${x.p}</p>
-                    </div>
-                </div>`).join('');
+            document.getElementById('tech-content').innerHTML = t.map(x => `<div class="flex gap-6 items-start">
+                <span class="text-4xl leading-none">${x.i}</span><div><h4 class="text-lg font-black text-indigo-900 uppercase mb-2 tracking-tighter">${x.n}</h4><p class="text-base text-slate-500 font-semibold leading-relaxed">${x.p}</p></div></div>`).join('');
         }
+        window.openTech = () => document.getElementById('tech-modal').classList.remove('hidden');
+        window.closeTech = () => document.getElementById('tech-modal').classList.add('hidden');
+        window.toggleVacation = () => { state.isVacation = !state.isVacation; const b = document.getElementById('vacation-btn'); b.className = state.isVacation ? "px-5 py-2.5 bg-indigo-600 text-white text-[10px] font-black rounded-full uppercase shadow-lg shadow-indigo-100" : "px-5 py-2.5 bg-slate-200 text-slate-600 text-[10px] font-black rounded-full uppercase border-slate-300"; render(); };
 
         window.onload = init;
     </script>
