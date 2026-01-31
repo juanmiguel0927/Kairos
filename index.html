@@ -106,41 +106,41 @@
 </head>
 <body class="pb-24 dark">
 
-    <!-- MODAL TUTORIAL / REGISTRO NOMBRE -->
+    <!-- MODAL TUTORIAL EXTENDIDO -->
     <div id="tutorial-modal" class="fixed inset-0 z-[3000] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white max-w-md w-full rounded-[3.5rem] p-10 text-center shadow-2xl">
             
             <div id="t-step-0" class="t-step block">
                 <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2.5rem] mx-auto mb-6 flex items-center justify-center"><i class="fas fa-id-badge text-3xl"></i></div>
-                <h2 class="text-2xl font-black mb-4 uppercase">BIENVENIDO</h2>
+                <h2 class="text-2xl font-black mb-4 uppercase text-slate-800">BIENVENIDO</h2>
                 <p class="text-slate-500 text-sm mb-6 font-bold">Ingresa tu nombre y presiona <b>Enter</b> para activar el sistema:</p>
                 <input type="text" id="name-input-init" class="styled-input text-center text-xl mb-8 border-indigo-100 font-black text-indigo-600 !bg-slate-50" placeholder="Nombre..." onkeydown="if(event.key==='Enter') handleInitialSave()">
                 <button onclick="handleInitialSave()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95 transition-all">Siguiente</button>
             </div>
 
             <div id="t-step-1" class="t-step hidden text-left">
-                <h3 class="text-indigo-600 text-[10px] font-black uppercase mb-2">Guía 1/4</h3>
-                <h2 class="text-xl font-black mb-4 uppercase text-slate-800">CRONOGRAMA</h2>
-                <p class="text-slate-600 text-sm font-bold mb-6 leading-relaxed">Toca cualquier misión cuando la termines. Si hay huecos entre tareas, el sistema creará un bloque de <b>Descanso</b> automático.</p>
-                <button onclick="nextTStep(2)" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente (Enter)</button>
+                <h3 class="text-indigo-600 text-[10px] font-black uppercase mb-2">Guía de Uso 1/4</h3>
+                <h2 class="text-xl font-black mb-4 uppercase text-slate-800">GESTIÓN DE MISIONES</h2>
+                <p class="text-slate-600 text-sm font-bold mb-6 leading-relaxed">Toca cualquier actividad en tu cronograma al finalizarla. Se marcará como cumplida y verás tu balance de rendimiento subir en tiempo real.</p>
+                <button onclick="nextTStep(2)" class="w-full mt-8 bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente (Enter)</button>
             </div>
 
             <div id="t-step-2" class="t-step hidden text-left">
-                <h3 class="text-indigo-600 text-[10px] font-black uppercase mb-2">Guía 2/4</h3>
+                <h3 class="text-indigo-600 text-[10px] font-black uppercase mb-2">Guía de Uso 2/4</h3>
                 <h2 class="text-xl font-black mb-4 uppercase text-slate-800">SALUD VISUAL</h2>
-                <p class="text-slate-600 text-sm font-bold mb-6 leading-relaxed">El sistema rastrea tus gotas. Te dirá qué día del tratamiento llevas y cuántos faltan para que tus ojos sanen.</p>
-                <button onclick="nextTStep(3)" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente (Enter)</button>
+                <p class="text-slate-600 text-sm font-bold mb-6 leading-relaxed">El sistema rastrea tus gotas automáticamente. Te dirá qué día del tratamiento llevas y cuántos faltan para que tus ojos sanen.</p>
+                <button onclick="nextTStep(3)" class="w-full mt-8 bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente (Enter)</button>
             </div>
 
             <div id="t-step-3" class="t-step hidden text-left">
-                <h3 class="text-indigo-600 text-[10px] font-black uppercase mb-2">Guía 3/4</h3>
-                <h2 class="text-xl font-black mb-4 uppercase text-slate-800">AJUSTES</h2>
-                <p class="text-slate-600 text-sm font-bold mb-6 leading-relaxed">Usa el menú de hamburguesa para añadir nuevas misiones, configurar tus medicinas o restaurar copias de seguridad.</p>
-                <button onclick="nextTStep(4)" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente (Enter)</button>
+                <h3 class="text-indigo-600 text-[10px] font-black uppercase mb-2">Guía de Uso 3/4</h3>
+                <h2 class="text-xl font-black mb-4 uppercase text-slate-800">CONTROL TOTAL</h2>
+                <p class="text-slate-600 text-sm font-bold mb-6 leading-relaxed">Usa el menú de hamburguesa arriba a la izquierda para añadir misiones, modificar medicinas o restaurar copias de seguridad.</p>
+                <button onclick="nextTStep(4)" class="w-full mt-8 bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente (Enter)</button>
             </div>
 
             <div id="t-step-4" class="t-step hidden text-center">
-                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-[2.5rem] mx-auto mb-6 flex items-center justify-center"><i class="fas fa-rocket text-3xl"></i></div>
+                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-[2rem] mx-auto mb-6 flex items-center justify-center"><i class="fas fa-rocket text-3xl"></i></div>
                 <h2 class="text-2xl font-black mb-4 uppercase text-slate-800">¡HOLA, <span class="user-name-display text-indigo-600"></span>!</h2>
                 <p class="text-slate-600 font-bold mb-10 text-sm italic">Presiona <b>Enter</b> para dominar tu día.</p>
                 <button onclick="finalizeTutorial()" class="w-full bg-slate-950 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">¡Comenzar!</button>
@@ -186,8 +186,8 @@
         <!-- Balance Rendimiento -->
         <section class="bg-[var(--bg-card)] rounded-[2.5rem] p-7 border border-[var(--border)] shadow-sm">
             <div class="flex justify-between items-center mb-8 text-[var(--text-main)]">
-                <h2 class="text-sm font-black uppercase flex items-center gap-2 font-black"><i class="fas fa-bolt text-indigo-500"></i> Mi Rendimiento</h2>
-                <div id="total-perc" class="text-[10px] font-black text-indigo-500 bg-indigo-500/10 px-4 py-1.5 rounded-full uppercase">0%</div>
+                <h2 class="text-sm font-black uppercase flex items-center gap-2 font-black"><i class="fas fa-bolt text-indigo-500"></i> Mi Esfuerzo</h2>
+                <div id="total-perc" class="text-[10px] font-black text-indigo-600 bg-indigo-500/10 px-4 py-1.5 rounded-full uppercase">0%</div>
             </div>
             <div class="grid grid-cols-2 gap-5" id="stats-grid"></div>
         </section>
@@ -206,7 +206,7 @@
             <h4 class="text-xs font-black uppercase tracking-widest mb-8 text-white flex items-center gap-3">
                 <i class="fas fa-capsules text-red-500"></i> Salud Visual
             </h4>
-            <div id="medical-info" class="space-y-8"></div>
+            <div id="medical-info" class="space-y-8 text-white"></div>
         </section>
 
         <footer class="text-center py-10 opacity-100 border-t border-[var(--border)] mt-16">
@@ -238,10 +238,10 @@
         </div>
     </div>
 
-    <!-- ESTRATEGIAS (AMPLIADAS Y DETALLADAS) -->
+    <!-- ESTRATEGIAS -->
     <div id="tech-modal" class="fixed inset-0 z-[2500] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white w-full max-w-2xl rounded-[3.5rem] p-10 shadow-2xl max-h-[85vh] overflow-y-auto no-scrollbar">
-            <h3 class="text-2xl font-black text-indigo-900 mb-10 uppercase tracking-tighter border-b-2 border-indigo-50 pb-6 text-center italic">Estrategias de Alto Rendimiento</h3>
+            <h3 class="text-2xl font-black text-indigo-900 mb-10 uppercase tracking-tighter border-b-2 border-indigo-50 pb-6 text-center italic">Estrategias de Éxito</h3>
             <div class="space-y-12 text-left font-medium text-slate-700" id="tech-content"></div>
             <button onclick="closeTech()" class="w-full mt-12 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95 transition-all">Entendido (Enter)</button>
         </div>
@@ -254,12 +254,14 @@
             vacationHidden: ['academia'],
             template: {
                 entreno: [
-                    { id: 'h1', start: '06:15 AM', end: '06:30 AM', task: 'Fluorometolona (Gota 1)', type: 'salud' },
-                    { id: 'h2', start: '07:00 AM', end: '08:00 AM', task: 'Instrumento Principal', type: 'musica' },
+                    { id: 'h1', start: '06:15 AM', end: '06:30 AM', task: 'Fluorometolona (Dosis 1)', type: 'salud' },
+                    { id: 'h2', start: '07:00 AM', end: '07:30 AM', task: 'Instrumento Principal', type: 'musica' },
+                    { id: 'h_salida', start: '07:30 AM', end: '07:50 AM', task: 'Salida al entrenamiento', type: 'deporte' },
+                    { id: 'h4', start: '08:00 AM', end: '10:00 AM', task: 'Entrenamiento de Billar', type: 'deporte' },
                     { id: 'h3', start: '08:30 AM', end: '08:45 AM', task: 'Olopatadina (Dosis 1)', type: 'salud' },
-                    { id: 'h4', start: '08:45 AM', end: '11:00 AM', task: 'Entrenamiento', type: 'deporte' },
+                    { id: 'h_regreso', start: '10:00 AM', end: '11:00 AM', task: 'Traslado a casa', type: 'deporte' },
                     { id: 'h5', start: '11:15 AM', end: '12:15 PM', task: 'Tareas Colegio', type: 'academia' },
-                    { id: 'h6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Pre-Col)', type: 'salud' },
+                    { id: 'h6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Dosis 2)', type: 'salud' },
                     { id: 'h7', start: '12:30 PM', end: '06:00 PM', task: 'Colegio', type: 'academia' },
                     { id: 'h8', start: '08:30 PM', end: '08:45 PM', task: 'Olopatadina (Dosis 2)', type: 'salud' },
                     { id: 'm1', start: '08:45 PM', end: '09:05 PM', task: 'Bloque Armónico', type: 'musica' },
@@ -269,14 +271,14 @@
                     { id: 'h10', start: '10:00 PM', end: '10:15 PM', task: 'Fluorometolona (Dosis 3)', type: 'salud' }
                 ],
                 estudio: [
-                    { id: 's1', start: '06:15 AM', end: '06:30 AM', task: 'Fluorometolona (Gota 1)', type: 'salud' },
+                    { id: 's1', start: '06:15 AM', end: '06:30 AM', task: 'Fluorometolona (Dosis 1)', type: 'salud' },
                     { id: 's2', start: '07:00 AM', end: '08:15 AM', task: 'Tareas Colegio', type: 'academia' },
                     { id: 's3', start: '08:30 AM', end: '08:45 AM', task: 'Olopatadina (Dosis 1)', type: 'salud' },
                     { id: 'm1', start: '08:45 AM', end: '09:15 AM', task: 'Bloque Armónico', type: 'musica' },
                     { id: 'm2', start: '09:15 AM', end: '09:45 AM', task: 'Lectura a 1ra Vista', type: 'musica' },
                     { id: 'm3', start: '09:45 AM', end: '10:15 AM', task: 'Formar Oído', type: 'musica' },
                     { id: 'id1', start: '10:15 AM', end: '10:45 AM', task: 'Duolingo', type: 'ocio' },
-                    { id: 'h6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Pre-Col)', type: 'salud' },
+                    { id: 'h6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Dosis 2)', type: 'salud' },
                     { id: 'h7', start: '12:30 PM', end: '06:00 PM', task: 'Colegio', type: 'academia' },
                     { id: 'h8', start: '08:30 PM', end: '08:45 PM', task: 'Olopatadina (Dosis 2)', type: 'salud' },
                     { id: 'h10', start: '10:00 PM', end: '10:15 PM', task: 'Fluorometolona (Dosis 3)', type: 'salud' }
@@ -350,7 +352,7 @@
                     const currentEnd = parseTime(sorted[i].end, state.selectedDate);
                     const nextStart = parseTime(sorted[i+1].start, state.selectedDate);
                     if(nextStart > currentEnd) {
-                        withGaps.push({ id: 'gap_'+i, start: formatTo12(currentEnd), end: formatTo12(nextStart), task: 'Tiempo Libre / Relax', type: 'ocio', isGap: true });
+                        withGaps.push({ id: 'gap_'+i, start: formatTo12(currentEnd), end: formatTo12(nextStart), task: 'Descanso / Tiempo Libre', type: 'ocio', isGap: true });
                     }
                 }
             }
@@ -527,7 +529,7 @@
         window.toggleTask = (id) => { if(!state.history[state.selectedDate]) state.history[state.selectedDate] = {}; state.history[state.selectedDate][id] = !state.history[state.selectedDate][id]; saveLocal(); render(); };
         window.openTech = () => document.getElementById('tech-modal').classList.remove('hidden');
         window.closeTech = () => document.getElementById('tech-modal').classList.add('hidden');
-        window.toggleVacation = () => { state.isVacation = !state.isVacation; const b = document.getElementById('vacation-btn'); b.className = state.isVacation ? "px-5 py-2.5 bg-indigo-600 text-white text-[10px] font-black rounded-full uppercase" : "px-5 py-2.5 bg-[var(--bg-card)] text-[var(--text-muted)] text-[10px] font-black rounded-full uppercase border border-[var(--border)]"; render(); };
+        window.toggleVacation = () => { state.isVacation = !state.isVacation; const b = document.getElementById('vacation-btn'); b.className = state.isVacation ? "px-5 py-2.5 bg-indigo-600 text-white text-[10px] font-black rounded-full uppercase shadow-lg shadow-indigo-200" : "px-5 py-2.5 bg-[var(--bg-card)] text-[var(--text-muted)] text-[10px] font-black rounded-full uppercase border border-[var(--border)]"; render(); };
 
         function renderTech() {
             const t = [
@@ -545,7 +547,7 @@
                 },
                 { 
                     i: '🎻', n: 'Recuerdo Activo (Active Recall)', 
-                    p: 'No leas la partitura o el cuaderno mil veces. Forzar al cerebro a recordar sin mirar crea cables de memoria 10 veces más fuertes.',
+                    p: 'No leas la partitura o el cuaderno mil veces. Forzar el cerebro a recordar sin mirar crea cables de memoria 10 veces más fuertes.',
                     e: 'Ejemplo: En tu misión de "Instrumento" (07:00 AM), intenta tocar un pasaje difícil cerrando los ojos. Si fallas, mira la nota solo un segundo y repite de memoria. Lo mismo con el colegio: al salir, intenta recordar las 3 ideas más importantes del día sin mirar tus notas.'
                 },
                 { 
