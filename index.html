@@ -112,9 +112,9 @@
             
             <div id="t-step-0" class="t-step block">
                 <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2.5rem] mx-auto mb-6 flex items-center justify-center"><i class="fas fa-id-badge text-3xl"></i></div>
-                <h2 class="text-2xl font-black mb-4 uppercase text-slate-800">BIENVENIDO</h2>
+                <h2 class="text-2xl font-black mb-4 uppercase">BIENVENIDO</h2>
                 <p class="text-slate-500 text-sm mb-6 font-bold">Ingresa tu nombre y presiona <b>Enter</b> para activar el sistema:</p>
-                <input type="text" id="name-input-init" class="styled-input text-center text-xl mb-8 border-indigo-100 font-black text-indigo-600 !bg-slate-50" placeholder="Nombre...">
+                <input type="text" id="name-input-init" class="styled-input text-center text-xl mb-8 border-indigo-100 font-black text-indigo-600 !bg-slate-50" placeholder="Nombre..." onkeydown="if(event.key==='Enter') handleInitialSave()">
                 <button onclick="handleInitialSave()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95 transition-all">Siguiente</button>
             </div>
 
@@ -140,7 +140,7 @@
             </div>
 
             <div id="t-step-4" class="t-step hidden text-center">
-                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-[2rem] mx-auto mb-6 flex items-center justify-center"><i class="fas fa-rocket text-3xl"></i></div>
+                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-[2.5rem] mx-auto mb-6 flex items-center justify-center"><i class="fas fa-rocket text-3xl"></i></div>
                 <h2 class="text-2xl font-black mb-4 uppercase text-slate-800">¡HOLA, <span class="user-name-display text-indigo-600"></span>!</h2>
                 <p class="text-slate-600 font-bold mb-10 text-sm italic">Presiona <b>Enter</b> para dominar tu día.</p>
                 <button onclick="finalizeTutorial()" class="w-full bg-slate-950 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">¡Comenzar!</button>
@@ -161,8 +161,8 @@
                 </div>
             </div>
             <div class="flex gap-2">
-                <button onclick="toggleTheme()" class="bg-white/10 p-4 rounded-2xl border border-white/5 active:scale-90"><i id="theme-icon" class="fas fa-sun text-sm"></i></button>
-                <button onclick="openTutorial(false)" class="bg-white/10 p-4 rounded-2xl border border-white/5 active:scale-90"><i class="fas fa-question text-sm"></i></button>
+                <button onclick="toggleTheme()" class="bg-white/10 p-4 rounded-2xl border border-white/5 active:scale-90 shadow-inner"><i id="theme-icon" class="fas fa-sun text-sm"></i></button>
+                <button onclick="openTutorial(false)" class="bg-white/10 p-4 rounded-2xl border border-white/5 active:scale-90 shadow-inner"><i class="fas fa-question text-sm"></i></button>
                 <button onclick="openTech()" class="bg-indigo-600 p-4 rounded-2xl shadow-lg border border-indigo-400/30 active:scale-90"><i class="fas fa-brain text-sm"></i></button>
             </div>
         </div>
@@ -186,8 +186,8 @@
         <!-- Balance Rendimiento -->
         <section class="bg-[var(--bg-card)] rounded-[2.5rem] p-7 border border-[var(--border)] shadow-sm">
             <div class="flex justify-between items-center mb-8 text-[var(--text-main)]">
-                <h2 class="text-sm font-black uppercase flex items-center gap-2 font-black"><i class="fas fa-bolt text-indigo-500"></i> Mi Esfuerzo</h2>
-                <div id="total-perc" class="text-[10px] font-black text-indigo-600 bg-indigo-500/10 px-4 py-1.5 rounded-full uppercase">0%</div>
+                <h2 class="text-sm font-black uppercase flex items-center gap-2 font-black"><i class="fas fa-bolt text-indigo-500"></i> Mi Rendimiento</h2>
+                <div id="total-perc" class="text-[10px] font-black text-indigo-500 bg-indigo-500/10 px-4 py-1.5 rounded-full uppercase">0%</div>
             </div>
             <div class="grid grid-cols-2 gap-5" id="stats-grid"></div>
         </section>
@@ -201,7 +201,7 @@
             <div id="task-list" class="space-y-4 text-slate-900"></div>
         </section>
 
-        <!-- Salud con Contador Exacto -->
+        <!-- Salud -->
         <section class="bg-slate-900 rounded-[3rem] p-8 border border-slate-800 shadow-2xl relative overflow-hidden text-white">
             <h4 class="text-xs font-black uppercase tracking-widest mb-8 text-white flex items-center gap-3">
                 <i class="fas fa-capsules text-red-500"></i> Salud Visual
@@ -221,12 +221,13 @@
             <div class="p-8 pb-4">
                 <div class="flex justify-between items-center mb-6 text-slate-900">
                     <h3 class="text-2xl font-black italic uppercase tracking-tighter">AJUSTES</h3>
-                    <button onclick="closeConfig()"><i class="fas fa-times-circle text-slate-300 text-3xl"></i></button>
+                    <button onclick="closeConfig()"><i class="fas fa-times-circle text-slate-300 text-3xl transition-colors hover:text-slate-600"></i></button>
                 </div>
                 <div class="flex gap-1 bg-slate-100 p-1.5 rounded-2xl overflow-x-auto no-scrollbar shadow-inner">
                     <button onclick="setTab('perfil')" id="tab-perfil" class="flex-1 py-3 text-[10px] font-black rounded-xl px-5 whitespace-nowrap">Perfil</button>
                     <button onclick="setTab('horarios')" id="tab-horarios" class="flex-1 py-3 text-[10px] font-black rounded-xl px-5 whitespace-nowrap">Horas</button>
                     <button onclick="setTab('medico')" id="tab-medico" class="flex-1 py-3 text-[10px] font-black rounded-xl px-5 whitespace-nowrap">Salud</button>
+                    <button onclick="setTab('filtro')" id="tab-filtro" class="flex-1 py-3 text-[10px] font-black rounded-xl px-5 whitespace-nowrap">Filtro</button>
                     <button onclick="setTab('data')" id="tab-data" class="flex-1 py-3 text-[10px] font-black rounded-xl px-5 whitespace-nowrap">Datos</button>
                 </div>
             </div>
@@ -237,10 +238,10 @@
         </div>
     </div>
 
-    <!-- ESTRATEGIAS -->
+    <!-- ESTRATEGIAS (AMPLIADAS Y DETALLADAS) -->
     <div id="tech-modal" class="fixed inset-0 z-[2500] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white w-full max-w-2xl rounded-[3.5rem] p-10 shadow-2xl max-h-[85vh] overflow-y-auto no-scrollbar">
-            <h3 class="text-2xl font-black text-indigo-900 mb-10 uppercase tracking-tighter border-b-2 border-indigo-50 pb-6 text-center italic">Estrategias de Éxito</h3>
+            <h3 class="text-2xl font-black text-indigo-900 mb-10 uppercase tracking-tighter border-b-2 border-indigo-50 pb-6 text-center italic">Estrategias de Alto Rendimiento</h3>
             <div class="space-y-12 text-left font-medium text-slate-700" id="tech-content"></div>
             <button onclick="closeTech()" class="w-full mt-12 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95 transition-all">Entendido (Enter)</button>
         </div>
@@ -250,14 +251,15 @@
         // --- DATA E HORARIOS MAESTROS ---
         const MASTER_CONFIG = {
             userName: '', treatmentStart: '2026-01-30', theme: 'dark',
+            vacationHidden: ['academia'],
             template: {
                 entreno: [
-                    { id: 'h1', start: '06:15 AM', end: '06:30 AM', task: 'Fluorometolona (Dosis 1)', type: 'salud' },
+                    { id: 'h1', start: '06:15 AM', end: '06:30 AM', task: 'Fluorometolona (Gota 1)', type: 'salud' },
                     { id: 'h2', start: '07:00 AM', end: '08:00 AM', task: 'Instrumento Principal', type: 'musica' },
                     { id: 'h3', start: '08:30 AM', end: '08:45 AM', task: 'Olopatadina (Dosis 1)', type: 'salud' },
                     { id: 'h4', start: '08:45 AM', end: '11:00 AM', task: 'Entrenamiento', type: 'deporte' },
                     { id: 'h5', start: '11:15 AM', end: '12:15 PM', task: 'Tareas Colegio', type: 'academia' },
-                    { id: 'h6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Dosis 2)', type: 'salud' },
+                    { id: 'h6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Pre-Col)', type: 'salud' },
                     { id: 'h7', start: '12:30 PM', end: '06:00 PM', task: 'Colegio', type: 'academia' },
                     { id: 'h8', start: '08:30 PM', end: '08:45 PM', task: 'Olopatadina (Dosis 2)', type: 'salud' },
                     { id: 'm1', start: '08:45 PM', end: '09:05 PM', task: 'Bloque Armónico', type: 'musica' },
@@ -267,14 +269,14 @@
                     { id: 'h10', start: '10:00 PM', end: '10:15 PM', task: 'Fluorometolona (Dosis 3)', type: 'salud' }
                 ],
                 estudio: [
-                    { id: 's1', start: '06:15 AM', end: '06:30 AM', task: 'Fluorometolona (Dosis 1)', type: 'salud' },
+                    { id: 's1', start: '06:15 AM', end: '06:30 AM', task: 'Fluorometolona (Gota 1)', type: 'salud' },
                     { id: 's2', start: '07:00 AM', end: '08:15 AM', task: 'Tareas Colegio', type: 'academia' },
                     { id: 's3', start: '08:30 AM', end: '08:45 AM', task: 'Olopatadina (Dosis 1)', type: 'salud' },
                     { id: 'm1', start: '08:45 AM', end: '09:15 AM', task: 'Bloque Armónico', type: 'musica' },
                     { id: 'm2', start: '09:15 AM', end: '09:45 AM', task: 'Lectura a 1ra Vista', type: 'musica' },
                     { id: 'm3', start: '09:45 AM', end: '10:15 AM', task: 'Formar Oído', type: 'musica' },
                     { id: 'id1', start: '10:15 AM', end: '10:45 AM', task: 'Duolingo', type: 'ocio' },
-                    { id: 'h6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Dosis 2)', type: 'salud' },
+                    { id: 'h6', start: '12:15 PM', end: '12:30 PM', task: 'Fluorometolona (Pre-Col)', type: 'salud' },
                     { id: 'h7', start: '12:30 PM', end: '06:00 PM', task: 'Colegio', type: 'academia' },
                     { id: 'h8', start: '08:30 PM', end: '08:45 PM', task: 'Olopatadina (Dosis 2)', type: 'salud' },
                     { id: 'h10', start: '10:00 PM', end: '10:15 PM', task: 'Fluorometolona (Dosis 3)', type: 'salud' }
@@ -301,13 +303,13 @@
 
         // --- SISTEMA ---
         function saveLocal() { 
-            localStorage.setItem('kairos_v80_storage', JSON.stringify(state.config)); 
-            localStorage.setItem('kairos_hist_v80', JSON.stringify(state.history));
+            localStorage.setItem('kairos_vfinal_v95', JSON.stringify(state.config)); 
+            localStorage.setItem('kairos_hist_v95', JSON.stringify(state.history));
         }
 
         function loadLocal() {
-            const c = localStorage.getItem('kairos_v80_storage');
-            const h = localStorage.getItem('kairos_hist_v80');
+            const c = localStorage.getItem('kairos_vfinal_v95');
+            const h = localStorage.getItem('kairos_hist_v95');
             if(c) state.config = JSON.parse(c); else openTutorial(true);
             if(h) state.history = JSON.parse(h);
             if(!state.config.userName) openTutorial(true);
@@ -348,7 +350,7 @@
                     const currentEnd = parseTime(sorted[i].end, state.selectedDate);
                     const nextStart = parseTime(sorted[i+1].start, state.selectedDate);
                     if(nextStart > currentEnd) {
-                        withGaps.push({ id: 'gap_'+i, start: formatTo12(currentEnd), end: formatTo12(nextStart), task: 'Descanso / Tiempo Libre', type: 'ocio', isGap: true });
+                        withGaps.push({ id: 'gap_'+i, start: formatTo12(currentEnd), end: formatTo12(nextStart), task: 'Tiempo Libre / Relax', type: 'ocio', isGap: true });
                     }
                 }
             }
@@ -375,7 +377,8 @@
             let routine = isF ? [...state.config.template.finde] : 
                           (['lunes', 'miércoles', 'viernes'].some(d => dayName.includes(d)) ? [...state.config.template.entreno] : [...state.config.template.estudio]);
 
-            if (state.isVacation) routine = routine.filter(t => t.type !== 'academia');
+            if (state.isVacation) routine = routine.filter(t => !state.config.vacationHidden.includes(t.type));
+            
             const fullRoutine = injectGaps(routine);
             list.innerHTML = '';
             let dc = 0; const s = { musica: 0, deporte: 0, academia: 0, salud: 0, total: { musica: 0, deporte: 0, academia: 0, salud: 0 } };
@@ -397,7 +400,7 @@
                             <p class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-tighter">${t.end}</p>
                         </div>
                         <div class="flex-1 pr-2">
-                            <h3 class="text-[15px] font-black uppercase tracking-tight ${t.isGap ? 'text-slate-500' : ''}">${t.task}</h3>
+                            <h3 class="text-[16px] font-black uppercase tracking-tight ${t.isGap ? 'text-slate-500' : ''}">${t.task}</h3>
                             <div class="flex items-center gap-2 mt-1">
                                 <span class="text-[8px] font-black uppercase bg-slate-500/10 px-2 py-0.5 rounded-full">${t.isGap ? 'Descanso' : t.type}</span>
                                 ${isNow ? '<div class="live-tag">AHORA</div>' : ''}
@@ -436,14 +439,14 @@
         window.closeConfig = () => { document.getElementById('config-modal').classList.add('hidden'); render(); };
         window.saveAndClose = () => { saveLocal(); document.getElementById('config-modal').classList.add('hidden'); render(); };
         window.resetApp = () => { if(!confirm("¿Borrar todo?")) return; localStorage.clear(); location.reload(); };
-        window.setTab = (t) => { state.tab = t; ['perfil','horarios','medico','data'].forEach(x => { document.getElementById(`tab-${x}`).className = `flex-1 py-3 text-[10px] font-black rounded-xl uppercase px-4 whitespace-nowrap ${t === x ? 'tab-btn-active' : 'text-slate-500'}`; }); renderTab(); };
+        window.setTab = (t) => { state.tab = t; ['perfil','horarios','medico','filtro','data'].forEach(x => { document.getElementById(`tab-${x}`).className = `flex-1 py-3 text-[10px] font-black rounded-xl uppercase px-4 whitespace-nowrap ${t === x ? 'tab-btn-active' : 'text-slate-500'}`; }); renderTab(); };
 
         function renderTab() {
             const c = document.getElementById('modal-content'); c.innerHTML = '';
             if(state.tab === 'perfil') {
-                c.innerHTML = `<div class="p-8 bg-slate-50 rounded-[2.5rem] space-y-4 text-center"><label class="input-label text-slate-900 font-black uppercase">Tu Identidad</label><input type="text" value="${state.config.userName || ''}" onchange="state.config.userName=this.value; updateNameDisplays(); saveLocal();" class="styled-input !bg-white !text-slate-900 border-indigo-100 text-xl font-black text-center" onkeydown="if(event.key==='Enter') saveAndClose()"></div>`;
+                c.innerHTML = `<div class="p-8 bg-slate-50 rounded-[2.5rem] space-y-4 text-center text-slate-900"><label class="input-label">Tu Nombre</label><input type="text" value="${state.config.userName || ''}" onchange="state.config.userName=this.value; updateNameDisplays(); saveLocal();" class="styled-input !bg-white !text-slate-900 border-indigo-100 text-xl font-black text-center" onkeydown="if(event.key==='Enter') saveAndClose()"></div>`;
             } else if(state.tab === 'horarios') {
-                c.innerHTML = `<div class="flex gap-2 mb-6 p-1 bg-slate-100 rounded-2xl">${['estudio','entreno','finde'].map(d => `<button onclick="state.dayType='${d}'; renderTab();" class="flex-1 py-2 text-[9px] font-black rounded-xl uppercase ${state.dayType===d?'bg-white shadow-sm text-indigo-600':'text-slate-400'}">${d}</button>`).join('')}</div>`;
+                c.innerHTML = `<div class="flex gap-2 mb-6 p-1 bg-slate-100 rounded-2xl text-slate-900">${['estudio','entreno','finde'].map(d => `<button onclick="state.dayType='${d}'; renderTab();" class="flex-1 py-2 text-[9px] font-black rounded-xl uppercase ${state.dayType===d?'bg-white shadow-sm text-indigo-600':'text-slate-400'}">${d}</button>`).join('')}</div>`;
                 (state.config.template[state.dayType] || []).forEach((t, i) => {
                     c.innerHTML += `<div class="config-block shadow-sm !bg-slate-50 border-slate-200">
                         <button onclick="delTask('${state.dayType}', ${i})" class="absolute top-4 right-4 text-slate-300 hover:text-red-500 transition-all"><i class="fas fa-trash-alt"></i></button>
@@ -469,6 +472,20 @@
                     </div>`;
                 });
                 c.innerHTML += `<button onclick="addMed()" class="w-full bg-red-50 text-red-600 py-4 rounded-3xl border-2 border-dashed border-red-100 font-black uppercase text-[10px] mt-4"><i class="fas fa-plus mr-2"></i> Añadir Medicina</button>`;
+            } else if(state.tab === 'filtro') {
+                c.innerHTML = `<div class="p-6 bg-slate-50 rounded-[2.5rem] space-y-6">
+                    <p class="text-[11px] font-black text-slate-500 uppercase text-center border-b pb-4">Categorías a ocultar en Vacaciones:</p>
+                    <div class="space-y-3">
+                        ${['academia', 'musica', 'deporte', 'salud', 'ocio'].map(cat => `
+                            <label class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 cursor-pointer active:scale-95 transition-all text-slate-900">
+                                <span class="text-xs font-black uppercase text-slate-700">${cat}</span>
+                                <input type="checkbox" class="w-6 h-6 rounded accent-indigo-600" 
+                                    ${state.config.vacationHidden.includes(cat) ? 'checked' : ''} 
+                                    onchange="toggleVacationCategory('${cat}')">
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>`;
             } else if(state.tab === 'data') {
                 c.innerHTML = `<div class="p-8 bg-indigo-50 rounded-[3rem] space-y-6 text-center border border-indigo-100 shadow-inner">
                     <button onclick="exportJSON()" class="w-full bg-white text-indigo-600 p-5 rounded-2xl font-black text-xs uppercase shadow-md active:scale-95 transition-all"><i class="fas fa-download mr-3"></i> Descargar .JSON</button>
@@ -482,6 +499,7 @@
         }
 
         // --- HELPERS ---
+        window.toggleVacationCategory = (cat) => { const index = state.config.vacationHidden.indexOf(cat); if (index > -1) state.config.vacationHidden.splice(index, 1); else state.config.vacationHidden.push(cat); saveLocal(); };
         window.addTask = () => { state.config.template[state.dayType].push({ id: 'task_'+Date.now(), start: '08:00 AM', end: '09:00 AM', task: 'Nueva Misión', type: 'musica' }); renderTab(); };
         window.addMed = () => { state.config.treatments.push({ id: 'med_'+Date.now(), name: 'Medicina', start: state.selectedDate, duration: 7, unit: 'dias', doseFreq: '8' }); renderTab(); };
         window.delTask = (d, i) => { state.config.template[d].splice(i, 1); renderTab(); };
@@ -513,13 +531,46 @@
 
         function renderTech() {
             const t = [
-                { i: '🍅', n: 'Pomodoro (25/5)', p: 'Divide tu estudio en bloques de 25 min de foco puro seguidos de 5 min de descanso total. Al sonar la alarma, debes alejarte de cualquier pantalla. Esto reduce la fatiga visual.' },
-                { i: '👁️', n: 'Regla 20-20-20', p: 'Crucial por tu conjuntivitis: cada 20 minutos de uso de pantalla, mira un objeto a 6 metros por 20 segundos para relajar el nervio óptico.' },
-                { i: '🎻', n: 'Recuerdo Activo', p: 'En lugar de leer la partitura 100 veces, intenta tocar los pasajes de memoria cada 5 minutos. Crea conexiones neuronales 10 veces más sólidas.' },
-                { i: '🧩', n: 'Práctica Intercalada', p: 'Alterna bloques cortos: 15 min de Técnica, 15 min de Lectura y 15 min de Oído. El cambio constante evita el aburrimiento mecánico.' },
-                { i: '🎓', n: 'Método Feynman', p: 'Al terminar tus deberes, explica lo que aprendiste como si tuvieras 5 años. Si logras explicarlo de forma simple, es porque realmente lo dominas.' }
+                { 
+                    i: '🍅', 
+                    n: 'Técnica Pomodoro (25/5)', 
+                    p: 'Es el arma secreta de la concentración. Divide tu estudio en bloques de 25 min de foco puro y 5 de descanso total.',
+                    e: 'Ejemplo: En tu misión de "Tareas Colegio" (11:15 AM), pon un cronómetro de 25 min. Cuando suene, ¡aléjate del escritorio! Bebe agua o estírate. Esto evita que tu mente se "bloquee" antes de entrar al colegio a las 12:30 PM.'
+                },
+                { 
+                    i: '👁️', 
+                    n: 'Escudo Visual 20-20-20', 
+                    p: 'Fundamental para curar tu conjuntivitis atópica. Evita que el nervio óptico se tense y la lágrima se seque.',
+                    e: 'Ejemplo: Mientras haces "Duolingo" o usas las "Apps de Música" (09:45 PM), cada 20 min mira por la ventana a un árbol o edificio lejano (6 metros) por 20 segundos. Esto relaja tus ojos para que la Fluorometolona final trabaje mejor mientras duermes.'
+                },
+                { 
+                    i: '🎻', n: 'Recuerdo Activo (Active Recall)', 
+                    p: 'No leas la partitura o el cuaderno mil veces. Forzar al cerebro a recordar sin mirar crea cables de memoria 10 veces más fuertes.',
+                    e: 'Ejemplo: En tu misión de "Instrumento" (07:00 AM), intenta tocar un pasaje difícil cerrando los ojos. Si fallas, mira la nota solo un segundo y repite de memoria. Lo mismo con el colegio: al salir, intenta recordar las 3 ideas más importantes del día sin mirar tus notas.'
+                },
+                { 
+                    i: '🧩', n: 'Práctica Intercalada', 
+                    p: 'El cerebro se aburre con la repetición mecánica. Alternar temas diferentes mantiene la plasticidad neuronal al máximo.',
+                    e: 'Ejemplo: No pases toda la hora de "Apps Música" (08:45 PM) solo en una app. Haz 10 min de Formar Oído, 10 min de Ritmo y 10 min de Bloque Armónico. El cambio constante obliga a tu cerebro a "despertar" en cada transición.'
+                },
+                { 
+                    i: '🎓', n: 'Método Feynman', 
+                    p: 'La prueba definitiva de que sabes algo. Si puedes explicarlo simple, es porque realmente lo dominas.',
+                    e: 'Ejemplo: Durante la "Cena" (09:30 PM), cuéntale a tus padres lo que aprendiste en "Colegio" o en tu práctica de "Instrumento" como si se lo explicaras a un niño de 5 años. Si logras que sea sencillo, ¡eres un experto!'
+                }
             ];
-            document.getElementById('tech-content').innerHTML = t.map(x => `<div class="flex gap-6 items-start border-b border-slate-100 pb-10"><span class="text-5xl leading-none shadow-sm">${x.i}</span><div><h4 class="text-xl font-black text-indigo-950 uppercase mb-3 leading-tight tracking-tight">${x.n}</h4><p class="text-base text-slate-500 font-bold leading-relaxed">${x.p}</p></div></div>`).join('');
+            document.getElementById('tech-content').innerHTML = t.map(x => `
+                <div class="flex gap-6 items-start border-b border-slate-100 pb-12">
+                    <span class="text-6xl leading-none shadow-sm">${x.i}</span>
+                    <div class="space-y-4">
+                        <h4 class="text-2xl font-black text-indigo-950 uppercase mb-3 leading-tight tracking-tight">${x.n}</h4>
+                        <p class="text-lg text-slate-600 font-semibold leading-relaxed">${x.p}</p>
+                        <div class="bg-indigo-50 p-6 rounded-[2rem] border-l-8 border-indigo-500 italic">
+                            <p class="text-[14px] text-indigo-900 font-bold leading-relaxed underline mb-2">Aplicación en tu Horario:</p>
+                            <p class="text-[13px] text-indigo-800 font-medium">${x.e}</p>
+                        </div>
+                    </div>
+                </div>`).join('');
         }
 
         window.onload = init;
