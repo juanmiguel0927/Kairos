@@ -99,51 +99,42 @@
 
         .live-tag { background: #EF4444; color: white; padding: 2px 8px; border-radius: 6px; font-size: 8px; font-weight: 900; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
-
-        footer p { color: var(--text-muted); font-weight: 600; }
-        footer strong { color: var(--text-main); font-weight: 800; }
     </style>
 </head>
 <body class="pb-24 dark">
 
-    <!-- MODAL TUTORIAL EXTENDIDO -->
+    <!-- MODAL TUTORIAL / REGISTRO NOMBRE -->
     <div id="tutorial-modal" class="fixed inset-0 z-[3000] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white max-w-md w-full rounded-[3.5rem] p-10 text-center shadow-2xl">
-            
             <div id="t-step-0" class="t-step block">
                 <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-[2.5rem] mx-auto mb-6 flex items-center justify-center"><i class="fas fa-id-badge text-3xl"></i></div>
-                <h2 class="text-2xl font-black mb-4 uppercase text-slate-800">BIENVENIDO</h2>
-                <p class="text-slate-500 text-sm mb-6 font-bold">Ingresa tu nombre y presiona <b>Enter</b> para activar el sistema:</p>
-                <input type="text" id="name-input-init" class="styled-input text-center text-xl mb-8 border-indigo-100 font-black text-indigo-600 !bg-slate-50" placeholder="Nombre..." onkeydown="if(event.key==='Enter') handleInitialSave()">
+                <h2 class="text-2xl font-black mb-4 uppercase">BIENVENIDO</h2>
+                <p class="text-slate-500 text-sm mb-6 font-bold">Ingresa tu nombre y presiona <b>Enter</b> para activar:</p>
+                <input type="text" id="name-input-init" class="styled-input text-center text-xl mb-8 border-indigo-100 font-black text-indigo-600 !bg-slate-50" placeholder="Nombre...">
                 <button onclick="handleInitialSave()" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95 transition-all">Siguiente</button>
             </div>
-
-            <div id="t-step-1" class="t-step hidden text-left">
-                <h3 class="text-indigo-600 text-[10px] font-black uppercase mb-2">Guía de Uso 1/4</h3>
-                <h2 class="text-xl font-black mb-4 uppercase text-slate-800">GESTIÓN DE MISIONES</h2>
-                <p class="text-slate-600 text-sm font-bold mb-6 leading-relaxed">Toca cualquier actividad en tu cronograma al finalizarla. Se marcará como cumplida y verás tu balance de rendimiento subir en tiempo real.</p>
-                <button onclick="nextTStep(2)" class="w-full mt-8 bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente (Enter)</button>
+            <div id="t-step-1" class="t-step hidden text-left text-slate-900">
+                <h3 class="text-indigo-600 text-[10px] font-black uppercase mb-2">Tutorial 1/4</h3>
+                <h2 class="text-xl font-black mb-4 uppercase text-slate-800">FLUJO DE MISIONES</h2>
+                <p class="text-slate-600 text-sm font-bold mb-6 leading-relaxed">Cada bloque en tu cronograma es una misión. Tócala cuando la termines. Si hay espacios vacíos, el sistema creará un bloque de <b>Descanso</b> automático para avisarte que puedes relajarte.</p>
+                <button onclick="nextTStep(2)" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95">Siguiente (Enter)</button>
             </div>
-
-            <div id="t-step-2" class="t-step hidden text-left">
-                <h3 class="text-indigo-600 text-[10px] font-black uppercase mb-2">Guía de Uso 2/4</h3>
+            <div id="t-step-2" class="t-step hidden text-left text-slate-900">
+                <h3 class="text-indigo-600 text-[10px] font-black uppercase mb-2">Tutorial 2/4</h3>
                 <h2 class="text-xl font-black mb-4 uppercase text-slate-800">SALUD VISUAL</h2>
-                <p class="text-slate-600 text-sm font-bold mb-6 leading-relaxed">El sistema rastrea tus gotas automáticamente. Te dirá qué día del tratamiento llevas y cuántos faltan para que tus ojos sanen.</p>
-                <button onclick="nextTStep(3)" class="w-full mt-8 bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente (Enter)</button>
+                <p class="text-slate-600 text-sm font-bold mb-6 leading-relaxed">El rastreador médico te dirá exactamente en qué día de tu tratamiento estás. La barra de progreso se llenará sola cada día hasta que tus ojos estén 100% sanos.</p>
+                <button onclick="nextTStep(3)" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95">Siguiente (Enter)</button>
             </div>
-
-            <div id="t-step-3" class="t-step hidden text-left">
-                <h3 class="text-indigo-600 text-[10px] font-black uppercase mb-2">Guía de Uso 3/4</h3>
-                <h2 class="text-xl font-black mb-4 uppercase text-slate-800">CONTROL TOTAL</h2>
-                <p class="text-slate-600 text-sm font-bold mb-6 leading-relaxed">Usa el menú de hamburguesa arriba a la izquierda para añadir misiones, modificar medicinas o restaurar copias de seguridad.</p>
-                <button onclick="nextTStep(4)" class="w-full mt-8 bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">Siguiente (Enter)</button>
+            <div id="t-step-3" class="t-step hidden text-left text-slate-900">
+                <h3 class="text-indigo-600 text-[10px] font-black uppercase mb-2">Tutorial 3/4</h3>
+                <h2 class="text-xl font-black mb-4 uppercase text-slate-800">CONTROL DE TECLADO</h2>
+                <p class="text-slate-600 text-sm font-bold mb-6 leading-relaxed">Usa <b>Enter</b> para confirmar, guardar o avanzar. Usa <b>Esc</b> para cerrar rápidamente cualquier panel de configuración o estrategias.</p>
+                <button onclick="nextTStep(4)" class="w-full bg-indigo-600 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95">Siguiente (Enter)</button>
             </div>
-
-            <div id="t-step-4" class="t-step hidden text-center">
+            <div id="t-step-4" class="t-step hidden text-center text-slate-900">
                 <div class="w-20 h-20 bg-green-100 text-green-600 rounded-[2rem] mx-auto mb-6 flex items-center justify-center"><i class="fas fa-rocket text-3xl"></i></div>
                 <h2 class="text-2xl font-black mb-4 uppercase text-slate-800">¡HOLA, <span class="user-name-display text-indigo-600"></span>!</h2>
-                <p class="text-slate-600 font-bold mb-10 text-sm italic">Presiona <b>Enter</b> para dominar tu día.</p>
-                <button onclick="finalizeTutorial()" class="w-full bg-slate-950 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl">¡Comenzar!</button>
+                <button onclick="finalizeTutorial()" class="w-full bg-slate-950 text-white py-5 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95">¡Comenzar!</button>
             </div>
         </div>
     </div>
@@ -161,52 +152,49 @@
                 </div>
             </div>
             <div class="flex gap-2">
-                <button onclick="toggleTheme()" class="bg-white/10 p-4 rounded-2xl border border-white/5 active:scale-90 shadow-inner"><i id="theme-icon" class="fas fa-sun text-sm"></i></button>
-                <button onclick="openTutorial(false)" class="bg-white/10 p-4 rounded-2xl border border-white/5 active:scale-90 shadow-inner"><i class="fas fa-question text-sm"></i></button>
+                <button onclick="toggleTheme()" class="bg-white/10 p-4 rounded-2xl border border-white/5 active:scale-90"><i id="theme-icon" class="fas fa-sun text-sm"></i></button>
+                <button onclick="openTutorial(false)" class="bg-white/10 p-4 rounded-2xl border border-white/5 active:scale-90"><i class="fas fa-question text-sm"></i></button>
                 <button onclick="openTech()" class="bg-indigo-600 p-4 rounded-2xl shadow-lg border border-indigo-400/30 active:scale-90"><i class="fas fa-brain text-sm"></i></button>
             </div>
         </div>
 
         <div class="flex justify-between items-end">
             <div class="flex items-center gap-4 text-white">
-                <span id="live-clock" class="text-5xl font-black tracking-tighter tabular-nums">00:00 AM</span>
+                <span id="live-clock" class="text-5xl font-black tracking-tighter tabular-nums uppercase">00:00 AM</span>
                 <div class="bg-indigo-500/20 px-4 py-1.5 rounded-xl border border-indigo-400/30">
                     <span class="text-[10px] font-black uppercase text-indigo-200 display-name">Usuario</span>
                 </div>
             </div>
-            <div class="text-right">
-                <div id="streak-indicator" class="bg-orange-500/20 text-orange-400 border border-orange-500/30 px-3 py-1 rounded-full text-[9px] font-black uppercase mb-1 hidden">Racha 🔥</div>
-                <p id="live-date" class="text-[10px] font-extrabold opacity-70 uppercase tracking-widest text-white"></p>
-            </div>
+            <p id="live-date" class="text-[10px] font-extrabold opacity-70 uppercase tracking-widest text-white text-right"></p>
         </div>
         <div id="calendar-strip" class="flex overflow-x-auto gap-4 no-scrollbar mt-8 pb-2 px-1"></div>
     </header>
 
     <main class="p-6 space-y-10 max-w-xl mx-auto">
-        <!-- Balance Rendimiento -->
+        <!-- Esfuerzo -->
         <section class="bg-[var(--bg-card)] rounded-[2.5rem] p-7 border border-[var(--border)] shadow-sm">
-            <div class="flex justify-between items-center mb-8 text-[var(--text-main)]">
-                <h2 class="text-sm font-black uppercase flex items-center gap-2 font-black"><i class="fas fa-bolt text-indigo-500"></i> Mi Esfuerzo</h2>
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-sm font-black uppercase flex items-center gap-2 text-[var(--text-main)]"><i class="fas fa-bolt text-indigo-500"></i> Mi Rendimiento</h2>
                 <div id="total-perc" class="text-[10px] font-black text-indigo-600 bg-indigo-500/10 px-4 py-1.5 rounded-full uppercase">0%</div>
             </div>
             <div class="grid grid-cols-2 gap-5" id="stats-grid"></div>
         </section>
 
-        <!-- Cronograma -->
+        <!-- Actividades -->
         <section class="space-y-5">
-            <div class="flex justify-between items-center px-4">
-                <h3 class="text-[11px] font-black uppercase tracking-widest italic text-[var(--text-main)]">Actividades Diarias</h3>
-                <button onclick="toggleVacation()" id="vacation-btn" class="px-5 py-2.5 bg-[var(--bg-card)] text-[var(--text-muted)] text-[9px] font-black rounded-full uppercase border border-[var(--border)] shadow-sm">Vacaciones</button>
+            <div class="flex justify-between items-center px-4 text-[var(--text-main)]">
+                <h3 class="text-[11px] font-black uppercase tracking-widest italic">Actividades del Día</h3>
+                <button onclick="toggleVacation()" id="vacation-btn" class="px-5 py-2.5 bg-[var(--bg-card)] text-[var(--text-muted)] text-[9px] font-black rounded-full uppercase border border-[var(--border)]">Vacaciones</button>
             </div>
             <div id="task-list" class="space-y-4 text-slate-900"></div>
         </section>
 
-        <!-- Salud -->
+        <!-- Salud con Días Faltantes -->
         <section class="bg-slate-900 rounded-[3rem] p-8 border border-slate-800 shadow-2xl relative overflow-hidden text-white">
-            <h4 class="text-xs font-black uppercase tracking-widest mb-8 text-white flex items-center gap-3">
+            <h4 class="text-xs font-black uppercase tracking-widest mb-8 flex items-center gap-3">
                 <i class="fas fa-capsules text-red-500"></i> Salud Visual
             </h4>
-            <div id="medical-info" class="space-y-8 text-white"></div>
+            <div id="medical-info" class="space-y-8"></div>
         </section>
 
         <footer class="text-center py-10 opacity-100 border-t border-[var(--border)] mt-16">
@@ -218,27 +206,26 @@
     <!-- PANEL DE CONTROL -->
     <div id="config-modal" class="fixed inset-0 z-[1500] modal-overlay hidden flex items-end sm:items-center justify-center p-0 sm:p-4 text-slate-900">
         <div class="bg-white w-full max-w-lg rounded-t-[3.5rem] sm:rounded-[3rem] shadow-2xl flex flex-col h-[92vh] overflow-hidden">
-            <div class="p-8 pb-4">
-                <div class="flex justify-between items-center mb-6 text-slate-900">
+            <div class="p-8 pb-4 text-slate-900">
+                <div class="flex justify-between items-center mb-6">
                     <h3 class="text-2xl font-black italic uppercase tracking-tighter">AJUSTES</h3>
-                    <button onclick="closeConfig()"><i class="fas fa-times-circle text-slate-300 text-3xl transition-colors hover:text-slate-600"></i></button>
+                    <button onclick="closeConfig()"><i class="fas fa-times-circle text-slate-300 text-3xl"></i></button>
                 </div>
                 <div class="flex gap-1 bg-slate-100 p-1.5 rounded-2xl overflow-x-auto no-scrollbar shadow-inner">
                     <button onclick="setTab('perfil')" id="tab-perfil" class="flex-1 py-3 text-[10px] font-black rounded-xl px-5 whitespace-nowrap">Perfil</button>
                     <button onclick="setTab('horarios')" id="tab-horarios" class="flex-1 py-3 text-[10px] font-black rounded-xl px-5 whitespace-nowrap">Horas</button>
                     <button onclick="setTab('medico')" id="tab-medico" class="flex-1 py-3 text-[10px] font-black rounded-xl px-5 whitespace-nowrap">Salud</button>
-                    <button onclick="setTab('filtro')" id="tab-filtro" class="flex-1 py-3 text-[10px] font-black rounded-xl px-5 whitespace-nowrap">Filtro</button>
                     <button onclick="setTab('data')" id="tab-data" class="flex-1 py-3 text-[10px] font-black rounded-xl px-5 whitespace-nowrap">Datos</button>
                 </div>
             </div>
             <div id="modal-content" class="flex-1 overflow-y-auto px-8 pb-8 no-scrollbar text-slate-900 modal-content-area"></div>
-            <div class="p-8 border-t border-slate-50 flex gap-2">
+            <div class="p-8 border-t border-slate-50">
                 <button onclick="saveAndClose()" class="w-full bg-indigo-600 text-white py-6 rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-95 transition-all">Guardar Todo (Enter)</button>
             </div>
         </div>
     </div>
 
-    <!-- ESTRATEGIAS -->
+    <!-- ESTRATEGIAS (AMPLIADAS Y DETALLADAS) -->
     <div id="tech-modal" class="fixed inset-0 z-[2500] modal-overlay hidden flex items-center justify-center p-6 text-slate-900">
         <div class="bg-white w-full max-w-2xl rounded-[3.5rem] p-10 shadow-2xl max-h-[85vh] overflow-y-auto no-scrollbar">
             <h3 class="text-2xl font-black text-indigo-900 mb-10 uppercase tracking-tighter border-b-2 border-indigo-50 pb-6 text-center italic">Estrategias de Éxito</h3>
@@ -248,10 +235,9 @@
     </div>
 
     <script>
-        // --- DATA E HORARIOS MAESTROS ---
+        // --- DATA E HORARIOS ---
         const MASTER_CONFIG = {
             userName: '', treatmentStart: '2026-01-30', theme: 'dark',
-            vacationHidden: ['academia'],
             template: {
                 entreno: [
                     { id: 'h1', start: '06:15 AM', end: '06:30 AM', task: 'Fluorometolona (Dosis 1)', type: 'salud' },
@@ -305,26 +291,31 @@
 
         // --- SISTEMA ---
         function saveLocal() { 
-            localStorage.setItem('kairos_vfinal_v95', JSON.stringify(state.config)); 
+            localStorage.setItem('kairos_v95_storage', JSON.stringify(state.config)); 
             localStorage.setItem('kairos_hist_v95', JSON.stringify(state.history));
         }
 
         function loadLocal() {
-            const c = localStorage.getItem('kairos_vfinal_v95');
+            const c = localStorage.getItem('kairos_v95_storage');
             const h = localStorage.getItem('kairos_hist_v95');
-            if(c) state.config = JSON.parse(c); else openTutorial(true);
+            if(c) {
+                state.config = JSON.parse(c);
+                if(!state.config.userName) openTutorial(true);
+            } else {
+                openTutorial(true);
+            }
             if(h) state.history = JSON.parse(h);
-            if(!state.config.userName) openTutorial(true);
             applyTheme(); updateNameDisplays();
         }
 
         window.onkeydown = (e) => {
             if(e.key === 'Escape') { closeConfig(); closeTech(); }
             if(e.key === 'Enter') {
-                if(!document.getElementById('tutorial-modal').classList.contains('hidden')) {
+                const tut = document.getElementById('tutorial-modal');
+                if(!tut.classList.contains('hidden')) {
                     if(!document.getElementById('t-step-0').classList.contains('hidden')) handleInitialSave();
-                    else if(document.getElementById('t-step-4').classList.contains('hidden')) nextTStep(null, true);
-                    else finalizeTutorial();
+                    else if(document.getElementById('t-step-4').classList.contains('hidden')) finalizeTutorial();
+                    else nextTStep(null, true);
                 } else if(!document.getElementById('tech-modal').classList.contains('hidden')) {
                     closeTech();
                 } else if(!document.getElementById('config-modal').classList.contains('hidden')) {
@@ -379,8 +370,7 @@
             let routine = isF ? [...state.config.template.finde] : 
                           (['lunes', 'miércoles', 'viernes'].some(d => dayName.includes(d)) ? [...state.config.template.entreno] : [...state.config.template.estudio]);
 
-            if (state.isVacation) routine = routine.filter(t => !state.config.vacationHidden.includes(t.type));
-            
+            if (state.isVacation) routine = routine.filter(t => t.type !== 'academia');
             const fullRoutine = injectGaps(routine);
             list.innerHTML = '';
             let dc = 0; const s = { musica: 0, deporte: 0, academia: 0, salud: 0, total: { musica: 0, deporte: 0, academia: 0, salud: 0 } };
@@ -394,7 +384,7 @@
                 if(!t.isGap && s.total[t.type] !== undefined) { s.total[t.type] += dur; if(isD) { s[t.type] += dur; dc++; } }
 
                 const col = { salud: 'bg-red-500', musica: 'bg-purple-500', deporte: 'bg-orange-500', academia: 'bg-indigo-500', ocio: 'bg-emerald-500' };
-                list.innerHTML += `<div onclick="toggleTask('${t.id}')" class="flex items-stretch bg-[var(--bg-card)] rounded-[2.2rem] border border-[var(--border)] transition-all ${isD ? 'opacity-30 grayscale' : isNow ? 'active-mission-card' : ''} ${t.isGap ? 'bg-slate-100 dark:bg-slate-900/40 opacity-70 border-dashed' : ''}">
+                list.innerHTML += `<div onclick="toggleTask('${t.id}')" class="flex items-stretch bg-[var(--bg-card)] rounded-[2.2rem] border border-[var(--border)] transition-all ${isD ? 'opacity-30 grayscale shadow-none' : isNow ? 'active-mission-card scale-[1.02]' : ''} ${t.isGap ? 'bg-slate-100 dark:bg-slate-900/40 opacity-70 border-dashed' : ''}">
                     <div class="w-2 ${t.isGap ? 'bg-slate-500' : col[t.type]} rounded-l-[2.2rem]"></div>
                     <div class="flex-1 p-6 flex items-center text-[var(--text-main)]">
                         <div class="time-label-box">
@@ -433,143 +423,113 @@
         }
 
         // --- ACTIONS ---
-        window.handleInitialSave = () => { const n = document.getElementById('name-input-init').value; if(!n) return; state.config.userName = n; saveLocal(); updateNameDisplays(); document.getElementById('t-step-0').classList.add('hidden'); document.getElementById('t-step-1').classList.remove('hidden'); };
-        window.finalizeTutorial = () => { document.getElementById('tutorial-modal').classList.add('hidden'); render(); };
-        window.nextTStep = (s, auto = false) => { if(auto) { const current = Array.from(document.querySelectorAll('.t-step')).findIndex(el => !el.classList.contains('hidden')); s = current + 1; } if(s > 4) return; document.querySelectorAll('.t-step').forEach(el => el.classList.add('hidden')); document.getElementById(`t-step-${s}`).classList.remove('hidden'); };
+        window.handleInitialSave = () => { const n = document.getElementById('name-input-init').value; if(!n) return; state.config.userName = n; updateNameDisplays(); document.getElementById('t-step-0').classList.add('hidden'); document.getElementById('t-step-1').classList.remove('hidden'); };
+        window.finalizeTutorial = () => { document.getElementById('tutorial-modal').classList.add('hidden'); saveLocal(); render(); };
+        window.nextTStep = (s, auto = false) => { if(auto) { const cur = Array.from(document.querySelectorAll('.t-step')).findIndex(el => !el.classList.contains('hidden')); s = cur + 1; } if(s > 4) return; document.querySelectorAll('.t-step').forEach(el => el.classList.add('hidden')); document.getElementById(`t-step-${s}`).classList.remove('hidden'); };
         window.openTutorial = (f = false) => { document.getElementById('tutorial-modal').classList.remove('hidden'); if(f) { document.getElementById('t-step-0').classList.remove('hidden'); document.getElementById('t-step-1').classList.add('hidden'); } else { nextTStep(1); } };
         window.openConfig = () => { document.getElementById('config-modal').classList.remove('hidden'); setTab('perfil'); };
         window.closeConfig = () => { document.getElementById('config-modal').classList.add('hidden'); render(); };
         window.saveAndClose = () => { saveLocal(); document.getElementById('config-modal').classList.add('hidden'); render(); };
-        window.resetApp = () => { if(!confirm("¿Borrar todo?")) return; localStorage.clear(); location.reload(); };
-        window.setTab = (t) => { state.tab = t; ['perfil','horarios','medico','filtro','data'].forEach(x => { document.getElementById(`tab-${x}`).className = `flex-1 py-3 text-[10px] font-black rounded-xl uppercase px-4 whitespace-nowrap ${t === x ? 'tab-btn-active' : 'text-slate-500'}`; }); renderTab(); };
+        window.resetApp = () => { if(!confirm("¡ADVERTENCIA! Se borrará todo tu progreso. ¿Estás seguro?")) return; localStorage.clear(); location.reload(); };
+        window.setTab = (t) => { state.tab = t; ['perfil','horarios','medico','data'].forEach(x => { document.getElementById(`tab-${x}`).className = `flex-1 py-3 text-[10px] font-black rounded-xl uppercase px-4 whitespace-nowrap ${t === x ? 'tab-btn-active' : 'text-slate-500'}`; }); renderTab(); };
 
         function renderTab() {
             const c = document.getElementById('modal-content'); c.innerHTML = '';
             if(state.tab === 'perfil') {
-                c.innerHTML = `<div class="p-8 bg-slate-50 rounded-[2.5rem] space-y-4 text-center text-slate-900"><label class="input-label">Tu Nombre</label><input type="text" value="${state.config.userName || ''}" onchange="state.config.userName=this.value; updateNameDisplays(); saveLocal();" class="styled-input !bg-white !text-slate-900 border-indigo-100 text-xl font-black text-center" onkeydown="if(event.key==='Enter') saveAndClose()"></div>`;
+                c.innerHTML = `<div class="p-8 bg-slate-50 rounded-[2.5rem] space-y-4 text-center"><label class="input-label text-slate-900 font-black uppercase">Tu Nombre</label><input type="text" value="${state.config.userName || ''}" onchange="state.config.userName=this.value;" class="styled-input !bg-white !text-slate-900 border-indigo-100 text-xl font-black text-center" onkeydown="if(event.key==='Enter') saveAndClose()"></div>`;
             } else if(state.tab === 'horarios') {
-                c.innerHTML = `<div class="flex gap-2 mb-6 p-1 bg-slate-100 rounded-2xl text-slate-900">${['estudio','entreno','finde'].map(d => `<button onclick="state.dayType='${d}'; renderTab();" class="flex-1 py-2 text-[9px] font-black rounded-xl uppercase ${state.dayType===d?'bg-white shadow-sm text-indigo-600':'text-slate-400'}">${d}</button>`).join('')}</div>`;
+                c.innerHTML = `<div class="flex gap-2 mb-6 p-1 bg-slate-100 rounded-2xl">${['estudio','entreno','finde'].map(d => `<button onclick="state.dayType='${d}'; renderTab();" class="flex-1 py-2 text-[9px] font-black rounded-xl uppercase ${state.dayType===d?'bg-white shadow-sm text-indigo-600':'text-slate-400'}">${d}</button>`).join('')}</div>`;
                 (state.config.template[state.dayType] || []).forEach((t, i) => {
                     c.innerHTML += `<div class="config-block shadow-sm !bg-slate-50 border-slate-200">
-                        <button onclick="delTask('${state.dayType}', ${i})" class="absolute top-4 right-4 text-slate-300 hover:text-red-500 transition-all"><i class="fas fa-trash-alt"></i></button>
-                        <label class="input-label text-slate-900 font-black">Misión</label><input type="text" value="${t.task}" onchange="state.config.template['${state.dayType}'][${i}].task=this.value; saveLocal();" class="styled-input !bg-white !text-slate-900 mb-4 font-bold">
-                        <div class="flex gap-4"><div class="flex-1 text-center"><label class="input-label text-slate-900 font-black">Inicio (AM/PM)</label><input type="text" value="${t.start}" onchange="state.config.template['${state.dayType}'][${i}].start=this.value; saveLocal();" class="styled-input !bg-white !text-slate-900"></div>
-                        <div class="flex-1 text-center"><label class="input-label text-slate-900 font-black">Fin (AM/PM)</label><input type="text" value="${t.end}" onchange="state.config.template['${state.dayType}'][${i}].end=this.value; saveLocal();" class="styled-input !bg-white !text-slate-900"></div></div></div>`;
+                        <button onclick="state.config.template['${state.dayType}'].splice(${i}, 1); renderTab();" class="absolute top-4 right-4 text-slate-300 hover:text-red-500 transition-all"><i class="fas fa-trash-alt"></i></button>
+                        <label class="input-label text-slate-900 font-black">Misión</label><input type="text" value="${t.task}" onchange="state.config.template['${state.dayType}'][${i}].task=this.value;" class="styled-input !bg-white !text-slate-900 mb-4 font-bold">
+                        <div class="flex gap-4"><div class="flex-1 text-center"><label class="input-label text-slate-900 font-black">Inicio (AM/PM)</label><input type="text" value="${t.start}" onchange="state.config.template['${state.dayType}'][${i}].start=this.value;" class="styled-input !bg-white !text-slate-900"></div>
+                        <div class="flex-1 text-center"><label class="input-label text-slate-900 font-black">Fin (AM/PM)</label><input type="text" value="${t.end}" onchange="state.config.template['${state.dayType}'][${i}].end=this.value;" class="styled-input !bg-white !text-slate-900"></div></div></div>`;
                 });
-                c.innerHTML += `<button onclick="addTask()" class="w-full bg-indigo-50 text-indigo-600 py-4 rounded-3xl border-2 border-dashed border-indigo-100 font-black uppercase text-[10px] mt-4"><i class="fas fa-plus mr-2"></i> Añadir Actividad</button>`;
+                c.innerHTML += `<button onclick="state.config.template[state.dayType].push({id:Date.now(), start:'08:00 AM', end:'09:00 AM', task:'Nueva Misión', type:'musica'}); renderTab();" class="w-full bg-indigo-50 text-indigo-600 py-4 rounded-3xl border-2 border-dashed border-indigo-100 font-black uppercase text-[10px] mt-4"><i class="fas fa-plus mr-2"></i> Añadir Actividad</button>`;
             } else if(state.tab === 'medico') {
                 state.config.treatments.forEach((tr, i) => {
                     c.innerHTML += `<div class="config-block shadow-sm !bg-slate-50 border-slate-200">
-                        <button onclick="delMed(${i})" class="absolute top-4 right-4 text-slate-300 hover:text-red-500 transition-all"><i class="fas fa-trash-alt"></i></button>
-                        <label class="input-label text-slate-900 font-black">Tratamiento</label><input type="text" value="${tr.name}" onchange="state.config.treatments[${i}].name=this.value; saveLocal();" class="styled-input !bg-white !text-slate-900 mb-4 font-bold">
+                        <button onclick="state.config.treatments.splice(${i}, 1); renderTab();" class="absolute top-4 right-4 text-slate-300 hover:text-red-500 transition-all"><i class="fas fa-trash-alt"></i></button>
+                        <label class="input-label text-slate-900 font-black">Tratamiento</label><input type="text" value="${tr.name}" onchange="state.config.treatments[${i}].name=this.value;" class="styled-input !bg-white !text-slate-900 mb-4 font-bold">
                         <div class="flex gap-3 mb-4">
-                            <div class="flex-1 text-center"><label class="input-label text-slate-900 font-black">Inicio</label><input type="date" value="${tr.start}" onchange="state.config.treatments[${i}].start=this.value; saveLocal();" class="styled-input !bg-white text-xs font-black"></div>
-                            <div class="flex-1 text-center"><label class="input-label text-slate-900 font-black">Cant.</label><input type="number" value="${tr.duration}" onchange="state.config.treatments[${i}].duration=this.value; saveLocal();" class="styled-input !bg-white !text-slate-900"></div>
-                            <div class="flex-1 text-center"><label class="input-label text-slate-900 font-black">Unidad</label><select onchange="state.config.treatments[${i}].unit=this.value; saveLocal();" class="styled-input !bg-white !text-slate-900 text-[10px] uppercase font-black">
+                            <div class="flex-1 text-center"><label class="input-label text-slate-900 font-black">Inicio</label><input type="date" value="${tr.start}" onchange="state.config.treatments[${i}].start=this.value;" class="styled-input !bg-white text-xs font-black"></div>
+                            <div class="flex-1 text-center"><label class="input-label text-slate-900 font-black">Cant.</label><input type="number" value="${tr.duration}" onchange="state.config.treatments[${i}].duration=this.value;" class="styled-input !bg-white"></div>
+                            <div class="flex-1 text-center"><label class="input-label text-slate-900 font-black">Unidad</label><select onchange="state.config.treatments[${i}].unit=this.value;" class="styled-input !bg-white !text-slate-900 text-[10px] uppercase font-black">
                                 <option value="dias" ${tr.unit==='dias'?'selected':''}>Días</option><option value="meses" ${tr.unit==='meses'?'selected':''}>Meses</option>
                             </select></div>
                         </div>
-                        <label class="input-label text-slate-900 font-black">Frecuencia (Horas)</label>
-                        <input type="number" value="${tr.doseFreq}" onchange="state.config.treatments[${i}].doseFreq=this.value; saveLocal();" class="styled-input !bg-white !text-slate-900 font-black">
+                        <label class="input-label text-slate-900 font-black">Frecuencia (Cada cuántas horas)</label>
+                        <input type="number" value="${tr.doseFreq}" onchange="state.config.treatments[${i}].doseFreq=this.value;" class="styled-input !bg-white !text-slate-900 font-black">
                     </div>`;
                 });
-                c.innerHTML += `<button onclick="addMed()" class="w-full bg-red-50 text-red-600 py-4 rounded-3xl border-2 border-dashed border-red-100 font-black uppercase text-[10px] mt-4"><i class="fas fa-plus mr-2"></i> Añadir Medicina</button>`;
-            } else if(state.tab === 'filtro') {
-                c.innerHTML = `<div class="p-6 bg-slate-50 rounded-[2.5rem] space-y-6">
-                    <p class="text-[11px] font-black text-slate-500 uppercase text-center border-b pb-4">Categorías a ocultar en Vacaciones:</p>
-                    <div class="space-y-3">
-                        ${['academia', 'musica', 'deporte', 'salud', 'ocio'].map(cat => `
-                            <label class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 cursor-pointer active:scale-95 transition-all text-slate-900">
-                                <span class="text-xs font-black uppercase text-slate-700">${cat}</span>
-                                <input type="checkbox" class="w-6 h-6 rounded accent-indigo-600" 
-                                    ${state.config.vacationHidden.includes(cat) ? 'checked' : ''} 
-                                    onchange="toggleVacationCategory('${cat}')">
-                            </label>
-                        `).join('')}
-                    </div>
-                </div>`;
+                c.innerHTML += `<button onclick="state.config.treatments.push({id:Date.now(), name:'Medicina', start:state.selectedDate, duration:7, unit:'dias', doseFreq:'8'}); renderTab();" class="w-full bg-red-50 text-red-600 py-4 rounded-3xl border-2 border-dashed border-red-100 font-black uppercase text-[10px] mt-4"><i class="fas fa-plus mr-2"></i> Añadir Medicina</button>`;
             } else if(state.tab === 'data') {
                 c.innerHTML = `<div class="p-8 bg-indigo-50 rounded-[3rem] space-y-6 text-center border border-indigo-100 shadow-inner">
                     <button onclick="exportJSON()" class="w-full bg-white text-indigo-600 p-5 rounded-2xl font-black text-xs uppercase shadow-md active:scale-95 transition-all"><i class="fas fa-download mr-3"></i> Descargar .JSON</button>
                     <div class="pt-6 border-t border-indigo-100">
                         <p class="text-[10px] font-black uppercase text-indigo-400 mb-4 text-center">Importar Backup:</p>
                         <input type="file" id="json-import" class="hidden" accept=".json" onchange="importJSON(event)">
-                        <button onclick="document.getElementById('json-import').click()" class="w-full bg-slate-950 text-white p-5 rounded-2xl font-black text-xs uppercase shadow-xl active:scale-95 transition-all"><i class="fas fa-upload mr-3"></i> Cargar archivo</button>
+                        <button onclick="document.getElementById('json-import').click()" class="w-full bg-slate-950 text-white p-5 rounded-2xl font-black text-xs uppercase shadow-xl"><i class="fas fa-upload mr-3"></i> Cargar archivo</button>
                     </div>
+                    <button onclick="resetApp()" class="w-full bg-red-100 text-red-600 p-5 rounded-2xl font-black text-[10px] uppercase border border-red-200 mt-10 active:bg-red-600 active:text-white transition-all">Reiniciar Aplicación</button>
                 </div>`;
             }
         }
 
         // --- HELPERS ---
-        window.toggleVacationCategory = (cat) => { const index = state.config.vacationHidden.indexOf(cat); if (index > -1) state.config.vacationHidden.splice(index, 1); else state.config.vacationHidden.push(cat); saveLocal(); };
-        window.addTask = () => { state.config.template[state.dayType].push({ id: 'task_'+Date.now(), start: '08:00 AM', end: '09:00 AM', task: 'Nueva Misión', type: 'musica' }); renderTab(); };
-        window.addMed = () => { state.config.treatments.push({ id: 'med_'+Date.now(), name: 'Medicina', start: state.selectedDate, duration: 7, unit: 'dias', doseFreq: '8' }); renderTab(); };
-        window.delTask = (d, i) => { state.config.template[d].splice(i, 1); renderTab(); };
-        window.delMed = (i) => { state.config.treatments.splice(i, 1); renderTab(); };
         window.updateNameDisplays = () => { const n = state.config.userName || 'Usuario'; document.querySelectorAll('.user-name-display, .display-name').forEach(el => el.innerText = n.toUpperCase()); };
         window.updateLive = () => { const n = new Date(); document.getElementById('live-clock').innerText = n.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true }); document.getElementById('live-date').innerText = n.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short' }); render(); };
         window.parseTime = (t, iso) => { const [time, mod] = t.split(' '); let [h, m] = time.split(':').map(Number); if(mod === 'PM' && h < 12) h += 12; if(mod === 'AM' && h === 12) h = 0; const d = new Date(iso + 'T00:00:00'); d.setHours(h, m, 0, 0); return d; };
         const formatTo12 = (d) => { let h = d.getHours(), m = d.getMinutes(), mod = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12; return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} ${mod}`; };
         function renderStats(s, count, total) { const grid = document.getElementById('stats-grid'); grid.innerHTML = ''; [{id:'musica',l:'Música',c:'bg-purple-500'},{id:'deporte',l:'Deporte',c:'bg-orange-500'},{id:'academia',l:'Estudios',c:'bg-indigo-500'},{id:'salud',l:'Salud',c:'bg-red-500'}].forEach(type => { const p = s.total[type.id] > 0 ? Math.round((s[type.id] / s.total[type.id]) * 100) : 0; grid.innerHTML += `<div><div class="flex justify-between mb-2 font-black text-[9px] uppercase opacity-70 text-[var(--text-main)]"><span>${type.l}</span><span>${p}%</span></div><div class="h-1.5 bg-slate-500/10 rounded-full overflow-hidden shadow-inner"><div class="${type.c} h-full transition-all duration-1000" style="width: ${p}%"></div></div></div>`; }); document.getElementById('total-perc').innerText = `${Math.round((count/total)*100 || 0)}%`; }
-        
-        function initCalendar() { 
-            const strip = document.getElementById('calendar-strip'); strip.innerHTML = ''; 
-            for (let i = 0; i <= 14; i++) { 
-                const d = new Date(); d.setDate(d.getDate() + i); const iso = new Intl.DateTimeFormat('sv-SE').format(d); 
-                const day = document.createElement('div'); day.className = `calendar-day ${iso === state.selectedDate ? 'selected' : 'text-white opacity-40 hover:opacity-100'}`; 
-                day.onclick = () => { state.selectedDate = iso; initCalendar(); render(); }; 
-                day.innerHTML = `<span class="text-[8px] font-black uppercase tracking-tighter">${new Intl.DateTimeFormat('es-ES', { weekday: 'short' }).format(d)}</span><span class="text-xl font-black mt-1 leading-none">${d.getDate()}</span>`; 
-                strip.appendChild(day); 
-            } 
-            strip.scrollLeft = 0;
-        }
-
+        function initCalendar() { const strip = document.getElementById('calendar-strip'); strip.innerHTML = ''; for (let i = 0; i <= 14; i++) { const d = new Date(); d.setDate(d.getDate() + i); const iso = new Intl.DateTimeFormat('sv-SE').format(d); const day = document.createElement('div'); day.className = `calendar-day ${iso === state.selectedDate ? 'selected' : 'text-white opacity-40 hover:opacity-100'}`; day.onclick = () => { state.selectedDate = iso; initCalendar(); render(); }; day.innerHTML = `<span class="text-[8px] font-black uppercase tracking-tighter">${new Intl.DateTimeFormat('es-ES', { weekday: 'short' }).format(d)}</span><span class="text-xl font-black mt-1 leading-none">${d.getDate()}</span>`; strip.appendChild(day); } }
         window.exportJSON = () => { const b = new Blob([JSON.stringify(state.config, null, 2)], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `kairos_backup.json`; a.click(); };
         window.importJSON = (e) => { const r = new FileReader(); r.onload = (ev) => { try { state.config = JSON.parse(ev.target.result); updateNameDisplays(); applyTheme(); alert("¡Importado!"); renderTab(); } catch(e) { alert("Archivo Inválido."); } }; r.readAsText(e.target.files[0]); };
         window.toggleTask = (id) => { if(!state.history[state.selectedDate]) state.history[state.selectedDate] = {}; state.history[state.selectedDate][id] = !state.history[state.selectedDate][id]; saveLocal(); render(); };
         window.openTech = () => document.getElementById('tech-modal').classList.remove('hidden');
         window.closeTech = () => document.getElementById('tech-modal').classList.add('hidden');
-        window.toggleVacation = () => { state.isVacation = !state.isVacation; const b = document.getElementById('vacation-btn'); b.className = state.isVacation ? "px-5 py-2.5 bg-indigo-600 text-white text-[10px] font-black rounded-full uppercase shadow-lg shadow-indigo-200" : "px-5 py-2.5 bg-[var(--bg-card)] text-[var(--text-muted)] text-[10px] font-black rounded-full uppercase border border-[var(--border)]"; render(); };
+        window.toggleVacation = () => { state.isVacation = !state.isVacation; const b = document.getElementById('vacation-btn'); b.className = state.isVacation ? "px-5 py-2.5 bg-indigo-600 text-white text-[10px] font-black rounded-full uppercase" : "px-5 py-2.5 bg-[var(--bg-card)] text-[var(--text-muted)] text-[10px] font-black rounded-full uppercase border border-[var(--border)]"; render(); };
 
         function renderTech() {
             const t = [
                 { 
                     i: '🍅', 
-                    n: 'Técnica Pomodoro (25/5)', 
-                    p: 'Es el arma secreta de la concentración. Divide tu estudio en bloques de 25 min de foco puro y 5 de descanso total.',
-                    e: 'Ejemplo: En tu misión de "Tareas Colegio" (11:15 AM), pon un cronómetro de 25 min. Cuando suene, ¡aléjate del escritorio! Bebe agua o estírate. Esto evita que tu mente se "bloquee" antes de entrar al colegio a las 12:30 PM.'
+                    n: '1. Técnica Pomodoro (25/5)', 
+                    p: 'Es el arma secreta de la concentración. Divide tu estudio en bloques de 25 minutos de foco puro y 5 de descanso total.',
+                    e: 'Ejemplo Real: En tu misión de "Tareas Colegio" (11:15 AM), pon un cronómetro de 25 min. Cuando suene, ¡aléjate del escritorio! Bebe agua o estírate. Esto evita que tu mente se sature antes de tu entrada al colegio a las 12:30 PM.'
                 },
                 { 
                     i: '👁️', 
-                    n: 'Escudo Visual 20-20-20', 
-                    p: 'Fundamental para curar tu conjuntivitis atópica. Evita que el nervio óptico se tense y la lágrima se seque.',
-                    e: 'Ejemplo: Mientras haces "Duolingo" o usas las "Apps de Música" (09:45 PM), cada 20 min mira por la ventana a un árbol o edificio lejano (6 metros) por 20 segundos. Esto relaja tus ojos para que la Fluorometolona final trabaje mejor mientras duermes.'
+                    n: '2. Escudo Visual 20-20-20', 
+                    p: 'Fundamental para curar tu conjuntivitis atópica. Evita que el nervio óptico se tense y la lágrima se seque por las pantallas.',
+                    e: 'Ejemplo Real: Mientras haces "Duolingo" o usas las "Apps de Música" (09:45 PM), cada 20 min mira por la ventana a un árbol lejano durante 20 segundos. Esto relaja tus ojos para que las gotas finales de Fluorometolona trabajen mejor al dormir.'
                 },
                 { 
-                    i: '🎻', n: 'Recuerdo Activo (Active Recall)', 
-                    p: 'No leas la partitura o el cuaderno mil veces. Forzar el cerebro a recordar sin mirar crea cables de memoria 10 veces más fuertes.',
-                    e: 'Ejemplo: En tu misión de "Instrumento" (07:00 AM), intenta tocar un pasaje difícil cerrando los ojos. Si fallas, mira la nota solo un segundo y repite de memoria. Lo mismo con el colegio: al salir, intenta recordar las 3 ideas más importantes del día sin mirar tus notas.'
+                    i: '🎻', n: '3. Recuerdo Activo (Active Recall)', 
+                    p: 'No leas la partitura o el libro mil veces. Forzar el cerebro a recordar sin mirar crea cables de memoria 10 veces más fuertes.',
+                    e: 'Ejemplo Real: En tu misión de "Instrumento" (07:00 AM), intenta tocar un pasaje difícil cerrando los ojos. Si fallas, mira la nota solo un segundo y repite de memoria. Así dominarás tu repertorio musical mucho más rápido.'
                 },
                 { 
-                    i: '🧩', n: 'Práctica Intercalada', 
-                    p: 'El cerebro se aburre con la repetición mecánica. Alternar temas diferentes mantiene la plasticidad neuronal al máximo.',
-                    e: 'Ejemplo: No pases toda la hora de "Apps Música" (08:45 PM) solo en una app. Haz 10 min de Formar Oído, 10 min de Ritmo y 10 min de Bloque Armónico. El cambio constante obliga a tu cerebro a "despertar" en cada transición.'
+                    i: '🧩', n: '4. Práctica Intercalada', 
+                    p: 'El cerebro se aburre con la repetición mecánica. Alternar temas diferentes mantiene la plasticidad neuronal al máximo nivel.',
+                    e: 'Ejemplo Real: No pases toda la hora de "Música" (08:45 PM) solo en una app. Haz 10 min de Formar Oído, 10 min de Ritmo y 10 min de Bloque Armónico. El cambio constante obliga a tu cerebro a estar alerta y aprender más.'
                 },
                 { 
-                    i: '🎓', n: 'Método Feynman', 
-                    p: 'La prueba definitiva de que sabes algo. Si puedes explicarlo simple, es porque realmente lo dominas.',
-                    e: 'Ejemplo: Durante la "Cena" (09:30 PM), cuéntale a tus padres lo que aprendiste en "Colegio" o en tu práctica de "Instrumento" como si se lo explicaras a un niño de 5 años. Si logras que sea sencillo, ¡eres un experto!'
+                    i: '🎓', n: '5. Método Feynman', 
+                    p: 'La prueba definitiva de que sabes algo. Si puedes explicarlo de forma simple, es porque realmente dominas el conocimiento.',
+                    e: 'Ejemplo Real: Durante la "Cena" (09:30 PM), cuéntale a tus padres lo que aprendiste en tu entrenamiento de Billar o una lección de música difícil como si se lo explicaras a un niño de 5 años. ¡Si ellos lo entienden, tú ya eres un experto!'
                 }
             ];
             document.getElementById('tech-content').innerHTML = t.map(x => `
                 <div class="flex gap-6 items-start border-b border-slate-100 pb-12">
-                    <span class="text-6xl leading-none shadow-sm">${x.i}</span>
+                    <span class="text-6xl leading-none drop-shadow-lg">${x.i}</span>
                     <div class="space-y-4">
                         <h4 class="text-2xl font-black text-indigo-950 uppercase mb-3 leading-tight tracking-tight">${x.n}</h4>
                         <p class="text-lg text-slate-600 font-semibold leading-relaxed">${x.p}</p>
-                        <div class="bg-indigo-50 p-6 rounded-[2rem] border-l-8 border-indigo-500 italic">
-                            <p class="text-[14px] text-indigo-900 font-bold leading-relaxed underline mb-2">Aplicación en tu Horario:</p>
-                            <p class="text-[13px] text-indigo-800 font-medium">${x.e}</p>
+                        <div class="bg-indigo-50 p-6 rounded-[2.5rem] border-l-8 border-indigo-500 italic shadow-sm">
+                            <p class="text-[14px] text-indigo-900 font-black uppercase mb-2 underline decoration-indigo-200">Cómo aplicarlo hoy:</p>
+                            <p class="text-[15px] text-indigo-800 font-medium leading-relaxed">${x.e}</p>
                         </div>
                     </div>
                 </div>`).join('');
